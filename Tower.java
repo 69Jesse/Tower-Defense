@@ -92,16 +92,6 @@ abstract class Tower implements Locationable {
     }
 
     /**
-     * Sells this tower.
-     */
-    public void sell() throws IllegalStateException {
-        if (!this.canSell()) {
-            throw new IllegalStateException("Tower cannot be sold.");
-        }
-        this.game.field.sellTower(this);
-    }
-
-    /**
      * Returns the cost to upgrade this tower.
      * 
      * @return The cost to upgrade this tower.
