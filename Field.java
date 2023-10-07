@@ -5,6 +5,9 @@ import java.util.ArrayList;
  * Field class.
  */
 public class Field {
+    public final int width = 160;  // The width of the field in pixels.
+    public final int height = 90;  // The height of the field in pixels.
+
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;
 

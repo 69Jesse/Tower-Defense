@@ -1,5 +1,37 @@
-interface Locationable {
-    public Location getLocation();
+/**
+ * An interface for objects that have a location on the field.
+ */
+abstract class Locationable {
+    protected Location location;
+
+    /**
+     * Returns the location of this object on the field.
+     * 
+     * @return The location of this object on the field.
+     */
+    public Location getLocation() {
+        return this.location;
+    }
+}
+
+
+abstract class LocationableWithSetter extends Locationable {
+    /**
+     * Sets the location of this object on the field.
+     * 
+     * TODO 
+     * er is een reden dat dit x en y veranderd en niet variabele veranderd
+     * want denk dat het handig gaat zijn bij animeren van projectiles die een
+     * doelwit hebben en dan hoef je alleen location object te geven en na
+     * elke tick stukje dichterbij dat object te gaan maar weet nog niet echt
+     * zeker ofzo dus ja
+     * 
+     * @param location The new location of this object on the field.
+     */
+    public void setLocation(Location location) {
+        this.location.x = location.x;
+        this.location.y = location.y;
+    }
 }
 
 
@@ -13,8 +45,8 @@ public class Location {
     /**
      * Constructs a new location.
      * 
-     * @param x The x coordinate.
-     * @param y The y coordinate.
+     * @param x The x coordinate in pixels.
+     * @param y The y coordinate in pixels.
      */
     public Location(int x, int y) {
         this.x = x;

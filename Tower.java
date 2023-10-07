@@ -1,13 +1,17 @@
-abstract class Tower implements Locationable {
+import java.util.ArrayList;
+
+/**
+ * A tower in the game.
+ */
+abstract class Tower extends Locationable {
     protected final Game game;
-    protected final Location location;
     public final int cost;
     public final int maxLevel;
     public final int cooldown;
 
-    public int level = 1;            // The level of this tower.
-    public int speedMultiplier = 1;  // The speed multiplier of this tower.
-    public int remainingCooldown;    // Remaining cooldown until the next action in game ticks.
+    public int level = 1;          // The level of this tower.
+    protected float cooldownMultiplier = 1.0f;  // The cooldown multiplier of this tower.
+    public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
 
     /**
      * Constructs a new tower.
@@ -35,13 +39,8 @@ abstract class Tower implements Locationable {
         this.remainingCooldown = this.game.ticksPerSecond / 2;
     }
 
-    /**
-     * Returns the location of this tower on the field.
-     * 
-     * @return The location of this tower on the field.
-     */
-    public Location getLocation() {
-        return this.location;
+    public boolean canAffordUpgrade() {
+        return this.game.gold >= this.getUpgradeCost();
     }
 
     /**
@@ -50,7 +49,7 @@ abstract class Tower implements Locationable {
      * @return Whether or not this tower can be upgraded.
      */
     public boolean canUpgrade() {
-        return this.level < this.maxLevel;
+        return this.level < this.maxLevel && this.canAffordUpgrade();
     }
 
     /**
@@ -61,25 +60,7 @@ abstract class Tower implements Locationable {
             throw new IllegalStateException("Tower cannot be upgraded.");
         }
         this.level++;
-    }
-
-    /**
-     * Returns whether or not this tower can perform an action.
-     * 
-     * @return Whether or not this tower can perform an action.
-     */
-    public boolean canAct() {
-        return this.remainingCooldown <= 0;
-    }
-
-    /**
-     * Performs an action.
-     */
-    public void act() throws IllegalStateException {
-        if (!this.canAct()) {
-            throw new IllegalStateException("Tower cannot act.");
-        }
-        this.remainingCooldown = this.cooldown;
+        this.cooldownMultiplier = 1.0f - (this.level - 1) * 0.1f;
     }
 
     /**
@@ -119,9 +100,43 @@ abstract class Tower implements Locationable {
     public int getSellCost() {
         return this.getTotalSpent() / 2;
     }
+
+    /**
+     * Returns whether or not this tower can perform an action.
+     * 
+     * @return Whether or not this tower can perform an action.
+     */
+    public boolean canAct() {
+        return this.remainingCooldown <= 0;
+    }
+
+    /**
+     * Performs an action.
+     */
+    public abstract void act();
+
+    public int getCooldown() {
+        return (int) (this.cooldown * this.cooldownMultiplier);
+    }
+
+    /**
+     * Performs an action.
+     */
+    public final void tick() {
+        this.remainingCooldown--;
+        int cooldown = this.getCooldown();
+        this.remainingCooldown = Math.min(this.remainingCooldown, cooldown);
+        if (this.canAct()) {
+            this.act();
+            this.remainingCooldown = cooldown;
+        }
+    }
 }
 
 
+/**
+ * A tower that can damage enemies.
+ */
 abstract class DamageTower extends Tower {
     public final int damage;
 
@@ -155,6 +170,9 @@ abstract class DamageTower extends Tower {
 }
 
 
+/**
+ * A tower that can damage enemies that are in a specific range.
+ */
 abstract class RangeDamageTower extends DamageTower {
     public final int range;
 
@@ -195,8 +213,23 @@ abstract class RangeDamageTower extends DamageTower {
      * @param enemy The enemy to check.
      * @return      Whether or not this tower can damage the enemy.
      */
-    public boolean canDamage(Enemy enemy) {
+    protected boolean canDamage(Enemy enemy) {
         return this.location.distanceTo(enemy) <= this.range;
+    }
+
+    /**
+     * Returns a list of enemies that can be damaged by this tower.
+     * 
+     * @return A list of enemies that can be damaged by this tower.
+     */
+    protected ArrayList<Enemy> damagableEnemies() {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        for (Enemy enemy : this.game.field.enemies) {
+            if (this.canDamage(enemy)) {
+                enemies.add(enemy);
+            }
+        }
+        return enemies;
     }
 }
 
@@ -215,5 +248,12 @@ class ArcherTower extends RangeDamageTower {
             10,
             5
         );
+    }
+
+    /**
+     * Performs an action.
+     */
+    public void act() {
+        System.out.println("Archer tower shoots arrow.");
     }
 }

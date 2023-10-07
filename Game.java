@@ -1,11 +1,12 @@
 /**
  * The game class.
  */
-public class Game {
+public final class Game {
     public final int ticksPerSecond = 20;
 
     public Field field;
-    public int gold;
+
+    public int gold = 0;
 
     public void start() {
         this.field = new Field();
@@ -33,5 +34,19 @@ public class Game {
     public void sellTower(Tower tower) throws IllegalArgumentException {
         this.field.removeTower(tower);
         this.gold += tower.getSellCost();
+    }
+
+    /**
+     * Upgrade a tower.
+     * 
+     * @param tower                     The tower to upgrade.
+     * @throws IllegalArgumentException If the tower does not exist or cannot be upgraded.
+     */
+    public void upgradeTower(Tower tower) throws IllegalArgumentException {
+        if (!tower.canUpgrade()) {
+            throw new IllegalArgumentException("Tower cannot be upgraded.");
+        }
+        this.gold -= tower.getUpgradeCost();
+        tower.upgrade();
     }
 }
