@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import location.Location;
+import location.Locationable;
 
 /**
  * A tower in the game.

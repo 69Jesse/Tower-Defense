@@ -8,7 +8,11 @@ public final class Game {
 
     public int gold = 0;
 
+    /**
+     * Starts the game.
+     */
     public void start() {
+        System.out.println("Game starting!");
         this.field = new Field();
     }
 

@@ -1,3 +1,7 @@
+import location.Location;
+import location.LocationableWithSetter;
+
+
 /**
  * An enemy on the field.
  */

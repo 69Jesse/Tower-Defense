@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import location.Location;
 
 
 /**
@@ -20,11 +21,12 @@ public class Field {
      * @throws IllegalArgumentException If the tower is not placeable.
      */
     public void addTower(Tower tower) throws IllegalArgumentException {
-        if (this.placeableSpots.contains(tower.location)) {
+        Location location = tower.getLocation();
+        if (this.placeableSpots.contains(location)) {
             throw new IllegalArgumentException("Tower already exists at this location.");
         }
         for (Tower t : this.towers) {
-            if (t.location.equals(tower.location)) {
+            if (t.getLocation().equals(location)) {
                 throw new IllegalArgumentException("Tower already exists at this location.");
             }
         }
