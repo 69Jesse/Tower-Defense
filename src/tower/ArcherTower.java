@@ -4,6 +4,7 @@ import game.Game;
 import location.Location;
 import tower.base.RangeDamageTower;
 
+
 class ArcherTower extends RangeDamageTower {
     /**
      * Constructs an archer tower.
