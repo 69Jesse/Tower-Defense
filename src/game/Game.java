@@ -1,3 +1,10 @@
+package game;
+
+import field.Field;
+import gui.frame.Frame;
+import tower.base.Tower;
+
+
 /**
  * The game class.
  */
@@ -5,6 +12,7 @@ public final class Game {
     public final int ticksPerSecond = 20;
 
     public Field field;
+    public Frame frame;
 
     public int gold = 0;
 
@@ -14,6 +22,7 @@ public final class Game {
     public void start() {
         System.out.println("Game starting!");
         this.field = new Field();
+        this.frame = new Frame(this);
     }
 
     /**

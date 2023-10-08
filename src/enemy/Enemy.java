@@ -1,3 +1,5 @@
+package enemy;
+
 import location.Location;
 import location.LocationableWithSetter;
 
@@ -5,7 +7,7 @@ import location.LocationableWithSetter;
 /**
  * An enemy on the field.
  */
-abstract class Enemy extends LocationableWithSetter {
+public abstract class Enemy extends LocationableWithSetter {
     public final int worth;
     public final int weight;
 
