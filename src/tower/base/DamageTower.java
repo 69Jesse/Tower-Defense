@@ -7,7 +7,7 @@ import location.Location;
 /**
  * A tower that can damage enemies.
  */
-abstract class DamageTower extends Tower {
+public abstract class DamageTower extends Tower {
     public final int damage;
 
     /**

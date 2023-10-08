@@ -9,7 +9,7 @@ import location.Location;
 /**
  * A tower that can damage enemies that are in a specific range.
  */
-abstract class RangeDamageTower extends DamageTower {
+public abstract class RangeDamageTower extends DamageTower {
     public final int range;
 
     /**
