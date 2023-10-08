@@ -23,6 +23,7 @@ public final class Game {
         System.out.println("Game starting!");
         this.field = new Field();
         this.frame = new Frame(this);
+        this.frame.start();
     }
 
     /**
