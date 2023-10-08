@@ -25,10 +25,10 @@ public class Frame extends BaseFrame {
 
     public void setInitialSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int n = 2;
+        double a = 0.8;
         this.setSize(
-            screenSize.width / n,
-            screenSize.height / n
+            (int) (screenSize.width * a),
+            (int) (screenSize.height * a)
         );
     }
 
