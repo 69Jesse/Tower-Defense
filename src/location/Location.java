@@ -5,8 +5,8 @@ package location;
  * A location on the field.
  */
 public class Location {
-    public int x;
-    public int y;
+    public double x;
+    public double y;
 
     /**
      * Constructs a new location.

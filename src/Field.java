@@ -22,8 +22,8 @@ public class Field {
      */
     public void addTower(Tower tower) throws IllegalArgumentException {
         Location location = tower.getLocation();
-        if (this.placeableSpots.contains(location)) {
-            throw new IllegalArgumentException("Tower already exists at this location.");
+        if (!this.placeableSpots.contains(location)) {
+            throw new IllegalArgumentException("Tower is not placeable at this location.");
         }
         for (Tower t : this.towers) {
             if (t.getLocation().equals(location)) {
