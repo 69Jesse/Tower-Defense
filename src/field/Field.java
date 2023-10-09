@@ -2,6 +2,7 @@ package field;
 
 import enemy.Enemy;
 import java.util.ArrayList;
+import java.util.Random;
 import location.Location;
 import tower.base.Tower;
 
@@ -16,8 +17,58 @@ public class Field {
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;
 
+    public ArrayList<Location> waypoints;
     public ArrayList<Location> path;
     public ArrayList<Location> placeable;
+
+
+    /**
+     * Constructs a new field.
+     */
+    public Field() {
+        this.init();
+    }
+
+    private void init() {
+        this.towers = new ArrayList<>();
+        this.enemies = new ArrayList<>();
+        this.createWaypoints();
+        this.createPath();
+        this.createPlaceable();
+    }
+
+    private Random random = new Random();
+
+    private Location randomLocation() {
+        final double margin = Math.max(this.width, this.height) * 0.1;
+        double x = this.random.nextDouble() * (this.width - 2 * margin) + margin;
+        double y = this.random.nextDouble() * (this.height - 2 * margin) + margin;
+        return new Location(x, y);
+    }
+
+    private void createWaypoints() {
+        Location start = new Location(0, this.height / 2);
+        Location end = new Location(this.width, this.height / 2);
+
+        this.waypoints = new ArrayList<>();
+        this.waypoints.add(start);
+        final int n = 5;
+        for (int i = 0; i < n; i++) {
+            this.waypoints.add(this.randomLocation());
+        }
+        this.waypoints.add(end);
+    }
+
+    private void createPath() {
+        final int steps = 1001;
+        CubicSpline2D spline = new CubicSpline2D(this.waypoints);
+        this.path = spline.calculateLocations(steps);
+        System.out.println(this.path);
+    }
+
+    private void createPlaceable() {
+        this.placeable = new ArrayList<>();
+    }
 
     /**
      * Adds a tower to the field.

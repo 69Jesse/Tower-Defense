@@ -112,12 +112,12 @@ public class CubicSpline2D {
     }
 
     /**
-     * Get the locations of points on the spline at a given number of steps along the spline.
+     * Calculate the locations of points on the spline at a given number of steps along the spline.
      * 
      * @param steps The number of steps along the spline.
      * @return      The locations of points on the spline at the given number of steps.
      */
-    public ArrayList<Location> getLocations(int steps) {
+    public ArrayList<Location> calculateLocations(int steps) {
         ArrayList<Location> locations = new ArrayList<>();
         for (int i = 0; i < steps; i++) {
             double a = (double) i / (steps - 1);  // Range [0, 1].
