@@ -52,7 +52,7 @@ public class Field {
 
         this.waypoints = new ArrayList<>();
         this.waypoints.add(start);
-        final int n = 5;
+        final int n = 4;
         for (int i = 0; i < n; i++) {
             this.waypoints.add(this.randomLocation());
         }
@@ -60,7 +60,7 @@ public class Field {
     }
 
     private void createPath() {
-        final int steps = 1001;
+        final int steps = 101;
         CubicSpline2D spline = new CubicSpline2D(this.waypoints);
         this.path = spline.calculateLocations(steps);
         System.out.println(this.path);
