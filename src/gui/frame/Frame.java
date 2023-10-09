@@ -2,6 +2,7 @@ package gui.frame;
 
 import game.Game;
 import gui.mouse.Mouse;
+import gui.panels.FieldPanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,8 @@ import javax.swing.Timer;
 public class Frame extends BaseFrame {
     private Game game;
     private Mouse mouse;
+
+    private FieldPanel fieldPanel;
 
     public Frame(Game game) {
         this.game = game;
@@ -39,6 +42,7 @@ public class Frame extends BaseFrame {
         this.addMouseListener(mouse);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationByPlatform(true);
+        this.setupPanels();
         this.setVisible(true);
 
         ActionListener taskPerformer = new ActionListener() {
@@ -53,7 +57,16 @@ public class Frame extends BaseFrame {
         timer.start();
     }
 
+    /**
+     * Setup the panels.
+     */
+    private void setupPanels() {
+        this.fieldPanel = new FieldPanel(this, this.game);
+        this.add(this.fieldPanel);
+    }
+
     public void tick() {
         System.out.println("Tick");
+        this.repaint();
     }
 }
