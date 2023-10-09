@@ -9,8 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import javax.swing.JPanel;
-
 
 /**
  * The frame class.
@@ -25,7 +23,7 @@ public class Frame extends BaseFrame {
 
     public void setInitialSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double a = 0.8;
+        double a = 0.6;
         this.setSize(
             (int) (screenSize.width * a),
             (int) (screenSize.height * a)
@@ -40,6 +38,7 @@ public class Frame extends BaseFrame {
         this.setInitialSize();
         this.addMouseListener(mouse);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationByPlatform(true);
         this.setVisible(true);
 
         ActionListener taskPerformer = new ActionListener() {
