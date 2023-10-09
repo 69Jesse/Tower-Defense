@@ -1,7 +1,6 @@
 package field;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import location.Location;
 
 
