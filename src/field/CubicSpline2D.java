@@ -9,19 +9,6 @@ import location.Location;
  * A 2D cubic spline.
  */
 public class CubicSpline2D {
-    public static void main(String[] args) {
-        ArrayList<Double> xValues = new ArrayList<>(Arrays.asList(
-            0.0, 1.0, 2.0, 3.0
-        ));
-        ArrayList<Double> yValues = new ArrayList<>(Arrays.asList(
-            5.0, 1.0, 6.0, 5.0
-        ));
-        CubicSpline2D spline = new CubicSpline2D(xValues, yValues);
-        for (Location location : spline.getLocations(11)) {
-            System.out.println(location);
-        }
-    }
-
     private ArrayList<Double> steps;
     private CubicSpline1D splineX;
     private CubicSpline1D splineY;
