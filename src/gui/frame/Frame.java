@@ -29,8 +29,8 @@ public class Frame extends BaseFrame {
      * Set the initial size of the frame.
      */
     public void setInitialSize() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double a = 0.6;
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final double a = 0.6;
         this.setSize(
             (int) (screenSize.width * a),
             (int) (screenSize.height * a)
