@@ -2,9 +2,6 @@ package field;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.xml.sax.helpers.LocatorImpl;
-
 import location.Location;
 
 
