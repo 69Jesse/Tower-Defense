@@ -14,9 +14,13 @@ public class Location {
      * @param x The x coordinate in pixels.
      * @param y The y coordinate in pixels.
      */
-    public Location(int x, int y) {
+    public Location(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Location(int x, int y) {
+        this((double) x, (double) y);
     }
 
     /**
@@ -34,5 +38,9 @@ public class Location {
 
     public double distanceTo(Locationable other) {
         return this.distanceTo(other.getLocation());
+    }
+
+    public String toString() {
+        return String.format("Location(%f, %f)", this.x, this.y);
     }
 }
