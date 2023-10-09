@@ -16,7 +16,8 @@ public class Field {
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;
 
-    public ArrayList<Location> placeableSpots;
+    public ArrayList<Location> path;
+    public ArrayList<Location> placeable;
 
     /**
      * Adds a tower to the field.
@@ -26,7 +27,7 @@ public class Field {
      */
     public void addTower(Tower tower) throws IllegalArgumentException {
         Location location = tower.getLocation();
-        if (!this.placeableSpots.contains(location)) {
+        if (!this.placeable.contains(location)) {
             throw new IllegalArgumentException("Tower is not placeable at this location.");
         }
         for (Tower t : this.towers) {
