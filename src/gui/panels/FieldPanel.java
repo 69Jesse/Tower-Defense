@@ -24,6 +24,7 @@ public class FieldPanel extends BasePanel {
         this.game = game;
     }
 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.GREEN);
