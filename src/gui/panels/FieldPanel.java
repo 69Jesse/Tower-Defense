@@ -33,6 +33,7 @@ public class FieldPanel extends BasePanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.checkDimensions();
+        this.drawBackground(g);
         this.drawField(g);
         this.drawPath(g);
     }
@@ -54,11 +55,11 @@ public class FieldPanel extends BasePanel {
         } else if (widthScale < heightScale) {
             this.newSize = new Dimension(
                 maxSize.width,
-                maxSize.width * this.fieldSize.height / this.fieldSize.width
+                (int) (this.fieldSize.height * widthScale)
             );
         } else {
             this.newSize = new Dimension(
-                maxSize.height * this.fieldSize.width / this.fieldSize.height,
+                (int) (this.fieldSize.width * heightScale),
                 maxSize.height
             );
         }
@@ -69,30 +70,63 @@ public class FieldPanel extends BasePanel {
         );
 
         this.scale = this.newSize.width / (double) this.fieldSize.width;
+
+        System.out.println(this.scale);
     }
 
+    private Color backgroundColor = new Color(0x000000);
+
+    private void drawBackground(Graphics g) {
+        g.setColor(this.backgroundColor);
+        g.fillRect(0, 0, this.frame.getWidth(), this.frame.getHeight());
+    }
+
+    private Color fieldColor1 = new Color(0xACCE5E);
+    private Color fieldColor2 = new Color(0x72B76A);
+
     private void drawField(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(this.fieldColor1);
         g.fillRect(
             this.topLeft.width,
             this.topLeft.height,
             this.newSize.width,
             this.newSize.height
         );
+        g.setColor(this.fieldColor2);
+        for (int i = 0; i < this.fieldSize.width; i++) {
+            for (int j = 0; j < this.fieldSize.height; j++) {
+                if ((i + j) % 2 != 0) {
+                    continue;
+                }
+                g.fillRect(
+                    (int) (i * this.scale + this.topLeft.width),
+                    (int) (j * this.scale + this.topLeft.height),
+                    (int) this.scale,
+                    (int) this.scale
+                );
+            }
+        }
     }
 
+    Color pathColor1 = new Color(0xC0971B);
+    Color pathColor2 = new Color(0xDBB12C);
+
     private void drawPath(Graphics g) {
-        g.setColor(Color.YELLOW);
-        final double radius = Math.max(
-            this.fieldSize.width, this.fieldSize.height
-        ) * 0.015 * this.scale;
-        for (Location location : this.game.field.path) {
-            g.fillOval(
-                (int) (location.x * this.scale - radius + this.topLeft.width),
-                (int) (location.y * this.scale - radius + this.topLeft.height),
-                (int) (2 * radius),
-                (int) (2 * radius)
-            );
+        for (int i = 0; i < 2; i++) {
+            double radius = Math.max(
+                this.fieldSize.width, this.fieldSize.height
+            ) * (
+                i == 0 ? 0.02 : 0.015
+            ) * this.scale;
+            g.setColor(i == 0 ? this.pathColor1 : this.pathColor2);
+            for (Location location : this.game.field.path) {
+                g.fillOval(
+                    (int) (location.x * this.scale - radius + this.topLeft.width),
+                    (int) (location.y * this.scale - radius + this.topLeft.height),
+                    (int) (2 * radius),
+                    (int) (2 * radius)
+                );
+            }
         }
     }
 }

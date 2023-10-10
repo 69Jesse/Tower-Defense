@@ -11,8 +11,8 @@ import tower.base.Tower;
  * Field class.
  */
 public class Field {
-    public final int width = 160;  // The width of the field in pixels.
-    public final int height = 90;  // The height of the field in pixels.
+    public final int width = 80;  // The width of the field in pixels.
+    public final int height = 45;  // The height of the field in pixels.
 
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;
@@ -51,8 +51,15 @@ public class Field {
     }
 
     private void createWaypoints() {
-        Location start = new Location(0, this.height / 2);
-        Location end = new Location(this.width, this.height / 2);
+        double margin = 0.1;
+        Location start = new Location(
+            0,
+            this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+        );
+        Location end = new Location(
+            this.width,
+            this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+        );
 
         this.waypoints = new ArrayList<>();
         this.waypoints.add(start);
