@@ -1,4 +1,4 @@
-package enemy;
+package enemies;
 
 import location.Location;
 import location.LocationableWithSetter;

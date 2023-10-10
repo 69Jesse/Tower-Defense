@@ -1,4 +1,4 @@
-package tower.base;
+package towers.base;
 
 import game.Game;
 import location.Location;

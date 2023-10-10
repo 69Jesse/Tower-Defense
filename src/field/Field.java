@@ -1,10 +1,11 @@
 package field;
 
-import enemy.Enemy;
 import java.util.ArrayList;
 import java.util.Random;
+
+import enemies.Enemy;
 import location.Location;
-import tower.base.Tower;
+import towers.base.Tower;
 
 
 /**

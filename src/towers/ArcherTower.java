@@ -1,8 +1,8 @@
-package tower;
+package towers;
 
 import game.Game;
 import location.Location;
-import tower.base.RangeDamageTower;
+import towers.base.RangeDamageTower;
 
 
 class ArcherTower extends RangeDamageTower {
