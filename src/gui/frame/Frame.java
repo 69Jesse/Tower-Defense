@@ -1,6 +1,7 @@
 package gui.frame;
 
 import game.Game;
+import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
 import gui.panels.FieldPanel;
@@ -83,6 +84,7 @@ public class Frame extends BaseFrame {
     private void setup() {
         this.add(new FieldPanel(this, this.game));
         this.addKeyBinding("F11", new FullscreenToggleAction(this));
+        this.addKeyBinding("ENTER", new DebugAction(this, this.game));
     }
 
     public void tick() {

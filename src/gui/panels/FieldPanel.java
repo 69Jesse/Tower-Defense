@@ -45,22 +45,28 @@ public class FieldPanel extends BasePanel {
             this.game.field.height
         );
         Dimension maxSize = this.frame.getSize();
-        if (maxSize.width / this.fieldSize.width < maxSize.height / this.fieldSize.height) {
+
+        double widthScale = maxSize.width / this.fieldSize.width;
+        double heightScale = maxSize.height / this.fieldSize.height;
+
+        if (widthScale == heightScale) {
+            this.newSize = maxSize;
+        } else if (widthScale < heightScale) {
             this.newSize = new Dimension(
                 maxSize.width,
-                (int) (maxSize.width * this.fieldSize.height / this.fieldSize.width)
+                maxSize.width * this.fieldSize.height / this.fieldSize.width
             );
         } else {
             this.newSize = new Dimension(
-                (int) (maxSize.height * this.fieldSize.width / this.fieldSize.height),
+                maxSize.height * this.fieldSize.width / this.fieldSize.height,
                 maxSize.height
             );
         }
         this.topLeft = new Dimension(
-            (maxSize.width - newSize.width) / 2,
-            (maxSize.height - newSize.height) / 2
+            (maxSize.width - this.newSize.width) / 2,
+            (maxSize.height - this.newSize.height) / 2
         );
-        this.scale = this.newSize.width / this.fieldSize.width;
+        this.scale = this.newSize.width / (double) this.fieldSize.width;
     }
 
     private void drawField(Graphics g) {
@@ -77,7 +83,7 @@ public class FieldPanel extends BasePanel {
         g.setColor(Color.YELLOW);
         final double radius = Math.max(
             this.fieldSize.width, this.fieldSize.height
-        ) * 0.01 * this.scale;
+        ) * 0.015 * this.scale;
         for (Location location : this.game.field.path) {
             g.fillOval(
                 (int) (location.x * this.scale - radius + this.topLeft.width),

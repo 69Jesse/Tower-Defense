@@ -37,6 +37,10 @@ public class Field {
         this.createPlaceable();
     }
 
+    public void reset() {
+        this.init();
+    }
+
     private Random random = new Random();
 
     private Location randomLocation() {
