@@ -14,7 +14,7 @@ public final class Game {
     public Field field;
     public Frame frame;
 
-    public int gold = 0;
+    private int gold = 0;
 
     /**
      * Starts the game.
@@ -26,6 +26,46 @@ public final class Game {
         this.frame.start();
     }
 
+    
+    /**
+     * Returns the gold.
+     * 
+     * @return The gold.
+     */
+    public int getGold() {
+        return this.gold;
+    }
+
+    /**
+     * Adds gold.
+     * 
+     * @param gold                      The gold to add.
+     * @throws IllegalArgumentException If the gold is negative.
+     */
+    public void addGold(int gold) throws IllegalArgumentException {
+        if (gold < 0) {
+            throw new IllegalArgumentException("Cannot add negative gold.");
+        }
+        this.gold += gold;
+    }
+
+    /**
+     * Removes gold.
+     * 
+     * @param gold                      The gold to remove.
+     * @throws IllegalArgumentException If the gold is negative.
+     */
+    public void removeGold(int gold) throws IllegalArgumentException {
+        if (gold < 0) {
+            throw new IllegalArgumentException("Cannot remove negative gold.");
+        }
+        int newGold = this.gold - gold;
+        if (newGold < 0) {
+            throw new IllegalArgumentException("Gold cannot be negative.");
+        }
+        this.gold = newGold;
+    }
+
     /**
      * Buy a tower.
      * 
@@ -33,10 +73,11 @@ public final class Game {
      * @throws IllegalArgumentException Not enough gold or tower not placeable.
      */
     public void buyTower(Tower tower) throws IllegalArgumentException {
-        if (this.gold < tower.cost) {
+        if (this.getGold() < tower.cost) {
             throw new IllegalArgumentException("Not enough gold.");
         }
-        this.field.addTower(tower);
+        this.field.addTower(tower);  // Throws if it cannot be placed.
+        this.removeGold(tower.cost);
     }
 
     /**
@@ -46,8 +87,8 @@ public final class Game {
      * @throws IllegalArgumentException If the tower does not exist.
      */
     public void sellTower(Tower tower) throws IllegalArgumentException {
-        this.field.removeTower(tower);
-        this.gold += tower.getSellCost();
+        this.field.removeTower(tower);  // Throws if it cannot be sold.
+        this.addGold(tower.getSellCost());
     }
 
     /**
@@ -57,10 +98,10 @@ public final class Game {
      * @throws IllegalArgumentException If the tower does not exist or cannot be upgraded.
      */
     public void upgradeTower(Tower tower) throws IllegalArgumentException {
-        if (!tower.canUpgrade()) {
-            throw new IllegalArgumentException("Tower cannot be upgraded.");
+        if (this.getGold() < tower.getUpgradeCost()) {
+            throw new IllegalArgumentException("Not enough gold.");
         }
-        this.gold -= tower.getUpgradeCost();
-        tower.upgrade();
+        tower.upgrade();  // Throws if it cannot be upgraded.
+        this.removeGold(tower.getUpgradeCost());
     }
 }

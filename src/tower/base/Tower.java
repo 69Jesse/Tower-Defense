@@ -44,21 +44,19 @@ public abstract class Tower extends Locationable {
         this.remainingCooldown = this.game.ticksPerSecond / 2;
     }
 
-    public boolean canAffordUpgrade() {
-        return this.game.gold >= this.getUpgradeCost();
-    }
-
     /**
      * Returns whether or not this tower can be upgraded.
      * 
      * @return Whether or not this tower can be upgraded.
      */
     public boolean canUpgrade() {
-        return this.level < this.maxLevel && this.canAffordUpgrade();
+        return this.level < this.maxLevel;
     }
 
     /**
      * Upgrades this tower.
+     * 
+     * @throws IllegalStateException If this tower cannot be upgraded.
      */
     public void upgrade() throws IllegalStateException {
         if (!this.canUpgrade()) {

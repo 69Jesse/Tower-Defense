@@ -87,6 +87,9 @@ public class Frame extends BaseFrame {
         this.addKeyBinding("ENTER", new DebugAction(this, this.game));
     }
 
+    /**
+     * Tick.
+     */
     public void tick() {
         System.out.println("Tick");
         this.repaint();
