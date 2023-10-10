@@ -5,6 +5,7 @@ import gui.frame.Frame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import javax.swing.JLabel;
 import location.Location;
 
 
@@ -13,6 +14,7 @@ import location.Location;
  */
 public class FieldPanel extends BasePanel {
     private Game game;
+    private JLabel label;
 
     /**
      * The constructor.
@@ -23,6 +25,7 @@ public class FieldPanel extends BasePanel {
     public FieldPanel(Frame frame, Game game) {
         super(frame);
         this.game = game;
+        createGoldLabel();
     }
 
     private Dimension topLeft;
@@ -94,5 +97,16 @@ public class FieldPanel extends BasePanel {
                 (int) (2 * radius)
             );
         }
+    }
+
+    private void createGoldLabel() {
+        this.label = new JLabel();
+        this.label.setBounds(50, 50, 100, 50);
+        this.updateGoldLabel();
+        this.add(label);
+    }
+
+    public void updateGoldLabel() {
+        this.label.setText(String.format("%d gold", this.game.getGold()));
     }
 }

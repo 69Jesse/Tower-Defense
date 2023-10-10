@@ -5,8 +5,6 @@ import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
 import gui.panels.FieldPanel;
-import gui.panels.GoldPanel;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -85,7 +83,6 @@ public class Frame extends BaseFrame {
      */
     private void setup() {
         this.add(new FieldPanel(this, this.game));
-        this.add(new GoldPanel(this, this.game));
         this.addKeyBinding("F11", new FullscreenToggleAction(this));
         this.addKeyBinding("ENTER", new DebugAction(this, this.game));
     }
