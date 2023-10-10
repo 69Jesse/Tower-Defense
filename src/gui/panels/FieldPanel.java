@@ -62,10 +62,12 @@ public class FieldPanel extends BasePanel {
                 maxSize.height
             );
         }
+
         this.topLeft = new Dimension(
             (maxSize.width - this.newSize.width) / 2,
             (maxSize.height - this.newSize.height) / 2
         );
+
         this.scale = this.newSize.width / (double) this.fieldSize.width;
     }
 
