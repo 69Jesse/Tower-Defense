@@ -60,7 +60,7 @@ public class Field {
     }
 
     private void createPath() {
-        final int steps = 101;
+        final int steps = 1001;
         CubicSpline2D spline = new CubicSpline2D(this.waypoints);
         this.path = spline.calculateLocations(steps);
         System.out.println(this.path);
