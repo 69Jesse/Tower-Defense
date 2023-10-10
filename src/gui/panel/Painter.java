@@ -5,7 +5,6 @@ import gui.frame.Frame;
 import java.awt.Graphics;
 
 
-
 /**
  * The base painter class.
  */

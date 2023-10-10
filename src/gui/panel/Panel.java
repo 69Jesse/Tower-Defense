@@ -3,6 +3,7 @@ package gui.panel;
 import game.Game;
 import gui.frame.Frame;
 import gui.panel.painters.BackgroundPainter;
+import gui.panel.painters.GoldLabelPainter;
 import gui.panel.painters.GrassPainter;
 import gui.panel.painters.PathPainter;
 import java.awt.Dimension;
@@ -48,6 +49,7 @@ public class Panel extends JPanel {
         this.painters.add(new BackgroundPainter(this.game, this.frame, this));
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
+        this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
     }
 
     public Dimension topLeft;
