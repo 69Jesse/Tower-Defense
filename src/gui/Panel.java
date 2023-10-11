@@ -1,11 +1,11 @@
-package gui.panel;
+package gui;
 
 import game.Game;
 import gui.frame.Frame;
-import gui.panel.painters.BackgroundPainter;
-import gui.panel.painters.GoldLabelPainter;
-import gui.panel.painters.GrassPainter;
-import gui.panel.painters.PathPainter;
+import gui.painters.BackgroundPainter;
+import gui.painters.GoldLabelPainter;
+import gui.painters.GrassPainter;
+import gui.painters.PathPainter;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;

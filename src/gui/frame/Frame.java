@@ -1,11 +1,10 @@
 package gui.frame;
 
 import game.Game;
+import gui.Panel;
 import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
-import gui.panel.Panel;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;

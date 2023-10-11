@@ -1,9 +1,9 @@
-package gui.panel.painters;
+package gui.painters;
 
 import game.Game;
+import gui.Painter;
+import gui.Panel;
 import gui.frame.Frame;
-import gui.panel.Painter;
-import gui.panel.Panel;
 import java.awt.Color;
 import java.awt.Graphics;
 

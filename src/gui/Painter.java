@@ -1,4 +1,4 @@
-package gui.panel;
+package gui;
 
 import game.Game;
 import gui.frame.Frame;
