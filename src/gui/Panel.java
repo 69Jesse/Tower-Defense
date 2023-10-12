@@ -8,13 +8,12 @@ import gui.painters.GrassPainter;
 import gui.painters.PathPainter;
 import gui.painters.SmoothBorderPainter;
 import gui.painters.TowerPainter;
-import location.Location;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import java.awt.Graphics2D;
+import location.Location;
 
 
 /**

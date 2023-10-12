@@ -5,11 +5,11 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
+import java.awt.Color;
 import java.awt.Image;
 import location.Location;
 import towers.RangeDamageTower;
 import towers.Tower;
-import java.awt.Color;
 
 
 /**
