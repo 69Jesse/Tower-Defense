@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -183,8 +184,8 @@ public final class BetterGraphics {
     public void setTransparency(double alpha) {
         alpha = Math.max(0, Math.min(1, alpha));
         this.g.setComposite(
-            java.awt.AlphaComposite.getInstance(
-                java.awt.AlphaComposite.SRC_OVER,
+            AlphaComposite.getInstance(
+                AlphaComposite.SRC_OVER,
                 (float) alpha
             )
         );
