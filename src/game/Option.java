@@ -14,7 +14,7 @@ public abstract class Option {
     protected final Game game;
     protected final Field field;
 
-    public static final double SIZE = 2.0;
+    public static final double RADIUS = 1.0;
     private final double distanceFromTowerCenter = 4.0;
 
     /**
@@ -110,6 +110,6 @@ public abstract class Option {
         int total
     ) {
         Location correctedLocation = this.getLocation(towerLocation, number, total);
-        return clickedLocation.distanceTo(correctedLocation) <= SIZE / 2;
+        return clickedLocation.distanceTo(correctedLocation) <= RADIUS;
     }
 }

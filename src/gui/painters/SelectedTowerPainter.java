@@ -61,8 +61,8 @@ public final class SelectedTowerPainter extends Painter {
                 option.getImage(),
                 optionLocation.x,
                 optionLocation.y,
-                Option.SIZE,
-                Option.SIZE
+                Option.RADIUS * 2,
+                Option.RADIUS * 2
             );
         }
         graphics.setTransparency(1.0);
