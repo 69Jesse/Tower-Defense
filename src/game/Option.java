@@ -110,6 +110,6 @@ public abstract class Option {
         int total
     ) {
         Location correctedLocation = this.getLocation(towerLocation, number, total);
-        return clickedLocation.distanceTo(correctedLocation) <= SIZE;
+        return clickedLocation.distanceTo(correctedLocation) <= SIZE / 2;
     }
 }
