@@ -43,7 +43,7 @@ public final class SelectedTowerPainter extends Painter {
             graphics.drawOval(
                 location.x,
                 location.y,
-                casted.range
+                casted.getRange()
             );
         }
 

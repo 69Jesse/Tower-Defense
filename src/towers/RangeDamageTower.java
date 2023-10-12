@@ -10,7 +10,7 @@ import location.Location;
  * A tower that can damage enemies that are in a specific range.
  */
 public abstract class RangeDamageTower extends DamageTower {
-    public final int range;
+    protected final double range;
 
     /**
      * Constructs a tower that can damage enemies that are in a specific range.
@@ -30,7 +30,7 @@ public abstract class RangeDamageTower extends DamageTower {
         int maxLevel,
         int cooldown,
         int damage,
-        int range
+        double range
     ) {
         super(
             game,
@@ -66,5 +66,22 @@ public abstract class RangeDamageTower extends DamageTower {
             }
         }
         return enemies;
+    }
+
+    /**
+     * Returns the multiplier of the range of this tower.
+     * This can be dependent on the level of this tower.
+     * 
+     * @return The multiplier of the range of this tower.
+     */
+    protected abstract double rangeMultiplier();
+
+    /**
+     * Returns the range of this tower.
+     * 
+     * @return The range of this tower.
+     */
+    public double getRange() {
+        return this.range * this.rangeMultiplier();
     }
 }

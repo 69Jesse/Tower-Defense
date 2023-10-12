@@ -15,10 +15,9 @@ public abstract class Tower extends Locationable {
     protected final Game game;
     public final int cost;
     public final int maxLevel;
-    public final int cooldown;
+    protected final int cooldown;
 
     public int level = 1;          // The level of this tower.
-    protected double cooldownMultiplier = 1.0;  // The cooldown multiplier of this tower.
     public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
 
     public static final Image UNPLACED_IMAGE = new ImageIcon(
@@ -70,7 +69,6 @@ public abstract class Tower extends Locationable {
             throw new IllegalStateException("Tower cannot be upgraded.");
         }
         this.level++;
-        this.cooldownMultiplier = 1.0 - (this.level - 1) * 0.1;
     }
 
     /**
@@ -125,10 +123,6 @@ public abstract class Tower extends Locationable {
      */
     public abstract void act();
 
-    public int getCooldown() {
-        return (int) (this.cooldown * this.cooldownMultiplier);
-    }
-
     /**
      * Performs an action.
      */
@@ -165,5 +159,22 @@ public abstract class Tower extends Locationable {
             this.images.put(this.level, image);
         }
         return image;
+    }
+
+    /**
+     * Returns the multiplier of the cooldown of this tower.
+     * This can be dependent on the level of this tower.
+     * 
+     * @return The multiplier of the cooldown of this tower.
+     */
+    protected abstract double cooldownMultiplier();
+
+    /**
+     * Returns the cooldown of this tower.
+     * 
+     * @return The cooldown of this tower.
+     */
+    public int getCooldown() {
+        return (int) (this.cooldown * this.cooldownMultiplier());
     }
 }

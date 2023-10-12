@@ -41,6 +41,48 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
+    @Override
+    protected double cooldownMultiplier() {
+        switch (this.level) {
+            case 1:
+                return 1.0;
+            case 2:
+                return 0.8;
+            case 3:
+                return 0.6;
+            default:
+                throw new RuntimeException("Invalid level: " + this.level);
+        }
+    }
+
+    @Override
+    protected double damageMultiplier() {
+        switch (this.level) {
+            case 1:
+                return 1.0;
+            case 2:
+                return 1.3;
+            case 3:
+                return 1.5;
+            default:
+                throw new RuntimeException("Invalid level: " + this.level);
+        }
+    }
+
+    @Override
+    protected double rangeMultiplier() {
+        switch (this.level) {
+            case 1:
+                return 1.0;
+            case 2:
+                return 1.3;
+            case 3:
+                return 1.5;
+            default:
+                throw new RuntimeException("Invalid level: " + this.level);
+        }
+    }
+
     /**
      * Performs an action.
      */

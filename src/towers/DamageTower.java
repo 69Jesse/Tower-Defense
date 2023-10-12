@@ -8,7 +8,7 @@ import location.Location;
  * A tower that can damage enemies.
  */
 public abstract class DamageTower extends Tower {
-    public final int damage;
+    protected final int damage;
 
     /**
      * Constructs a tower that can damage enemies.
@@ -36,5 +36,22 @@ public abstract class DamageTower extends Tower {
             cooldown
         );
         this.damage = damage;
-    }    
+    }
+
+    /**
+     * Returns the multiplier of the damage of this tower.
+     * This can be dependent on the level of this tower.
+     * 
+     * @return The multiplier of the damage of this tower.
+     */
+    protected abstract double damageMultiplier();
+
+    /**
+     * Returns the damage of this tower.
+     * 
+     * @return The damage of this tower.
+     */
+    public double getDamage() {
+        return this.damage * this.damageMultiplier();
+    }
 }
