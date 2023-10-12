@@ -11,8 +11,8 @@ public class Location {
     /**
      * Constructs a new location.
      * 
-     * @param x The x coordinate in pixels.
-     * @param y The y coordinate in pixels.
+     * @param x The x coordinate in field pixels.
+     * @param y The y coordinate in field pixels.
      */
     public Location(double x, double y) {
         this.x = x;
@@ -63,10 +63,10 @@ public class Location {
      * @return       Whether or not this location is in the same rectangle as another location.
      */
     public boolean inSameRect(Location other, double width, double height) {
-        return this.x >= other.x
-            && this.x <= other.x + width
-            && this.y >= other.y
-            && this.y <= other.y + height;
+        double otherX = other.x - width / 2;
+        double otherY = other.y - height / 2;
+        return this.x >= otherX && this.x <= otherX + width
+            && this.y >= otherY && this.y <= otherY + height;
     }
 
     public boolean inSameRect(Locationable other, double width, double height) {

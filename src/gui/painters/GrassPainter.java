@@ -13,7 +13,11 @@ import java.awt.Color;
  */
 public final class GrassPainter extends Painter {
     /**
-     * The constructor.
+     * {The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.}
      */
     public GrassPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);

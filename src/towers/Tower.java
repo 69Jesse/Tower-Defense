@@ -23,7 +23,6 @@ public abstract class Tower extends Locationable {
     public static final Image UNPLACED_IMAGE = new ImageIcon(
         "./assets/towers/unplaced.png"
     ).getImage();
-    public final Image image;
 
     /**
      * Constructs a new tower.
@@ -49,7 +48,6 @@ public abstract class Tower extends Locationable {
 
         // Always wait half a seconds before the first action.
         this.remainingCooldown = this.game.ticksPerSecond / 2;
-        this.image = new ImageIcon(this.getImagePath()).getImage();
     }
 
     /**
@@ -104,11 +102,11 @@ public abstract class Tower extends Locationable {
     }
 
     /**
-     * Returns the gold earned by selling this tower.
+     * Returns the value of this tower when sold.
      * 
-     * @return The gold earned by selling this tower.
+     * @return The value of this tower when sold.
      */
-    public int getSellCost() {
+    public int getSellValue() {
         return this.getTotalSpent() / 2;
     }
 
@@ -149,4 +147,18 @@ public abstract class Tower extends Locationable {
      * @return The image path of this tower.
      */
     public abstract String getImagePath();
+
+    public Image image;
+
+    /**
+     * Returns the image of this tower.
+     * 
+     * @return The image of this tower.
+     */
+    public Image getImage() {
+        if (this.image == null) {
+            this.image = new ImageIcon(this.getImagePath()).getImage();
+        }
+        return this.image;
+    }
 }

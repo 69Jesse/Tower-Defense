@@ -8,16 +8,16 @@ import towers.Tower;
 
 
 /**
- * The sell option class.
+ * The upgrade option class.
  */
-public final class SellOption extends Option {
+public final class UpgradeOption extends Option {
     /**
      * The constructor.
      *
      * @param game  The game.
      * @param field The field.
      */
-    public SellOption(
+    public UpgradeOption(
         Game game,
         Field field
     ) {
@@ -33,12 +33,11 @@ public final class SellOption extends Option {
         if (!this.shouldBeEnabled(location)) {
             return;
         }
-        int value = tower.getSellValue();
+        int cost = tower.getUpgradeCost();
         try {
-            this.game.addGold(value);
-            this.field.removeTower(tower);
+            this.game.removeGold(cost);
+            tower.upgrade();
         } catch (Exception e) {
-            // Should never happen.
             return;
         }
     }
@@ -49,11 +48,11 @@ public final class SellOption extends Option {
         if (tower == null) {
             return false;
         }
-        return tower.canSell();
+        return tower.canUpgrade() && tower.getUpgradeCost() <= this.game.getGold();
     }
 
     @Override
     public String getImagePath() {
-        return "./assets/options/sell.png";
+        return "./assets/options/upgrade.png";
     }
 }

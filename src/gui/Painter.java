@@ -14,6 +14,10 @@ public abstract class Painter {
 
     /**
      * The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.
      */
     public Painter(Game game, Frame frame, Panel panel) {
         this.game = game;

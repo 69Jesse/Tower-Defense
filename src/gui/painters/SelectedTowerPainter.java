@@ -1,11 +1,13 @@
 package gui.painters;
 
 import game.Game;
+import game.Option;
 import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import java.awt.Color;
+import java.util.ArrayList;
 import location.Location;
 import towers.RangeDamageTower;
 import towers.Tower;
@@ -17,6 +19,10 @@ import towers.Tower;
 public final class SelectedTowerPainter extends Painter {
     /**
      * The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.
      */
     public SelectedTowerPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
@@ -29,9 +35,6 @@ public final class SelectedTowerPainter extends Painter {
     public void paint(BetterGraphics graphics) {
         Location location = this.game.selectedLocation;
         Tower tower = this.game.field.towers.getOrDefault(location, null);
-        if (tower == null) {
-            return;
-        }
 
         if (tower instanceof RangeDamageTower) {
             RangeDamageTower casted = (RangeDamageTower) tower;
@@ -41,6 +44,19 @@ public final class SelectedTowerPainter extends Painter {
                 location.x,
                 location.y,
                 casted.range
+            );
+        }
+
+        ArrayList<Option> options = this.game.getSelectedOptions();
+        for (int i = 0; i < options.size(); i++) {
+            Option option = options.get(i);
+            Location optionLocation = option.getLocation(location, i, options.size());
+            graphics.drawImageMiddle(
+                option.getImage(),
+                optionLocation.x,
+                optionLocation.y,
+                Option.SIZE,
+                Option.SIZE
             );
         }
     }

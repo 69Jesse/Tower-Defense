@@ -1,11 +1,13 @@
 package gui.mouse;
 
 import game.Game;
+import game.Option;
 import gui.Panel;
 import gui.frame.Frame;
 import gui.painters.TowerPainter;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import location.Location;
 
 
@@ -38,6 +40,24 @@ public class Mouse extends BaseMouse {
     }
 
     /**
+     * Return the option that was clicked, or null if none was clicked.
+     * 
+     * @param location      The location where the mouse was clicked.
+     * @param towerLocation The location of the placeable spot/tower.
+     * @return              The option that was clicked, or null if none was clicked.
+     */
+    private Option clickedOnOption(Location location, Location towerLocation) {
+        ArrayList<Option> options = this.game.getSelectedOptions();
+        for (int i = 0; i < options.size(); i++) {
+            Option option = options.get(i);
+            if (option.hasClicked(location, towerLocation, i, options.size())) {
+                return option;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Return the placeable location that was clicked, or null if none was clicked.
      * 
      * @param location The location where the mouse was clicked.
@@ -52,7 +72,15 @@ public class Mouse extends BaseMouse {
         return null;
     }
 
-    private void checkTowerClicked(Location location) {
+    private void checkClick(Location location) {
+        if (this.game.selectedLocation != null) {
+            Option option = this.clickedOnOption(location, this.game.selectedLocation);
+            if (option != null) {
+                option.callback(this.game.selectedLocation);
+                return;
+            }
+        }
+
         Location placeable = this.clickedOnPlaceable(location);
         if (placeable == null) {
             this.game.selectedLocation = null;
@@ -69,6 +97,6 @@ public class Mouse extends BaseMouse {
     @Override
     public void onAnyPressed(MouseEvent e) {
         Location location = this.getMouseLocation(e);
-        this.checkTowerClicked(location);
+        this.checkClick(location);
     }
 }

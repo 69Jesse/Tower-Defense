@@ -8,52 +8,58 @@ import towers.Tower;
 
 
 /**
- * The sell option class.
+ * An abstract class for buying towers.
  */
-public final class SellOption extends Option {
+public abstract class BuyTowerOption extends Option {
     /**
      * The constructor.
      *
      * @param game  The game.
      * @param field The field.
      */
-    public SellOption(
+    public BuyTowerOption(
         Game game,
         Field field
     ) {
         super(game, field);
     }
 
+    /**
+     * Creates a tower with a specific subclass.
+     * 
+     * @param location The location of the tower.
+     * @return         The tower.
+     */
+    public abstract Tower createTower(Location location);
+
     @Override
     public void callback(Location location) {
-        Tower tower = this.field.towers.getOrDefault(location, null);
-        if (tower == null) {
-            return;
-        }
         if (!this.shouldBeEnabled(location)) {
             return;
         }
-        int value = tower.getSellValue();
+        Tower tower = this.createTower(location);
         try {
-            this.game.addGold(value);
-            this.field.removeTower(tower);
+            this.game.removeGold(this.getCost());
+            this.field.addTower(tower);
         } catch (Exception e) {
             // Should never happen.
             return;
         }
     }
 
+    /**
+     * Returns the cost of this tower.
+     * 
+     * @return The cost of this tower.
+     */
+    public abstract int getCost();
+
     @Override
     public boolean shouldBeEnabled(Location location) {
         Tower tower = this.field.towers.getOrDefault(location, null);
-        if (tower == null) {
+        if (tower != null) {
             return false;
         }
-        return tower.canSell();
-    }
-
-    @Override
-    public String getImagePath() {
-        return "./assets/options/sell.png";
+        return this.game.getGold() >= this.getCost(); 
     }
 }

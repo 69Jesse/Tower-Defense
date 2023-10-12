@@ -16,6 +16,10 @@ import towers.Tower;
 public final class TowerPainter extends Painter {
     /**
      * The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.
      */
     public TowerPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
@@ -27,7 +31,7 @@ public final class TowerPainter extends Painter {
     public void paint(BetterGraphics graphics) {
         for (Location location : this.game.field.placeable) {
             Tower tower = this.game.field.towers.getOrDefault(location, null);
-            Image image = tower == null ? Tower.UNPLACED_IMAGE : tower.image;
+            Image image = tower == null ? Tower.UNPLACED_IMAGE : tower.getImage();
             graphics.drawImageMiddle(
                 image,
                 location.x,

@@ -15,6 +15,10 @@ import location.Location;
 public final class PathPainter extends Painter {
     /**
      * The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.
      */
     public PathPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);

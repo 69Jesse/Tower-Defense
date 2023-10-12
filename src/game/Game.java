@@ -1,6 +1,9 @@
 package game;
 
 import field.Field;
+import game.options.BuyArcherTowerOption;
+import game.options.SellOption;
+import game.options.UpgradeOption;
 import gui.frame.Frame;
 import java.util.ArrayList;
 import location.Location;
@@ -91,7 +94,7 @@ public final class Game {
      */
     public void sellTower(Tower tower) throws IllegalArgumentException {
         this.field.removeTower(tower);  // Throws if it cannot be sold.
-        this.addGold(tower.getSellCost());
+        this.addGold(tower.getSellValue());
     }
 
     /**
@@ -109,6 +112,34 @@ public final class Game {
     }
 
     /**
+     * Adds the buy tower options.
+     * 
+     * @param options The options to add to.
+     */
+    private void addBuyTowerOptions(ArrayList<Option> options) {
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+        options.add(new BuyArcherTowerOption(this, this.field));
+    }
+
+    /**
+     * Adds the existing tower options.
+     * 
+     * @param options The options to add to.
+     * @param tower   The tower.
+     */
+    private void addExistingTowerOptions(ArrayList<Option> options, Tower tower) {
+        options.add(new SellOption(this, this.field));
+        if (tower.canUpgrade()) {
+            options.add(new UpgradeOption(this, this.field));
+        }
+    }
+
+    /**
      * Returns the selected options.
      * 
      * @return The selected options.
@@ -120,9 +151,10 @@ public final class Game {
         }
         Tower tower = this.field.towers.getOrDefault(this.selectedLocation, null);
         if (tower == null) {
+            this.addBuyTowerOptions(options);
             return options;
         }
-
+        this.addExistingTowerOptions(options, tower);
         return options;
     }
 }

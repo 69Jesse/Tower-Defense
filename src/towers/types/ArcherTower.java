@@ -11,6 +11,9 @@ import towers.RangeDamageTower;
 public final class ArcherTower extends RangeDamageTower {
     /**
      * Constructs an archer tower.
+     * 
+     * @param game     The game this tower is in.
+     * @param location The location of this tower on the field.
      */
     public ArcherTower(Game game, Location location) {
         super(
