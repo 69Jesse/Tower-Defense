@@ -55,6 +55,7 @@ public class Frame extends BaseFrame {
         this.setInitialSize();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationByPlatform(true);
+        // this.setUndecorated(true);
         this.setVisible(true);
 
         ActionListener taskPerformer = new ActionListener() {

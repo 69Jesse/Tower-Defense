@@ -1,15 +1,14 @@
 package gui.mouse;
 
-import java.awt.event.MouseEvent;
-
 import game.Game;
+import gui.Panel;
 import gui.frame.Frame;
+import gui.painters.TowerPainter;
+import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import location.Location;
 import towers.Tower;
 import towers.types.ArcherTower;
-import location.Location;
-import gui.Panel;
-
-import gui.painters.TowerPainter;
 
 
 /**
@@ -33,7 +32,11 @@ public class Mouse extends BaseMouse {
     }
 
     private Location getMouseLocation(MouseEvent e) {
-        return this.panel.correctXY(e.getX(), e.getY());
+        Insets insets = this.frame.getInsets();
+        return this.panel.correctXY(
+            e.getX() - insets.left,
+            e.getY() - insets.top
+        );
     }
 
     /**
