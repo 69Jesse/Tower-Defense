@@ -1,10 +1,10 @@
 package towers;
 
 import game.Game;
-import location.Location;
-import location.Locationable;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import location.Location;
+import location.Locationable;
 
 
 /**
