@@ -19,7 +19,7 @@ public final class Game {
     public Field field;
     public Frame frame;
 
-    private int gold = 10000;
+    private int gold = 100;
 
     public Location selectedLocation = null;
 

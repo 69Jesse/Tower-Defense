@@ -174,4 +174,19 @@ public final class BetterGraphics {
             height
         );
     }
+
+    /**
+     * Set the transparency of the graphics.
+     * 
+     * @param alpha The alpha value in [0, 1].
+     */
+    public void setTransparency(double alpha) {
+        alpha = Math.max(0, Math.min(1, alpha));
+        this.g.setComposite(
+            java.awt.AlphaComposite.getInstance(
+                java.awt.AlphaComposite.SRC_OVER,
+                (float) alpha
+            )
+        );
+    }
 }

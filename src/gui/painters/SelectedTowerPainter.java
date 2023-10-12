@@ -30,6 +30,7 @@ public final class SelectedTowerPainter extends Painter {
 
     private final Color rangeColor = new Color(0x000000);
     private final double rangeLineWidth = 0.25;
+    private final double disabledTransparency = 0.5;
 
     @Override
     public void paint(BetterGraphics graphics) {
@@ -51,6 +52,11 @@ public final class SelectedTowerPainter extends Painter {
         for (int i = 0; i < options.size(); i++) {
             Option option = options.get(i);
             Location optionLocation = option.getLocation(location, i, options.size());
+            if (option.shouldBeEnabled(location)) {
+                graphics.setTransparency(1.0);
+            } else {
+                graphics.setTransparency(this.disabledTransparency);
+            }
             graphics.drawImageMiddle(
                 option.getImage(),
                 optionLocation.x,
@@ -59,5 +65,6 @@ public final class SelectedTowerPainter extends Painter {
                 Option.SIZE
             );
         }
+        graphics.setTransparency(1.0);
     }
 }
