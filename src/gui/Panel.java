@@ -69,6 +69,9 @@ public class Panel extends JPanel {
     private Dimension topLeft;
     private double scale;
 
+    /**
+     * Check the dimensions of the panel, these are used to scale the game.
+     */
     private void checkDimensions() {
         this.frameSize = this.getSize();
         System.out.println(
@@ -109,8 +112,5 @@ public class Panel extends JPanel {
             fieldWidth / (double) this.game.field.width,
             fieldHeight / (double) this.game.field.height
         );
-
-        int side = this.topLeft.width;
-        int top = this.topLeft.height;
     }
 }

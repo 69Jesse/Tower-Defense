@@ -7,10 +7,17 @@ import java.awt.Graphics;
 
 /**
  * A (sort of) wrapper of Graphics that allows for easier drawing.
+ * This gets instantiated by the Panel class every time it needs to draw.
  */
 public final class BetterGraphics {
     /**
-     * The constructor.
+     * Constructor.
+     * 
+     * @param g         The Graphics object to wrap.
+     * @param panel     The panel to draw on.
+     * @param topLeft   The top left corner of the panel.
+     * @param frameSize The size of the frame.
+     * @param scale     The scale to draw at.
      */
     public BetterGraphics(
         Graphics g,
@@ -34,6 +41,8 @@ public final class BetterGraphics {
 
     /**
      * Set the color.
+     * 
+     * @param color The color to set.
      */
     public void setColor(Color color) {
         this.g.setColor(color);
@@ -41,6 +50,11 @@ public final class BetterGraphics {
 
     /**
      * Fill a rectangle.
+     * 
+     * @param x      The x coordinate of the top left corner in field pixels.
+     * @param y      The y coordinate of the top left corner in field pixels.
+     * @param width  The width of the rectangle in field pixels.
+     * @param height The height of the rectangle in field pixels.
      */
     public void fillRect(double x, double y, double width, double height) {
         this.g.fillRect(
@@ -53,6 +67,11 @@ public final class BetterGraphics {
 
     /**
      * Fill an oval.
+     * 
+     * @param x      The x coordinate of the top left corner in field pixels.
+     * @param y      The y coordinate of the top left corner in field pixels.
+     * @param width  The width of the oval in field pixels.
+     * @param height The height of the oval in field pixels.
      */
     public void fillOval(double x, double y, double width, double height) {
         this.g.fillOval(

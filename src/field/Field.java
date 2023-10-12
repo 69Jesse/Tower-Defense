@@ -2,7 +2,6 @@ package field;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import enemies.Enemy;
 import location.Location;
 import towers.base.Tower;
@@ -12,8 +11,8 @@ import towers.base.Tower;
  * Field class.
  */
 public class Field {
-    public final int width = 64;  // The width of the field in pixels.
-    public final int height = 36;  // The height of the field in pixels.
+    public final int width = 64;  // The width of the field in (field) pixels.
+    public final int height = 36;  // The height of the field in (field) pixels.
 
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;
@@ -21,7 +20,6 @@ public class Field {
     public ArrayList<Location> waypoints;
     public ArrayList<Location> path;
     public ArrayList<Location> placeable;
-
 
     /**
      * Constructs a new field.
@@ -80,6 +78,10 @@ public class Field {
 
     private void createPlaceable() {
         this.placeable = new ArrayList<>();
+        final int n = 5;
+        for (int i = 0; i < n; i++) {
+            this.placeable.add(this.randomLocation());
+        }
     }
 
     /**
