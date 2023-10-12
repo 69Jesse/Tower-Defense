@@ -2,6 +2,7 @@ package towers;
 
 import game.Game;
 import java.awt.Image;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 import location.Location;
 import location.Locationable;
@@ -143,12 +144,14 @@ public abstract class Tower extends Locationable {
 
     /**
      * Returns the image path of this tower.
+     * This can be dependent on the level of this tower.
      * 
      * @return The image path of this tower.
      */
     public abstract String getImagePath();
 
-    public Image image;
+    // The images of this tower based on its level.
+    public HashMap<Integer, Image> images = new HashMap<>();
 
     /**
      * Returns the image of this tower.
@@ -156,9 +159,11 @@ public abstract class Tower extends Locationable {
      * @return The image of this tower.
      */
     public Image getImage() {
-        if (this.image == null) {
-            this.image = new ImageIcon(this.getImagePath()).getImage();
+        Image image = this.images.getOrDefault(this.level, null);
+        if (image == null) {
+            image = new ImageIcon(this.getImagePath()).getImage();
+            this.images.put(this.level, image);
         }
-        return this.image;
+        return image;
     }
 }

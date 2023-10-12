@@ -27,8 +27,18 @@ public final class ArcherTower extends RangeDamageTower {
         );
     }
 
+    @Override
     public String getImagePath() {
-        return "./assets/towers/archer_tower.png";
+        switch (this.level) {
+            case 1:
+                return "./assets/towers/archer_tower_1.png";
+            case 2:
+                return "./assets/towers/archer_tower_2.png";
+            case 3:
+                return "./assets/towers/archer_tower_3.png";
+            default:
+                throw new RuntimeException("Invalid level: " + this.level);
+        }
     }
 
     /**
