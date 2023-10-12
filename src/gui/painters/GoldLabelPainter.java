@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 /**
  * The gold label painter class.
  */
-public class GoldLabelPainter extends Painter {
+public final class GoldLabelPainter extends Painter {
     /**
      * The constructor.
      */

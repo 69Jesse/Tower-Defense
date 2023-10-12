@@ -10,7 +10,7 @@ import gui.frame.Frame;
 /**
  * The smooth border painter class.
  */
-public class SmoothBorderPainter extends Painter {
+public final class SmoothBorderPainter extends Painter {
     /**
      * The constructor.
      */

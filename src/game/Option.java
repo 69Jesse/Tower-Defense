@@ -34,8 +34,18 @@ public abstract class Option {
     /**
      * The callback function of this option.
      * This function is called when the option is clicked.
+     * 
+     * @param tower The tower which this option is for.
      */
     public abstract void callback(Tower tower);
+
+    /**
+     * Returns whether this option should be enabled.
+     * 
+     * @param tower The tower which this option is for.
+     * @return      Whether this option should be enabled.
+     */
+    public abstract boolean shouldBeEnabled(Tower tower);
 
     /**
      * Returns the image path of this tower.

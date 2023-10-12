@@ -29,7 +29,7 @@ public final class Game {
         this.frame = new Frame(this);
         this.frame.start();
     }
-    
+
     /**
      * Returns the gold.
      * 

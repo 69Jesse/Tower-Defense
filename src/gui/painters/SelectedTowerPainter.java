@@ -6,7 +6,6 @@ import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import java.awt.Color;
-import java.awt.Image;
 import location.Location;
 import towers.RangeDamageTower;
 import towers.Tower;
@@ -15,7 +14,7 @@ import towers.Tower;
 /**
  * The selected tower painter class.
  */
-public class SelectedTowerPainter extends Painter {
+public final class SelectedTowerPainter extends Painter {
     /**
      * The constructor.
      */

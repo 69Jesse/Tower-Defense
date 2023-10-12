@@ -12,7 +12,7 @@ import location.Location;
 /**
  * The path painter class.
  */
-public class PathPainter extends Painter {
+public final class PathPainter extends Painter {
     /**
      * The constructor.
      */

@@ -11,7 +11,7 @@ import java.awt.Color;
 /**
  * The background painter class.
  */
-public class BackgroundPainter extends Painter {
+public final class BackgroundPainter extends Painter {
     /**
      * The constructor.
      */

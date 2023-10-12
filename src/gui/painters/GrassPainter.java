@@ -11,7 +11,7 @@ import java.awt.Color;
 /**
  * The grass painter class.
  */
-public class GrassPainter extends Painter {
+public final class GrassPainter extends Painter {
     /**
      * The constructor.
      */

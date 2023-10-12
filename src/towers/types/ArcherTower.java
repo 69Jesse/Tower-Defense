@@ -8,7 +8,7 @@ import towers.RangeDamageTower;
 /**
  * An archer tower.
  */
-public class ArcherTower extends RangeDamageTower {
+public final class ArcherTower extends RangeDamageTower {
     /**
      * Constructs an archer tower.
      */

@@ -5,17 +5,15 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
-import java.awt.Color;
 import java.awt.Image;
 import location.Location;
-import towers.RangeDamageTower;
 import towers.Tower;
 
 
 /**
  * The tower painter class.
  */
-public class TowerPainter extends Painter {
+public final class TowerPainter extends Painter {
     /**
      * The constructor.
      */
