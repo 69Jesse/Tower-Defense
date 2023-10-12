@@ -6,6 +6,7 @@ import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Action;
@@ -28,17 +29,20 @@ public class Frame extends BaseFrame {
 
     /**
      * Set the initial size of the frame.
+     * 
+     * It seems to be very hard to get a good proportion
+     * when undecorated is false, not really sure why.
      */
     public void setInitialSize() {
         final Dimension screenSize = this.getToolkit().getScreenSize();
+        final Insets insets = this.getInsets();
         final double a = 0.6;
 
-        final int width = (int) (screenSize.width * a);
-        final int height = (int) (width / (double) this.game.field.width * this.game.field.height);
-        this.setSize(
-            (int) (width),
-            (int) (height)
-        );  // Should be a correct ratio but for some reason it is not??
+        // For some reason this works the best..
+        final int width = (int) (screenSize.width * a - insets.left - insets.right);
+        final int height = (int) (screenSize.height * a + insets.top - insets.bottom - 2);
+
+        this.setSize(width, height);
     }
 
     /**
@@ -52,11 +56,10 @@ public class Frame extends BaseFrame {
         this.addMouseListener(mouse);
 
         this.setup();
-        this.setInitialSize();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationByPlatform(true);
-        // this.setUndecorated(true);
         this.setVisible(true);
+        this.setInitialSize();
 
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

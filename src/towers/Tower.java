@@ -3,6 +3,8 @@ package towers;
 import game.Game;
 import location.Location;
 import location.Locationable;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -17,6 +19,11 @@ public abstract class Tower extends Locationable {
     public int level = 1;          // The level of this tower.
     protected float cooldownMultiplier = 1.0f;  // The cooldown multiplier of this tower.
     public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
+
+    public static final Image UNPLACED_IMAGE = new ImageIcon(
+        "./assets/towers/unplaced.png"
+    ).getImage();
+    public final Image image;
 
     /**
      * Constructs a new tower.
@@ -42,6 +49,7 @@ public abstract class Tower extends Locationable {
 
         // Always wait half a seconds before the first action.
         this.remainingCooldown = this.game.ticksPerSecond / 2;
+        this.image = new ImageIcon(this.getImagePath()).getImage();
     }
 
     /**
@@ -134,29 +142,11 @@ public abstract class Tower extends Locationable {
             this.remainingCooldown = cooldown;
         }
     }
-}
-
-
-class ArcherTower extends RangeDamageTower {
-    /**
-     * Constructs an archer tower.
-     */
-    public ArcherTower(Game game, Location location) {
-        super(
-            game,
-            location,
-            100,
-            3,
-            40,
-            10,
-            5
-        );
-    }
 
     /**
-     * Performs an action.
+     * Returns the image path of this tower.
+     * 
+     * @return The image path of this tower.
      */
-    public void act() {
-        System.out.println("Archer tower shoots arrow.");
-    }
+    public abstract String getImagePath();
 }

@@ -47,8 +47,8 @@ public class Mouse extends BaseMouse {
      */
     private Location placeableClicked(Location location) {
         for (Location placeable : this.game.field.placeable) {
-            double distance = placeable.distanceTo(location);
-            if (distance <= TowerPainter.RADIUS) {
+            double distance = placeable.manhattanDistanceTo(location);
+            if (distance <= (TowerPainter.SIZE / 2)) {
                 return placeable;
             }
         }
@@ -62,8 +62,16 @@ public class Mouse extends BaseMouse {
     private void checkTowerClicked(Location location) {
         Location placeable = this.placeableClicked(location);
         if (placeable == null) {
+            this.game.selectedLocation = null;
             return;
         }
+
+        if (this.game.selectedLocation == placeable) {
+            this.game.selectedLocation = null;
+        } else {
+            this.game.selectedLocation = placeable;
+        }
+
         Tower tower = this.towerClicked(placeable);
         if (tower == null) {
             tower = new ArcherTower(this.game, placeable);
@@ -77,6 +85,5 @@ public class Mouse extends BaseMouse {
     public void onAnyPressed(MouseEvent e) {
         Location location = this.getMouseLocation(e);
         this.checkTowerClicked(location);
-        this.frame.repaint();
     }
 }

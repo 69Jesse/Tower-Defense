@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import java.awt.Graphics2D;
 
 
 /**
@@ -41,8 +42,10 @@ public class Panel extends JPanel {
         super.paintComponent(g);
         this.checkDimensions();
 
+        Graphics2D g2d = (Graphics2D) g;
+
         BetterGraphics graphics = new BetterGraphics(
-            g,
+            g2d,
             this,
             topLeft,
             frameSize,
@@ -120,8 +123,6 @@ public class Panel extends JPanel {
      * @return  The corrected location.
      */
     public Location correctXY(int x, int y) {
-        System.out.println("clicked " + x + " " + y + " with topleft " + this.topLeft.width + " " + this.topLeft.height);
-        System.out.println("screen size " + this.frame.getX() + " " + this.frame.getY() + " " + this.frame.getWidth() + " " + this.frame.getHeight());
         return new Location(
             (x - this.topLeft.width) / this.scale,
             (y - this.topLeft.height) / this.scale

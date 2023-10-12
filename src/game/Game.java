@@ -2,6 +2,7 @@ package game;
 
 import field.Field;
 import gui.frame.Frame;
+import location.Location;
 import towers.Tower;
 
 
@@ -15,6 +16,8 @@ public final class Game {
     public Frame frame;
 
     private int gold = 10000;
+
+    public Location selectedLocation = null;
 
     /**
      * Starts the game.

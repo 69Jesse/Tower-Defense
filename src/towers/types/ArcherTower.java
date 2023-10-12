@@ -24,6 +24,10 @@ public class ArcherTower extends RangeDamageTower {
         );
     }
 
+    public String getImagePath() {
+        return "./assets/towers/archer_tower.png";
+    }
+
     /**
      * Performs an action.
      */

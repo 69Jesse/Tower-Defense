@@ -36,6 +36,5 @@ public class FullscreenToggleAction extends AbstractAction {
         }
 
         this.frame.setVisible(true);
-        this.frame.repaint();
     }
 }

@@ -40,6 +40,20 @@ public class Location {
         return this.distanceTo(other.getLocation());
     }
 
+    /**
+     * Returns the manhattan distance between this location and another location.
+     * 
+     * @param other The other location.
+     * @return      The manhattan distance between this location and another location.
+     */
+    public double manhattanDistanceTo(Location other) {
+        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+    }
+
+    public double manhattanDistanceTo(Locationable other) {
+        return this.manhattanDistanceTo(other.getLocation());
+    }
+
     public String toString() {
         return String.format("Location(%f, %f)", this.x, this.y);
     }
