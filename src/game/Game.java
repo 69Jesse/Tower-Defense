@@ -2,6 +2,7 @@ package game;
 
 import field.Field;
 import gui.frame.Frame;
+import java.util.ArrayList;
 import location.Location;
 import towers.Tower;
 
@@ -105,5 +106,23 @@ public final class Game {
         }
         tower.upgrade();  // Throws if it cannot be upgraded.
         this.removeGold(tower.getUpgradeCost());
+    }
+
+    /**
+     * Returns the selected options.
+     * 
+     * @return The selected options.
+     */
+    public ArrayList<Option> getSelectedOptions() {
+        ArrayList<Option> options = new ArrayList<>();
+        if (this.selectedLocation == null) {
+            return options;
+        }
+        Tower tower = this.field.towers.getOrDefault(this.selectedLocation, null);
+        if (tower == null) {
+            return options;
+        }
+
+        return options;
     }
 }

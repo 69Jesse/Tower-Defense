@@ -17,7 +17,7 @@ public abstract class Tower extends Locationable {
     public final int cooldown;
 
     public int level = 1;          // The level of this tower.
-    protected float cooldownMultiplier = 1.0f;  // The cooldown multiplier of this tower.
+    protected double cooldownMultiplier = 1.0;  // The cooldown multiplier of this tower.
     public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
 
     public static final Image UNPLACED_IMAGE = new ImageIcon(
@@ -71,7 +71,7 @@ public abstract class Tower extends Locationable {
             throw new IllegalStateException("Tower cannot be upgraded.");
         }
         this.level++;
-        this.cooldownMultiplier = 1.0f - (this.level - 1) * 0.1f;
+        this.cooldownMultiplier = 1.0 - (this.level - 1) * 0.1;
     }
 
     /**
