@@ -5,7 +5,9 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
+import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -18,7 +20,10 @@ public class GoldLabelPainter extends Painter {
     public GoldLabelPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
         this.label = new JLabel();
-        this.label.setBounds(50, 50, 100, 50);
+        //this.label.setBounds(100, 1000, 200, 100);
+        this.label.setOpaque(true);
+        this.label.setHorizontalTextPosition(SwingConstants.LEFT);
+        this.label.setBackground(Color.MAGENTA);
         this.panel.add(label);
     }
 

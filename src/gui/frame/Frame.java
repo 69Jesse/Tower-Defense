@@ -6,6 +6,7 @@ import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Action;
@@ -22,8 +23,12 @@ public class Frame extends BaseFrame {
     private Mouse mouse;
     private Panel panel;
 
+    /**
+     * .
+     */
     public Frame(Game game) {
         this.game = game;
+        this.setLayout(new FlowLayout());
     }
 
     /**
