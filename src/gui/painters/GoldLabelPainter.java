@@ -1,10 +1,10 @@
 package gui.painters;
 
 import game.Game;
+import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
-import java.awt.Graphics;
 import javax.swing.JLabel;
 
 
@@ -25,7 +25,7 @@ public class GoldLabelPainter extends Painter {
     private JLabel label;
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(BetterGraphics graphics) {
         this.label.setText(String.format("%d gold", this.game.getGold()));
     }
 }

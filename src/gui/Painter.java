@@ -2,7 +2,6 @@ package gui;
 
 import game.Game;
 import gui.frame.Frame;
-import java.awt.Graphics;
 
 
 /**
@@ -22,5 +21,5 @@ public abstract class Painter {
         this.panel = panel;
     }
 
-    public abstract void paint(Graphics g);
+    public abstract void paint(BetterGraphics graphics);
 }

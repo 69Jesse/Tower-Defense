@@ -6,7 +6,6 @@ import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.mouse.Mouse;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Action;
@@ -21,6 +20,7 @@ import javax.swing.Timer;
 public class Frame extends BaseFrame {
     private Game game;
     private Mouse mouse;
+    private Panel panel;
 
     public Frame(Game game) {
         this.game = game;
@@ -30,24 +30,31 @@ public class Frame extends BaseFrame {
      * Set the initial size of the frame.
      */
     public void setInitialSize() {
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final Dimension screenSize = this.getToolkit().getScreenSize();
         final double a = 0.6;
+
+        final int width = (int) (screenSize.width * a);
+        final int height = (int) (width / (double) this.game.field.width * this.game.field.height);
         this.setSize(
-            (int) (screenSize.width * a),
-            (int) (screenSize.height * a)
-        );
+            (int) (width),
+            (int) (height)
+        );  // Should be a correct ratio but for some reason it is not??
     }
 
     /**
      * Start the frame.
      */
     public void start() {
+        this.panel = new Panel(this, this.game);
+        this.add(this.panel);
+
         this.mouse = new Mouse(this, this.game);
-        this.setInitialSize();
         this.addMouseListener(mouse);
+
+        this.setup();
+        this.setInitialSize();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationByPlatform(true);
-        this.setup();
         this.setVisible(true);
 
         ActionListener taskPerformer = new ActionListener() {
@@ -82,7 +89,8 @@ public class Frame extends BaseFrame {
      * Setup the panels.
      */
     private void setup() {
-        this.add(new Panel(this, this.game));
+        this.panel = new Panel(this, this.game);
+        this.add(this.panel);
         this.addKeyBinding("F11", new FullscreenToggleAction(this));
         this.addKeyBinding("ENTER", new DebugAction(this, this.game));
     }

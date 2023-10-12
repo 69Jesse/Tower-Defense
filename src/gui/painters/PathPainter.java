@@ -1,11 +1,11 @@
 package gui.painters;
 
 import game.Game;
+import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import java.awt.Color;
-import java.awt.Graphics;
 import location.Location;
 
 
@@ -24,20 +24,20 @@ public class PathPainter extends Painter {
     Color pathColor2 = new Color(0xDBB12C);
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(BetterGraphics graphics) {
         for (int i = 0; i < 2; i++) {
             double radius = Math.max(
                 this.game.field.width, this.game.field.height
             ) * (
                 i == 0 ? 0.02 : 0.015
-            ) * this.panel.scale;
-            g.setColor(i == 0 ? this.pathColor1 : this.pathColor2);
+            );
+            graphics.setColor(i == 0 ? this.pathColor1 : this.pathColor2);
             for (Location location : this.game.field.path) {
-                g.fillOval(
-                    (int) (location.x * this.panel.scale - radius + this.panel.topLeft.width),
-                    (int) (location.y * this.panel.scale - radius + this.panel.topLeft.height),
-                    (int) (2 * radius),
-                    (int) (2 * radius)
+                graphics.fillOval(
+                    location.x - radius,
+                    location.y - radius,
+                    2 * radius,
+                    2 * radius
                 );
             }
         }

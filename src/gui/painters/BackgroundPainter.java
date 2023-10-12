@@ -1,11 +1,11 @@
 package gui.painters;
 
 import game.Game;
+import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import java.awt.Color;
-import java.awt.Graphics;
 
 
 /**
@@ -19,11 +19,11 @@ public class BackgroundPainter extends Painter {
         super(game, frame, panel);
     }
 
-    private Color backgroundColor = new Color(0x000000);
+    public static Color backgroundColor = new Color(0x000000);
 
     @Override
-    public void paint(Graphics g) {
-        g.setColor(this.backgroundColor);
-        g.fillRect(0, 0, this.frame.getWidth(), this.frame.getHeight());
+    public void paint(BetterGraphics graphics) {
+        graphics.setColor(backgroundColor);
+        graphics.fillEntireScreen();
     }
 }

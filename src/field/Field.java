@@ -12,8 +12,8 @@ import towers.base.Tower;
  * Field class.
  */
 public class Field {
-    public final int width = 80;  // The width of the field in pixels.
-    public final int height = 45;  // The height of the field in pixels.
+    public final int width = 64;  // The width of the field in pixels.
+    public final int height = 36;  // The height of the field in pixels.
 
     public ArrayList<Tower> towers;
     public ArrayList<Enemy> enemies;

@@ -6,6 +6,7 @@ import gui.painters.BackgroundPainter;
 import gui.painters.GoldLabelPainter;
 import gui.painters.GrassPainter;
 import gui.painters.PathPainter;
+import gui.painters.SmoothBorderPainter;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -36,8 +37,17 @@ public class Panel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.checkDimensions();
+
+        BetterGraphics graphics = new BetterGraphics(
+            g,
+            this,
+            topLeft,
+            frameSize,
+            scale
+        );
+
         for (Painter painter : this.painters) {
-            painter.paint(g);
+            painter.paint(graphics);
         }
     }
 
@@ -50,39 +60,57 @@ public class Panel extends JPanel {
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
         this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
+        this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }
 
-    public Dimension topLeft;
-    public Dimension newSize;
-    public double scale;
+    public Dimension fieldSize;
+
+    private Dimension frameSize;
+    private Dimension topLeft;
+    private double scale;
 
     private void checkDimensions() {
-        Dimension maxSize = this.frame.getSize();
-
-        double widthScale = maxSize.width / this.game.field.width;
-        double heightScale = maxSize.height / this.game.field.height;
-
-        if (widthScale == heightScale) {
-            this.newSize = maxSize;
-        } else if (widthScale < heightScale) {
-            this.newSize = new Dimension(
-                maxSize.width,
-                (int) (this.game.field.height * widthScale)
-            );
-        } else {
-            this.newSize = new Dimension(
-                (int) (this.game.field.width * heightScale),
-                maxSize.height
-            );
-        }
-
-        this.topLeft = new Dimension(
-            (maxSize.width - this.newSize.width) / 2,
-            (maxSize.height - this.newSize.height) / 2
+        this.frameSize = this.getSize();
+        System.out.println(
+            this.frameSize.width + " " + this.frameSize.height
         );
 
-        this.scale = this.newSize.width / (double) this.game.field.width;
+        double widthScale = this.frameSize.width / (double) this.game.field.width;
+        double heightScale = this.frameSize.height / (double) this.game.field.height;
+        System.out.println(
+            widthScale + " " + heightScale
+        );
 
-        System.out.println(this.scale);
+        double fieldWidth;
+        double fieldHeight;
+
+        if (widthScale == heightScale) {
+            fieldWidth = this.frameSize.width;
+            fieldHeight = this.frameSize.height;
+        } else if (widthScale < heightScale) {
+            fieldWidth = this.frameSize.width;
+            fieldHeight = this.game.field.height * widthScale;
+        } else {
+            fieldWidth = this.game.field.width * heightScale;
+            fieldHeight = this.frameSize.height;
+        }
+
+        this.fieldSize = new Dimension(
+            (int) fieldWidth,
+            (int) fieldHeight
+        );
+
+        this.topLeft = new Dimension(
+            (int) ((this.frameSize.width - fieldWidth) / 2.0),
+            (int) ((this.frameSize.height - fieldHeight) / 2.0)
+        );
+
+        this.scale = Math.max(
+            fieldWidth / (double) this.game.field.width,
+            fieldHeight / (double) this.game.field.height
+        );
+
+        int side = this.topLeft.width;
+        int top = this.topLeft.height;
     }
 }
