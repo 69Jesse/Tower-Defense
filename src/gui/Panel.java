@@ -7,6 +7,9 @@ import gui.painters.GoldLabelPainter;
 import gui.painters.GrassPainter;
 import gui.painters.PathPainter;
 import gui.painters.SmoothBorderPainter;
+import gui.painters.TowerPainter;
+import location.Location;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -59,6 +62,7 @@ public class Panel extends JPanel {
         this.painters.add(new BackgroundPainter(this.game, this.frame, this));
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
+        this.painters.add(new TowerPainter(this.game, this.frame, this));
         this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }
@@ -74,18 +78,12 @@ public class Panel extends JPanel {
      */
     private void checkDimensions() {
         this.frameSize = this.getSize();
-        System.out.println(
-            this.frameSize.width + " " + this.frameSize.height
-        );
 
-        double widthScale = this.frameSize.width / (double) this.game.field.width;
-        double heightScale = this.frameSize.height / (double) this.game.field.height;
-        System.out.println(
-            widthScale + " " + heightScale
-        );
+        final double widthScale = this.frameSize.width / (double) this.game.field.width;
+        final double heightScale = this.frameSize.height / (double) this.game.field.height;
 
-        double fieldWidth;
-        double fieldHeight;
+        final double fieldWidth;
+        final double fieldHeight;
 
         if (widthScale == heightScale) {
             fieldWidth = this.frameSize.width;
@@ -111,6 +109,22 @@ public class Panel extends JPanel {
         this.scale = Math.max(
             fieldWidth / (double) this.game.field.width,
             fieldHeight / (double) this.game.field.height
+        );
+    }
+
+    /**
+     * Correct the x and y coordinates.
+     * 
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @return  The corrected location.
+     */
+    public Location correctXY(int x, int y) {
+        System.out.println("clicked " + x + " " + y + " with topleft " + this.topLeft.width + " " + this.topLeft.height);
+        System.out.println("screen size " + this.frame.getX() + " " + this.frame.getY() + " " + this.frame.getWidth() + " " + this.frame.getHeight());
+        return new Location(
+            (x - this.topLeft.width) / this.scale,
+            (y - this.topLeft.height) / this.scale
         );
     }
 }

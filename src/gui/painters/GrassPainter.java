@@ -19,8 +19,8 @@ public class GrassPainter extends Painter {
         super(game, frame, panel);
     }
 
-    private Color grassColor1 = new Color(0xACCE5E);
-    private Color grassColor2 = new Color(0x72B76A);
+    private final Color grassColor1 = new Color(0xACCE5E);
+    private final Color grassColor2 = new Color(0x72B76A);
 
     @Override
     public void paint(BetterGraphics graphics) {

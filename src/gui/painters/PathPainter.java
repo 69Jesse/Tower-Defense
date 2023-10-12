@@ -20,24 +20,21 @@ public class PathPainter extends Painter {
         super(game, frame, panel);
     }
 
-    Color pathColor1 = new Color(0xC0971B);
-    Color pathColor2 = new Color(0xDBB12C);
+    private final Color pathColor1 = new Color(0xC0971B);
+    private final Color pathColor2 = new Color(0xDBB12C);
+    private final double radius1 = 1.5;
+    private final double radius2 = 1.2;
 
     @Override
     public void paint(BetterGraphics graphics) {
         for (int i = 0; i < 2; i++) {
-            double radius = Math.max(
-                this.game.field.width, this.game.field.height
-            ) * (
-                i == 0 ? 0.02 : 0.015
-            );
+            final double radius = i == 0 ? this.radius1 : this.radius2;
             graphics.setColor(i == 0 ? this.pathColor1 : this.pathColor2);
             for (Location location : this.game.field.path) {
                 graphics.fillOval(
-                    location.x - radius,
-                    location.y - radius,
-                    2 * radius,
-                    2 * radius
+                    location.x,
+                    location.y,
+                    radius
                 );
             }
         }

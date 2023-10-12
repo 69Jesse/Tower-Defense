@@ -6,6 +6,6 @@ import javax.swing.JFrame;
 /**
  * The base frame class.
  */
-public class BaseFrame extends JFrame {
+public abstract class BaseFrame extends JFrame {
 
 }

@@ -20,7 +20,7 @@ public class SmoothBorderPainter extends Painter {
 
     @Override
     public void paint(BetterGraphics graphics) {
-        graphics.setColor(BackgroundPainter.backgroundColor);
+        graphics.setColor(BackgroundPainter.BACKGROUND_COLOR);
         graphics.fillRect(
             -this.game.field.width, -this.game.field.height,
             3 * this.game.field.width, this.game.field.height

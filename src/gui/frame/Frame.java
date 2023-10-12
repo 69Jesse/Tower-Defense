@@ -48,7 +48,7 @@ public class Frame extends BaseFrame {
         this.panel = new Panel(this, this.game);
         this.add(this.panel);
 
-        this.mouse = new Mouse(this, this.game);
+        this.mouse = new Mouse(this, this.game, this.panel);
         this.addMouseListener(mouse);
 
         this.setup();
@@ -89,8 +89,6 @@ public class Frame extends BaseFrame {
      * Setup the panels.
      */
     private void setup() {
-        this.panel = new Panel(this, this.game);
-        this.add(this.panel);
         this.addKeyBinding("F11", new FullscreenToggleAction(this));
         this.addKeyBinding("ENTER", new DebugAction(this, this.game));
     }
@@ -99,7 +97,6 @@ public class Frame extends BaseFrame {
      * Tick.
      */
     public void tick() {
-        System.out.println("Tick");
         this.repaint();
     }
 }

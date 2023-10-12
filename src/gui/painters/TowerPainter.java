@@ -5,6 +5,9 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
+import java.awt.Color;
+import location.Location;
+import towers.Tower;
 
 
 /**
@@ -18,26 +21,19 @@ public class TowerPainter extends Painter {
         super(game, frame, panel);
     }
 
-    private 
+    private final Color unplacedTowerColor = new Color(0x7F7F7F);
+    public static final int RADIUS = 2;
 
     @Override
     public void paint(BetterGraphics graphics) {
-        graphics.setColor(BackgroundPainter.backgroundColor);
-        graphics.fillRect(
-            -this.game.field.width, -this.game.field.height,
-            3 * this.game.field.width, this.game.field.height
-        );
-        graphics.fillRect(
-            -this.game.field.width, -this.game.field.height,
-            this.game.field.width, 3 * this.game.field.height
-        );
-        graphics.fillRect(
-            this.game.field.width, -this.game.field.height,
-            this.game.field.width, 3 * this.game.field.height
-        );
-        graphics.fillRect(
-            -this.game.field.width, this.game.field.height,
-            3 * this.game.field.width, this.game.field.height
-        );
+        for (Location location : this.game.field.placeable) {
+            Tower tower = this.game.field.towers.getOrDefault(location, null);
+            if (tower == null) {
+                graphics.setColor(this.unplacedTowerColor);
+                graphics.fillOval(
+                    location.x, location.y, RADIUS
+                );
+            }
+        }
     }
 }

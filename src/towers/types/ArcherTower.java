@@ -1,11 +1,14 @@
-package towers;
+package towers.types;
 
 import game.Game;
 import location.Location;
-import towers.base.RangeDamageTower;
+import towers.RangeDamageTower;
 
 
-class ArcherTower extends RangeDamageTower {
+/**
+ * An archer tower.
+ */
+public class ArcherTower extends RangeDamageTower {
     /**
      * Constructs an archer tower.
      */

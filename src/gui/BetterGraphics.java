@@ -82,6 +82,10 @@ public final class BetterGraphics {
         );
     }
 
+    public void fillOval(double x, double y, double radius) {
+        this.fillOval(x - radius, y - radius, 2 * radius, 2 * radius);
+    }
+
     /**
      * Fills the entire screen.
      */

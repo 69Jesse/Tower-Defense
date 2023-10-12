@@ -1,25 +1,26 @@
 package field;
 
-import java.util.ArrayList;
-import java.util.Random;
 import enemies.Enemy;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import location.Location;
-import towers.base.Tower;
+import towers.Tower;
 
 
 /**
  * Field class.
  */
 public class Field {
-    public final int width = 64;  // The width of the field in (field) pixels.
-    public final int height = 36;  // The height of the field in (field) pixels.
-
-    public ArrayList<Tower> towers;
-    public ArrayList<Enemy> enemies;
+    public final int width = 80;  // The width of the field in (field) pixels.
+    public final int height = 45;  // The height of the field in (field) pixels.
 
     public ArrayList<Location> waypoints;
     public ArrayList<Location> path;
     public ArrayList<Location> placeable;
+
+    public HashMap<Location, Tower> towers;
+    public ArrayList<Enemy> enemies;
 
     /**
      * Constructs a new field.
@@ -29,7 +30,7 @@ public class Field {
     }
 
     private void init() {
-        this.towers = new ArrayList<>();
+        this.towers = new HashMap<>();
         this.enemies = new ArrayList<>();
         this.createWaypoints();
         this.createPath();
@@ -73,7 +74,6 @@ public class Field {
         final int steps = 1001;
         CubicSpline2D spline = new CubicSpline2D(this.waypoints);
         this.path = spline.calculateLocations(steps);
-        System.out.println(this.path);
     }
 
     private void createPlaceable() {
@@ -95,12 +95,10 @@ public class Field {
         if (!this.placeable.contains(location)) {
             throw new IllegalArgumentException("Tower is not placeable at this location.");
         }
-        for (Tower t : this.towers) {
-            if (t.getLocation().equals(location)) {
-                throw new IllegalArgumentException("Tower already exists at this location.");
-            }
+        if (this.towers.containsKey(location)) {
+            throw new IllegalArgumentException("Tower already exists at this location.");
         }
-        this.towers.add(tower);
+        this.towers.put(location, tower);
     }
 
     /**
@@ -110,9 +108,9 @@ public class Field {
      * @throws IllegalArgumentException If the tower does not exist.
      */
     public void removeTower(Tower tower) throws IllegalArgumentException {
-        boolean removed = this.towers.remove(tower);
+        boolean removed = this.towers.remove(tower.getLocation(), tower);
         if (!removed) {
-            throw new IllegalArgumentException("Tower does not exist.");
+            throw new IllegalArgumentException("Tower does not exist at this location.");
         }
     }
 }

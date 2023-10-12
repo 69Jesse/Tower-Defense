@@ -19,11 +19,11 @@ public class BackgroundPainter extends Painter {
         super(game, frame, panel);
     }
 
-    public static Color backgroundColor = new Color(0x000000);
+    public static final Color BACKGROUND_COLOR = new Color(0x000000);
 
     @Override
     public void paint(BetterGraphics graphics) {
-        graphics.setColor(backgroundColor);
+        graphics.setColor(BACKGROUND_COLOR);
         graphics.fillEntireScreen();
     }
 }

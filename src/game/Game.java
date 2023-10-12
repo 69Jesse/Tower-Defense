@@ -2,7 +2,7 @@ package game;
 
 import field.Field;
 import gui.frame.Frame;
-import towers.base.Tower;
+import towers.Tower;
 
 
 /**
@@ -14,7 +14,7 @@ public final class Game {
     public Field field;
     public Frame frame;
 
-    private int gold = 0;
+    private int gold = 10000;
 
     /**
      * Starts the game.
@@ -25,7 +25,6 @@ public final class Game {
         this.frame = new Frame(this);
         this.frame.start();
     }
-
     
     /**
      * Returns the gold.

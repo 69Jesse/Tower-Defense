@@ -22,7 +22,7 @@ public class GoldLabelPainter extends Painter {
         this.panel.add(label);
     }
 
-    private JLabel label;
+    private final JLabel label;
 
     @Override
     public void paint(BetterGraphics graphics) {
