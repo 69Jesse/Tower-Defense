@@ -10,7 +10,7 @@ import location.Location;
 
 
 /**
- * The grass and path painter class.
+ * The path painter class.
  */
 public class PathPainter extends Painter {
     /**

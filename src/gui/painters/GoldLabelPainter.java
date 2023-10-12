@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 
 /**
- * The background painter class.
+ * The gold label painter class.
  */
 public class GoldLabelPainter extends Painter {
     /**

@@ -9,7 +9,7 @@ import java.awt.Color;
 
 
 /**
- * The grass and path painter class.
+ * The grass painter class.
  */
 public class GrassPainter extends Painter {
     /**

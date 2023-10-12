@@ -54,6 +54,33 @@ public class Location {
         return this.manhattanDistanceTo(other.getLocation());
     }
 
+    /**
+     * Returns whether or not this location is in the same rectangle as another location.
+     * 
+     * @param other  The other location.
+     * @param width  The width of the rectangle.
+     * @param height The height of the rectangle.
+     * @return       Whether or not this location is in the same rectangle as another location.
+     */
+    public boolean inSameRect(Location other, double width, double height) {
+        return this.x >= other.x
+            && this.x <= other.x + width
+            && this.y >= other.y
+            && this.y <= other.y + height;
+    }
+
+    public boolean inSameRect(Locationable other, double width, double height) {
+        return this.inSameRect(other.getLocation(), width, height);
+    }
+
+    public boolean inSameSquare(Location other, double size) {
+        return this.inSameRect(other, size, size);
+    }
+
+    public boolean inSameSquare(Locationable other, double size) {
+        return this.inSameSquare(other.getLocation(), size);
+    }
+
     public String toString() {
         return String.format("Location(%f, %f)", this.x, this.y);
     }

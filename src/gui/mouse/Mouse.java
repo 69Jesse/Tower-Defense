@@ -7,8 +7,6 @@ import gui.painters.TowerPainter;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import location.Location;
-import towers.Tower;
-import towers.types.ArcherTower;
 
 
 /**
@@ -45,22 +43,17 @@ public class Mouse extends BaseMouse {
      * @param location The location where the mouse was clicked.
      * @return         The placeable location that was clicked, or null if none was clicked.
      */
-    private Location placeableClicked(Location location) {
+    private Location clickedOnPlaceable(Location location) {
         for (Location placeable : this.game.field.placeable) {
-            double distance = placeable.manhattanDistanceTo(location);
-            if (distance <= (TowerPainter.SIZE / 2)) {
+            if (placeable.inSameSquare(location, TowerPainter.SIZE)) {
                 return placeable;
             }
         }
         return null;
     }
 
-    private Tower towerClicked(Location location) {
-        return this.game.field.towers.getOrDefault(location, null);
-    }
-
     private void checkTowerClicked(Location location) {
-        Location placeable = this.placeableClicked(location);
+        Location placeable = this.clickedOnPlaceable(location);
         if (placeable == null) {
             this.game.selectedLocation = null;
             return;
@@ -70,14 +63,6 @@ public class Mouse extends BaseMouse {
             this.game.selectedLocation = null;
         } else {
             this.game.selectedLocation = placeable;
-        }
-
-        Tower tower = this.towerClicked(placeable);
-        if (tower == null) {
-            tower = new ArcherTower(this.game, placeable);
-            this.game.buyTower(tower);
-        } else {
-            this.game.sellTower(tower);
         }
     }
 

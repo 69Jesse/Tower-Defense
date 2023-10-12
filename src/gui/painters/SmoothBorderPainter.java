@@ -8,7 +8,7 @@ import gui.frame.Frame;
 
 
 /**
- * The background painter class.
+ * The smooth border painter class.
  */
 public class SmoothBorderPainter extends Painter {
     /**

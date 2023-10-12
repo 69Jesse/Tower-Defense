@@ -6,6 +6,7 @@ import gui.painters.BackgroundPainter;
 import gui.painters.GoldLabelPainter;
 import gui.painters.GrassPainter;
 import gui.painters.PathPainter;
+import gui.painters.SelectedTowerPainter;
 import gui.painters.SmoothBorderPainter;
 import gui.painters.TowerPainter;
 import java.awt.Dimension;
@@ -65,6 +66,7 @@ public class Panel extends JPanel {
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
         this.painters.add(new TowerPainter(this.game, this.frame, this));
+        this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
         this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }

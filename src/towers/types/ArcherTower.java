@@ -20,7 +20,7 @@ public class ArcherTower extends RangeDamageTower {
             3,
             40,
             10,
-            5
+            10
         );
     }
 
