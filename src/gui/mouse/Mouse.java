@@ -50,7 +50,7 @@ public class Mouse extends BaseMouse {
         ArrayList<Option> options = this.game.getSelectedOptions();
         for (int i = 0; i < options.size(); i++) {
             Option option = options.get(i);
-            if (option.hasClicked(location, towerLocation, i, options.size())) {
+            if (option.isHovering(location, towerLocation, i, options.size())) {
                 return option;
             }
         }

@@ -43,7 +43,7 @@ public abstract class Option {
      * Returns whether this option should be enabled.
      * 
      * @param location The location of the placeable spot/tower which this option is for.
-     * @return      Whether this option should be enabled.
+     * @return         Whether this option should be enabled.
      */
     public abstract boolean shouldBeEnabled(Location location);
 
@@ -75,7 +75,7 @@ public abstract class Option {
      * @param towerLocation The location of the tower.
      * @param number        The number of this option.
      * @param total         The total number of options.
-     * @return The location of this option in field pixels.
+     * @return              The location of this option in field pixels.
      */
     public Location getLocation(
         Location towerLocation,
@@ -95,21 +95,21 @@ public abstract class Option {
     }
 
     /**
-     * Returns whether the user has clicked on this option.
+     * Returns whether the mouse is hovering over this option.
      * 
-     * @param clickedLocation The location where the user clicked.
-     * @param towerLocation   The location of the placeable spot/tower.
-     * @param number          The number of this option.
-     * @param total           The total number of options.
-     * @return                Whether the user has clicked on this option.
+     * @param mouseLocation The location of the mouse.
+     * @param towerLocation The location of the placeable spot/tower.
+     * @param number        The number of this option.
+     * @param total         The total number of options.
+     * @return              Whether the user has clicked on this option.
      */
-    public boolean hasClicked(
-        Location clickedLocation,
+    public boolean isHovering(
+        Location mouseLocation,
         Location towerLocation,
         int number,
         int total
     ) {
         Location correctedLocation = this.getLocation(towerLocation, number, total);
-        return clickedLocation.distanceTo(correctedLocation) <= RADIUS;
+        return mouseLocation.distanceTo(correctedLocation) <= RADIUS;
     }
 }

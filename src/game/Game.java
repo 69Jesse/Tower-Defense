@@ -170,4 +170,13 @@ public final class Game {
         this.addExistingTowerOptions(options, tower);
         return options;
     }
+
+    /**
+     * Handle a game tick.
+     */
+    public void tick() {
+        for (Tower tower : this.field.towers.values()) {
+            tower.tick();
+        }
+    }
 }
