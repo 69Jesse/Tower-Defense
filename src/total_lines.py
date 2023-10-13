@@ -6,7 +6,7 @@ def main() -> None:
     for path in Path('.').rglob('*.java'):
         with path.open() as f:
             total_lines += len(f.readlines())
-    print(f'Total lines of code: {total_lines}')
+    print(f'Total lines of Java code: {total_lines}')
 
 
 if __name__ == '__main__':
