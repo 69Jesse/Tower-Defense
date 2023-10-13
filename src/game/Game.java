@@ -2,6 +2,7 @@ package game;
 
 import field.Field;
 import game.options.BuyArcherTowerOption;
+import game.options.BuyTowerOption;
 import game.options.SellOption;
 import game.options.UpgradeOption;
 import gui.frame.Frame;
@@ -30,6 +31,7 @@ public final class Game {
         System.out.println("Game starting!");
         this.field = new Field();
         this.frame = new Frame(this);
+        this.cacheOptions();
         this.frame.start();
     }
 
@@ -111,19 +113,31 @@ public final class Game {
         this.removeGold(tower.getUpgradeCost());
     }
 
+    private static BuyArcherTowerOption BUY_ARCHER_TOWER_OPTION;
+
+    private static SellOption SELL_OPTION;
+    private static UpgradeOption UPGRADE_OPTION;
+
+    /**
+     * Caches the options.
+     * This is mostly done to avoid having to load
+     * the image every time an option is displayed.
+     */
+    private void cacheOptions() {
+        BUY_ARCHER_TOWER_OPTION = new BuyArcherTowerOption(this, this.field);
+        SELL_OPTION = new SellOption(this, this.field);
+        UPGRADE_OPTION = new UpgradeOption(this, this.field);
+    }
+
     /**
      * Adds the buy tower options.
      * 
      * @param options The options to add to.
      */
     private void addBuyTowerOptions(ArrayList<Option> options) {
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
-        options.add(new BuyArcherTowerOption(this, this.field));
+        for (int i = 0; i < 10; i++) {
+            options.add(BUY_ARCHER_TOWER_OPTION);
+        }
     }
 
     /**
@@ -133,9 +147,9 @@ public final class Game {
      * @param tower   The tower.
      */
     private void addExistingTowerOptions(ArrayList<Option> options, Tower tower) {
-        options.add(new SellOption(this, this.field));
+        options.add(SELL_OPTION);
         if (tower.canUpgrade()) {
-            options.add(new UpgradeOption(this, this.field));
+            options.add(UPGRADE_OPTION);
         }
     }
 
