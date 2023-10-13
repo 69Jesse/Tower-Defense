@@ -2,7 +2,6 @@ package game;
 
 import field.Field;
 import game.options.BuyArcherTowerOption;
-import game.options.BuyTowerOption;
 import game.options.SellOption;
 import game.options.UpgradeOption;
 import gui.frame.Frame;
