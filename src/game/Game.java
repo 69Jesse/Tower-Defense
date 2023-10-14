@@ -118,9 +118,7 @@ public final class Game {
     private static UpgradeOption UPGRADE_OPTION;
 
     /**
-     * Caches the options.
-     * This is mostly done to avoid having to load
-     * the image every time an option is displayed.
+     * Caches the options because there is no need to create them every time.
      */
     private void cacheOptions() {
         BUY_ARCHER_TOWER_OPTION = new BuyArcherTowerOption(this, this.field);
