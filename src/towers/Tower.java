@@ -13,6 +13,7 @@ public abstract class Tower extends Locationable {
     public final int cost;
     public final int maxLevel;
     protected final int cooldown;
+    private int totalSpent;
 
     public int level = 1;          // The level of this tower.
     public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
@@ -43,6 +44,7 @@ public abstract class Tower extends Locationable {
 
         // Always wait half a seconds before the first action.
         this.remainingCooldown = this.game.ticksPerSecond / 2;
+        this.totalSpent = cost;
     }
 
     /**
@@ -63,6 +65,7 @@ public abstract class Tower extends Locationable {
         if (!this.canUpgrade()) {
             throw new IllegalStateException("Tower cannot be upgraded.");
         }
+        this.totalSpent += this.getUpgradeCost();
         this.level++;
     }
 
@@ -81,8 +84,7 @@ public abstract class Tower extends Locationable {
      * @return The cost to upgrade this tower.
      */
     public int getUpgradeCost() {
-        // TODO
-        return 1;
+        return this.cost * (this.level + 1);
     }
 
     /**
@@ -91,8 +93,7 @@ public abstract class Tower extends Locationable {
      * @return The total amount of gold spent on this tower.
      */
     public int getTotalSpent() {
-        // TODO
-        return 1;
+        return this.totalSpent;
     }
 
     /**
