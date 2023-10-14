@@ -1,9 +1,6 @@
 package towers;
 
 import game.Game;
-import java.awt.Image;
-import java.util.HashMap;
-import javax.swing.ImageIcon;
 import location.Location;
 import location.Locationable;
 
@@ -20,9 +17,7 @@ public abstract class Tower extends Locationable {
     public int level = 1;          // The level of this tower.
     public int remainingCooldown;  // Remaining cooldown until the next action in game ticks.
 
-    public static final Image UNPLACED_IMAGE = new ImageIcon(
-        "./assets/towers/unplaced.png"
-    ).getImage();
+    public static final String UNPLACED_IMAGE_PATH = "./assets/towers/unplaced.png";
 
     /**
      * Constructs a new tower.
@@ -143,23 +138,6 @@ public abstract class Tower extends Locationable {
      * @return The image path of this tower.
      */
     public abstract String getImagePath();
-
-    // The images of this tower based on its level.
-    public HashMap<Integer, Image> images = new HashMap<>();
-
-    /**
-     * Returns the image of this tower.
-     * 
-     * @return The image of this tower.
-     */
-    public Image getImage() {
-        Image image = this.images.getOrDefault(this.level, null);
-        if (image == null) {
-            image = new ImageIcon(this.getImagePath()).getImage();
-            this.images.put(this.level, image);
-        }
-        return image;
-    }
 
     /**
      * Returns the multiplier of the cooldown of this tower.

@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.util.HashMap;
+import javax.swing.ImageIcon;
 
 
 /**
@@ -125,22 +127,40 @@ public final class BetterGraphics {
         );
     }
 
+    private static final HashMap<String, Image> IMAGES = new HashMap<>();
+
+    /**
+     * Get an image, possibly from the cache.
+     * 
+     * @param imagePath The path to the image.
+     * @return          The image.
+     */
+    private Image getMaybeCachedImage(String imagePath) {
+        Image image = IMAGES.getOrDefault(imagePath, null);
+        if (image == null) {
+            image = new ImageIcon(imagePath).getImage();
+            IMAGES.put(imagePath, image);
+        }
+        return image;
+    }
+
     /**
      * Draw an image.
      * 
-     * @param image  The image to draw.
-     * @param x      The x coordinate of the top left corner in field pixels.
-     * @param y      The y coordinate of the top left corner in field pixels.
-     * @param width  The width of the image in field pixels.
-     * @param height The height of the image in field pixels.
+     * @param imagePath The path to the image.
+     * @param x         The x coordinate of the top left corner in field pixels.
+     * @param y         The y coordinate of the top left corner in field pixels.
+     * @param width     The width of the image in field pixels.
+     * @param height    The height of the image in field pixels.
      */
     public void drawImage(
-        Image image,
+        String imagePath,
         double x,
         double y,
         double width,
         double height
     ) {
+        Image image = this.getMaybeCachedImage(imagePath);
         this.g.drawImage(
             image,
             (int) (x * this.scale + this.topLeft.width),
@@ -154,21 +174,21 @@ public final class BetterGraphics {
     /**
      * Draw an image around the given coordinates.
      * 
-     * @param image  The image to draw.
-     * @param x      The x coordinate of the middle in field pixels.
-     * @param y      The y coordinate of the middle in field pixels.
-     * @param width  The width of the image in field pixels.
-     * @param height The height of the image in field pixels.
+     * @param imagePath The path to the image.
+     * @param x         The x coordinate of the middle in field pixels.
+     * @param y         The y coordinate of the middle in field pixels.
+     * @param width     The width of the image in field pixels.
+     * @param height    The height of the image in field pixels.
      */
     public void drawImageMiddle(
-        Image image,
+        String imagePath,
         double x,
         double y,
         double width,
         double height
     ) {
         this.drawImage(
-            image,
+            imagePath,
             x - width / 2,
             y - height / 2,
             width,
