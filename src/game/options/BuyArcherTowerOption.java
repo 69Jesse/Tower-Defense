@@ -30,11 +30,6 @@ public class BuyArcherTowerOption extends BuyTowerOption {
     }
 
     @Override
-    public int getCost() {
-        return this.createTower(null).cost;
-    }
-
-    @Override
     public boolean shouldBeEnabled(Location location) {
         Tower tower = this.field.towers.getOrDefault(location, null);
         if (tower != null) {

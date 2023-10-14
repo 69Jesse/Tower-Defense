@@ -51,7 +51,9 @@ public abstract class BuyTowerOption extends Option {
      * 
      * @return The cost of this tower.
      */
-    public abstract int getCost();
+    public int getCost() {
+        return this.createTower(null).cost;
+    }
 
     @Override
     public boolean shouldBeEnabled(Location location) {
