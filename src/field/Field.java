@@ -32,7 +32,6 @@ public class Field {
     private void init() {
         this.towers = new HashMap<>();
         this.enemies = new ArrayList<>();
-        this.createWaypoints();
         this.createPath();
         this.createPlaceable();
     }
@@ -50,8 +49,13 @@ public class Field {
         return new Location(x, y);
     }
 
+    // Excluding the start and end point.
+    private final int waypointsAmount = 3;
+    private final int maxPathRetries = 1000;
+    private final int maxWaypoinRetries = 100;
+
     private void createWaypoints() {
-        double margin = 0.1;
+        final double margin = 0.1;
         Location start = new Location(
             0,
             this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
@@ -61,27 +65,48 @@ public class Field {
             this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
         );
 
+        int retries = 0;
         this.waypoints = new ArrayList<>();
         this.waypoints.add(start);
-        final int n = 3;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < this.waypointsAmount; i++) {
             this.waypoints.add(this.randomLocation());
-            if (i > 0) {
-                if (!checkAngle(i, end)) {
-                    // The angle is too sharp, so we have to generate a new waypoint.
-                    this.waypoints.remove(i + 1);
-                    i--;
+            if (!validAngle(i, end)) {
+                this.waypoints.remove(i + 1);
+                i--;
+                retries++;
+                if (retries > this.maxWaypoinRetries) {
+                    // Insanely unlikely to reach this point, but just in case.
+                    throw new RuntimeException("Could not generate valid waypoints.");
                 }
             }
-            
         }
         this.waypoints.add(end);
     }
 
     private void createPath() {
-        final int steps = 1001;
-        CubicSpline2D spline = new CubicSpline2D(this.waypoints);
-        this.path = spline.calculateLocations(steps);
+        int retries = 0;
+        do {
+            if (retries > this.maxPathRetries) {
+                // Should actually never happen.
+                throw new RuntimeException("Could not generate a valid path.");
+            }
+
+            try {
+                this.createWaypoints();
+            } catch (RuntimeException e) {
+                retries++;
+                continue;
+            }
+
+            final int steps = 1001;
+            CubicSpline2D spline = new CubicSpline2D(this.waypoints);
+            this.path = spline.calculateLocations(steps);
+
+            if (!validPath()) {
+                this.path = null;
+            }
+            retries++;
+        } while (this.path == null);
     }
 
     private void createPlaceable() {
@@ -92,8 +117,18 @@ public class Field {
         }
     }
 
-    private boolean checkAngle(int pointNumber, Location end) {
-        double sharpAngle = 30.0; // The angels sharper than this angle, are too sharp.
+    /**
+     * Checks if the latest points of the path have a valid angle.
+     * 
+     * @param pointNumber The amount of points that have been generated.
+     * @param end         The end point of the path.
+     * @return            Whether the angle is valid.
+     */
+    private boolean validAngle(int pointNumber, Location end) {
+        if (pointNumber == 0) {
+            return true;
+        }
+        final double sharpAngle = 30.0; // The angels sharper than this angle, are too sharp.
         double angle = this.calculateAngle(pointNumber, end);
         if (angle < sharpAngle || angle > (360 - sharpAngle)) {
             return false;
@@ -122,7 +157,8 @@ public class Field {
         double y2 = this.waypoints.get(pointNumber).y; // the y-coordinate of the second point
         double x3; // the x-coordinate of the third point
         double y3; // the y-coordinate of the third point
-        if (pointNumber == 3) {
+
+        if (pointNumber == this.waypointsAmount) {
             // The last point is the endpoint, which hasn't yet been added to the waypoints.
             x3 = end.x;
             y3 = end.y;
@@ -143,6 +179,29 @@ public class Field {
         angle = Math.abs(angleBetween1And2 - angleBetween2And3);
 
         return angle;
+    }
+
+    /**
+     * Checks if the path is valid.
+     * 
+     * @return Whether the path is valid.
+     */
+    private boolean validPath() {
+        // Tiny offset to prevent rounding errors.
+        final double zero = -0.0001;
+        final double width = this.width - zero;
+        final double height = this.height - zero;
+
+        // Check if the whole path is within the bounds of the field.
+        for (Location location : this.path) {
+            if (
+                location.x < zero || location.x > width
+                    || location.y < zero || location.y > height
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
