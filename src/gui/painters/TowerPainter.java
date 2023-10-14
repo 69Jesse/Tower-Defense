@@ -5,7 +5,6 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
-import java.awt.Image;
 import location.Location;
 import towers.Tower;
 
@@ -31,9 +30,9 @@ public final class TowerPainter extends Painter {
     public void paint(BetterGraphics graphics) {
         for (Location location : this.game.field.placeable) {
             Tower tower = this.game.field.towers.getOrDefault(location, null);
-            Image image = tower == null ? Tower.UNPLACED_IMAGE : tower.getImage();
+            String imagePath = tower == null ? Tower.UNPLACED_IMAGE_PATH : tower.getImagePath();
             graphics.drawImageMiddle(
-                image,
+                imagePath,
                 location.x,
                 location.y,
                 SIZE,

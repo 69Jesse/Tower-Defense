@@ -1,8 +1,6 @@
 package game;
 
 import field.Field;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 import location.Location;
 
 
@@ -53,20 +51,6 @@ public abstract class Option {
      * @return The image path of this tower.
      */
     public abstract String getImagePath();
-
-    public Image image;
-
-    /**
-     * Returns the image of this tower.
-     * 
-     * @return The image of this tower.
-     */
-    public Image getImage() {
-        if (this.image == null) {
-            this.image = new ImageIcon(this.getImagePath()).getImage();
-        }
-        return this.image;
-    }
 
     /**
      * Returns the location of this option in field pixels.
