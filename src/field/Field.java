@@ -67,7 +67,7 @@ public class Field {
         for (int i = 0; i < n; i++) {
             this.waypoints.add(this.randomLocation());
             if (i > 0) {
-                if (!checksAngle(i, end)) {
+                if (!checkAngle(i, end)) {
                     // The angle is too sharp, so we have to generate a new waypoint.
                     this.waypoints.remove(i + 1);
                     i--;
@@ -92,14 +92,14 @@ public class Field {
         }
     }
 
-    private boolean checksAngle(int pointNumber, Location end) {
+    private boolean checkAngle(int pointNumber, Location end) {
         double sharpAngle = 30.0; // The angels sharper than this angle, are too sharp.
-        double angle = calculateAngle(pointNumber, end);
+        double angle = this.calculateAngle(pointNumber, end);
         if (angle < sharpAngle || angle > (360 - sharpAngle)) {
             return false;
         }
         if (pointNumber == 2) {
-            angle = calculateAngle(pointNumber + 1, end);
+            angle = this.calculateAngle(pointNumber + 1, end);
             if (angle < sharpAngle || angle > (360 - sharpAngle)) {
                 return false;
             }
@@ -110,15 +110,16 @@ public class Field {
     /**
      * Calculates the angle of the path between 
      * the first and second point and the second and third point.
-     * @param pointNumber // the amount of points that have been generated.
-     * @return // returns the angle.
+     * 
+     * @param pointNumber The amount of points that have been generated.
+     * @return            The angle.
      */
     private double calculateAngle(int pointNumber, Location end) {
         double angle;
-        double x1 = waypoints.get(pointNumber - 1).x; // the x-coordinate of the first point
-        double y1 = waypoints.get(pointNumber - 1).y; // the y-coordinate of the first point
-        double x2 = waypoints.get(pointNumber).x; // the x-coordinate of the second point
-        double y2 = waypoints.get(pointNumber).y; // the y-coordinate of the second point
+        double x1 = this.waypoints.get(pointNumber - 1).x; // the x-coordinate of the first point
+        double y1 = this.waypoints.get(pointNumber - 1).y; // the y-coordinate of the first point
+        double x2 = this.waypoints.get(pointNumber).x; // the x-coordinate of the second point
+        double y2 = this.waypoints.get(pointNumber).y; // the y-coordinate of the second point
         double x3; // the x-coordinate of the third point
         double y3; // the y-coordinate of the third point
         if (pointNumber == 3) {
@@ -126,20 +127,20 @@ public class Field {
             x3 = end.x;
             y3 = end.y;
         } else {
-            x3 = waypoints.get(pointNumber + 1).x;
-            y3 = waypoints.get(pointNumber + 1).y;
+            x3 = this.waypoints.get(pointNumber + 1).x;
+            y3 = this.waypoints.get(pointNumber + 1).y;
         }
 
         // First we calculate the angle of the path between point 1 and 2 with the x-axis.
-        double angleBetween1and2 = Math.atan2(y1 - y2, x1 - x2);
-        angleBetween1and2 = Math.toDegrees(angleBetween1and2);
+        double angleBetween1And2 = Math.atan2(y1 - y2, x1 - x2);
+        angleBetween1And2 = Math.toDegrees(angleBetween1And2);
 
         // Then we calculate the angle of the path between point 1 and 2 with the x-axis.
-        double angleBetween2and3 = Math.atan2(y3 - y2, x3 - x2);
-        angleBetween2and3 = Math.toDegrees(angleBetween2and3);
+        double angleBetween2And3 = Math.atan2(y3 - y2, x3 - x2);
+        angleBetween2And3 = Math.toDegrees(angleBetween2And3);
 
         // Then we substract them to get the angle we need.
-        angle = Math.abs(angleBetween1and2 - angleBetween2and3);
+        angle = Math.abs(angleBetween1And2 - angleBetween2And3);
 
         return angle;
     }
