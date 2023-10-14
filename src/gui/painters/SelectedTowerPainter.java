@@ -58,7 +58,7 @@ public final class SelectedTowerPainter extends Painter {
                 graphics.setTransparency(this.disabledTransparency);
             }
             graphics.drawImageMiddle(
-                option.getImage(),
+                option.getImagePath(),
                 optionLocation.x,
                 optionLocation.y,
                 Option.RADIUS * 2,
