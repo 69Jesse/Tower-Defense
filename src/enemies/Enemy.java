@@ -45,7 +45,16 @@ public abstract class Enemy extends LocationableWithSetter {
         this.location = location;
     }
 
+    @Override
     public Location getLocation() {
         return this.location;
     }
+
+    /**
+     * Returns the image path of this tower.
+     * This can be dependent on the level of this tower.
+     * 
+     * @return The image path of this tower.
+     */
+    public abstract String getImagePath();
 }

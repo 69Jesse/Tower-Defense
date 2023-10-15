@@ -1,4 +1,4 @@
-package towers.types;
+package towers.implementations;
 
 import game.Game;
 import location.Location;

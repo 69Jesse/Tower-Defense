@@ -4,7 +4,7 @@ import field.Field;
 import game.Game;
 import location.Location;
 import towers.Tower;
-import towers.types.ArcherTower;
+import towers.implementations.ArcherTower;
 
 
 /**
