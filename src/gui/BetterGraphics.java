@@ -13,31 +13,31 @@ import javax.swing.ImageIcon;
 
 
 /**
- * A (sort of) wrapper of Graphics that allows for easier drawing.
+ * A (sort of) wrapper of Graphics2D that allows for easier drawing.
  * This gets instantiated by the Panel class every time it needs to draw.
  */
 public final class BetterGraphics {
     /**
      * Constructor.
      * 
-     * @param g         The Graphics object to wrap.
+     * @param g2d       The Graphics object to wrap.
      * @param topLeft   The top left corner of the panel.
      * @param frameSize The size of the frame.
      * @param scale     The scale to draw at.
      */
     public BetterGraphics(
-        Graphics2D g,
+        Graphics2D g2d,
         Dimension topLeft,
         Dimension frameSize,
         double scale
     ) {
-        this.g = g;
+        this.g2d = g2d;
         this.topLeft = topLeft;
         this.frameSize = frameSize;
         this.scale = scale;
     }
 
-    private Graphics2D g;
+    private Graphics2D g2d;
     private Dimension topLeft;
     private Dimension frameSize;
     private double scale;
@@ -48,7 +48,7 @@ public final class BetterGraphics {
      * @param color The color to set.
      */
     public void setColor(Color color) {
-        this.g.setColor(color);
+        this.g2d.setColor(color);
     }
 
     /**
@@ -60,7 +60,7 @@ public final class BetterGraphics {
      * @param height The height of the rectangle in field pixels.
      */
     public void fillRect(double x, double y, double width, double height) {
-        this.g.fillRect(
+        this.g2d.fillRect(
             (int) (x * this.scale + this.topLeft.width),
             (int) (y * this.scale + this.topLeft.height),
             (int) (width * this.scale),
@@ -91,7 +91,7 @@ public final class BetterGraphics {
      * @param width The width of the line in field pixels.
      */
     public void setLineWidth(double width) {
-        this.g.setStroke(new BasicStroke((float) (width * this.scale)));
+        this.g2d.setStroke(new BasicStroke((float) (width * this.scale)));
     }
 
     /**
@@ -103,7 +103,7 @@ public final class BetterGraphics {
      * @param height The height of the oval in field pixels.
      */
     public void drawOval(double x, double y, double width, double height) {
-        this.g.drawOval(
+        this.g2d.drawOval(
             (int) (x * this.scale + this.topLeft.width),
             (int) (y * this.scale + this.topLeft.height),
             (int) (width * this.scale),
@@ -131,7 +131,7 @@ public final class BetterGraphics {
      * @param height The height of the oval in field pixels.
      */
     public void fillOval(double x, double y, double width, double height) {
-        this.g.fillOval(
+        this.g2d.fillOval(
             (int) (x * this.scale + this.topLeft.width),
             (int) (y * this.scale + this.topLeft.height),
             (int) (width * this.scale),
@@ -154,7 +154,7 @@ public final class BetterGraphics {
      * Fills the entire screen.
      */
     public void fillEntireScreen() {
-        this.g.fillRect(
+        this.g2d.fillRect(
             0, 0,
             this.frameSize.width,
             this.frameSize.height
@@ -195,7 +195,7 @@ public final class BetterGraphics {
         double height
     ) {
         Image image = this.getMaybeCachedImage(imagePath);
-        this.g.drawImage(
+        this.g2d.drawImage(
             image,
             (int) (x * this.scale + this.topLeft.width),
             (int) (y * this.scale + this.topLeft.height),
@@ -237,7 +237,7 @@ public final class BetterGraphics {
      */
     public void setTransparency(double alpha) {
         alpha = Math.max(0, Math.min(1, alpha));
-        this.g.setComposite(
+        this.g2d.setComposite(
             AlphaComposite.getInstance(
                 AlphaComposite.SRC_OVER,
                 (float) alpha
@@ -257,7 +257,7 @@ public final class BetterGraphics {
         double size,
         Font font
     ) {
-        this.g.setFont(font.deriveFont((float) (size * this.scale)));
+        this.g2d.setFont(font.deriveFont((float) (size * this.scale)));
     }
 
     public void setFont(double size) {
@@ -333,7 +333,7 @@ public final class BetterGraphics {
         x = x * this.scale + this.topLeft.width;
         y = y * this.scale + this.topLeft.height;
 
-        FontMetrics metrics = this.g.getFontMetrics();
+        FontMetrics metrics = this.g2d.getFontMetrics();
         int width = metrics.stringWidth(text);
         int height = metrics.getHeight();
 
@@ -343,12 +343,12 @@ public final class BetterGraphics {
         }
     
         if (box != null) {
-            Color beforeColor = this.g.getColor();
-            double beforeAlpha = ((AlphaComposite) this.g.getComposite()).getAlpha();
+            Color beforeColor = this.g2d.getColor();
+            double beforeAlpha = ((AlphaComposite) this.g2d.getComposite()).getAlpha();
             this.setTransparency(box.alpha);
             this.setColor(box.color);
             double yPadding = box.padding * box.yPaddingMultiplier;
-            this.g.fillRect(
+            this.g2d.fillRect(
                 (int) (x - (box.padding * this.scale)),
                 (int) (y - (yPadding * this.scale)),
                 width + (int) (2 * box.padding * this.scale),
@@ -358,7 +358,7 @@ public final class BetterGraphics {
             this.setTransparency(beforeAlpha);
         }
 
-        this.g.drawString(
+        this.g2d.drawString(
             text,
             (int) x,
             (int) (y + metrics.getAscent())
