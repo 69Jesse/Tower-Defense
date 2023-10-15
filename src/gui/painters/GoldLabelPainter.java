@@ -5,7 +5,6 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
-import javax.swing.JLabel;
 import java.awt.Color;
 
 
@@ -20,18 +19,21 @@ public final class GoldLabelPainter extends Painter {
         super(game, frame, panel);
     }
 
+    public static final Color TEXT_COLOR = new Color(0xFFFFFF);
+    public static final Color BOX_COLOR = new Color(0x000000);
+
     private String getText() {
         return String.format("Gold: %d", this.game.getGold());
     }
 
     @Override
     public void paint(BetterGraphics graphics) {
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(TEXT_COLOR);
         graphics.setFont(2.5);
         graphics.drawStringCenteredWithBox(
             this.getText(),
             this.game.field.width / 2, 3,
-            graphics.new Box(Color.BLACK, 0.5, 0.5)
+            graphics.new Box(BOX_COLOR, 0.5, 0.5)
         );
     }
 }
