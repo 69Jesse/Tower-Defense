@@ -17,7 +17,7 @@ public final class GrassPainter extends Painter {
      * 
      * @param game  The game.
      * @param frame The frame.
-     * @param panel The panel.}
+     * @param panel The panel.
      */
     public GrassPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
