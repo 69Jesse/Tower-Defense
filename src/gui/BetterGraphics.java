@@ -85,6 +85,11 @@ public final class BetterGraphics {
         );
     }
 
+    /**
+     * Set the line width.
+     * 
+     * @param width The width of the line in field pixels.
+     */
     public void setLineWidth(double width) {
         this.g.setStroke(new BasicStroke((float) (width * this.scale)));
     }

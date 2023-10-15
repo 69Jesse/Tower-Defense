@@ -35,8 +35,7 @@ public final class TowerPainter extends Painter {
                 imagePath,
                 location.x,
                 location.y,
-                SIZE,
-                SIZE
+                SIZE, SIZE
             );
         }
     }
