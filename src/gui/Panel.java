@@ -49,7 +49,6 @@ public class Panel extends JPanel {
 
         BetterGraphics graphics = new BetterGraphics(
             g2d,
-            this,
             topLeft,
             frameSize,
             scale
@@ -70,9 +69,9 @@ public class Panel extends JPanel {
         this.painters.add(new BackgroundPainter(this.game, this.frame, this));
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
-        this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new TowerPainter(this.game, this.frame, this));
         this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
+        this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }
 

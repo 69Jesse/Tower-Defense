@@ -21,27 +21,23 @@ public final class BetterGraphics {
      * Constructor.
      * 
      * @param g         The Graphics object to wrap.
-     * @param panel     The panel to draw on.
      * @param topLeft   The top left corner of the panel.
      * @param frameSize The size of the frame.
      * @param scale     The scale to draw at.
      */
     public BetterGraphics(
         Graphics2D g,
-        Panel panel,
         Dimension topLeft,
         Dimension frameSize,
         double scale
     ) {
         this.g = g;
-        // this.panel = panel;
         this.topLeft = topLeft;
         this.frameSize = frameSize;
         this.scale = scale;
     }
 
     private Graphics2D g;
-    // private Panel panel;
     private Dimension topLeft;
     private Dimension frameSize;
     private double scale;
