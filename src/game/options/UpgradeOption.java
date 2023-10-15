@@ -55,4 +55,15 @@ public final class UpgradeOption extends Option {
     public String getImagePath() {
         return "./assets/options/upgrade.png";
     }
+
+    @Override
+    public String getLabel(Location location) {
+        Tower tower = this.field.towers.getOrDefault(location, null);
+        if (tower == null) {
+            return "You should not be able to see this..";
+        }
+        return String.format(
+            "Upgrade to level %d (-%d gold)", tower.level + 1, tower.getUpgradeCost()
+        );
+    }
 }

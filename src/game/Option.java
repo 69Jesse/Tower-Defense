@@ -53,6 +53,13 @@ public abstract class Option {
     public abstract String getImagePath();
 
     /**
+     * Returns the label of this option.
+     * 
+     * @return The label of this option.
+     */
+    public abstract String getLabel(Location location);
+
+    /**
      * Returns the location of this option in field pixels.
      * It chooses a location around the tower in a circle.
      * 

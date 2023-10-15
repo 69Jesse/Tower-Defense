@@ -19,8 +19,8 @@ public final class GoldLabelPainter extends Painter {
         super(game, frame, panel);
     }
 
-    public static final Color TEXT_COLOR = new Color(0xFFFFFF);
-    public static final Color BOX_COLOR = new Color(0x000000);
+    private final Color textColor = new Color(0xFFFFFF);
+    private final Color boxColor = new Color(0x000000);
 
     private String getText() {
         return String.format("Gold: %d", this.game.getGold());
@@ -28,12 +28,12 @@ public final class GoldLabelPainter extends Painter {
 
     @Override
     public void paint(BetterGraphics graphics) {
-        graphics.setColor(TEXT_COLOR);
+        graphics.setColor(this.textColor);
         graphics.setFont(2.5);
         graphics.drawStringCenteredWithBox(
             this.getText(),
             this.game.field.width / 2, 3,
-            graphics.new Box(BOX_COLOR, 0.5, 0.5)
+            graphics.new Box(this.boxColor, 0.5, 0.5)
         );
     }
 }
