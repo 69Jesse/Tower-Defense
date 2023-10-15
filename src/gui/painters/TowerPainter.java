@@ -31,7 +31,7 @@ public final class TowerPainter extends Painter {
         for (Location location : this.game.field.placeable) {
             Tower tower = this.game.field.towers.getOrDefault(location, null);
             String imagePath = tower == null ? Tower.UNPLACED_IMAGE_PATH : tower.getImagePath();
-            graphics.drawImageMiddle(
+            graphics.drawImageCentered(
                 imagePath,
                 location.x,
                 location.y,
