@@ -42,4 +42,11 @@ public class BuyArcherTowerOption extends BuyTowerOption {
     public String getImagePath() {
         return "./assets/options/archer_tower.png";
     }
+
+    @Override
+    public String getLabel(Location location) {
+        return String.format(
+            "Buy Archer Tower (-%d gold)", this.getCost()
+        );
+    }
 }

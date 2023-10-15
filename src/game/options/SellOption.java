@@ -55,4 +55,15 @@ public final class SellOption extends Option {
     public String getImagePath() {
         return "./assets/options/sell.png";
     }
+
+    @Override
+    public String getLabel(Location location) {
+        Tower tower = this.field.towers.getOrDefault(location, null);
+        if (tower == null) {
+            return "You should not be able to see this..";
+        }
+        return String.format(
+            "Sell (+%d gold)", tower.getSellValue()
+        );
+    }
 }

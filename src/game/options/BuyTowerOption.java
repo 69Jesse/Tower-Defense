@@ -46,13 +46,18 @@ public abstract class BuyTowerOption extends Option {
         }
     }
 
+    private Integer cost = null;
+
     /**
      * Returns the cost of this tower.
      * 
      * @return The cost of this tower.
      */
     public int getCost() {
-        return this.createTower(null).cost;
+        if (this.cost == null) {
+            this.cost = this.createTower(null).cost;
+        }
+        return this.cost;
     }
 
     @Override

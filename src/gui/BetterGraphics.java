@@ -270,6 +270,29 @@ public final class BetterGraphics {
         public Color color;
         public double alpha;
         public double padding;
+        public double yPaddingMultiplier;
+
+        private final double defaultYPaddingMultiplier = 0.5;
+
+        /**
+         * Constructor.
+         * 
+         * @param color              The color of the box.
+         * @param alpha              The alpha value of the box in [0, 1].
+         * @param padding            The padding of the box in field pixels.
+         * @param yPaddingMultiplier The multiplier for the y padding.
+         */
+        public Box(
+            Color color,
+            double alpha,
+            double padding,
+            double yPaddingMultiplier
+        ) {
+            this.color = color;
+            this.alpha = alpha;
+            this.padding = padding;
+            this.yPaddingMultiplier = yPaddingMultiplier;
+        }
 
         /**
          * Constructor.
@@ -286,6 +309,7 @@ public final class BetterGraphics {
             this.color = color;
             this.alpha = alpha;
             this.padding = padding;
+            this.yPaddingMultiplier = this.defaultYPaddingMultiplier;
         }
     }
 
@@ -322,11 +346,12 @@ public final class BetterGraphics {
             double beforeAlpha = ((AlphaComposite) this.g.getComposite()).getAlpha();
             this.setTransparency(box.alpha);
             this.setColor(box.color);
+            double yPadding = box.padding * box.yPaddingMultiplier;
             this.g.fillRect(
                 (int) (x - (box.padding * this.scale)),
-                (int) (y - (box.padding * this.scale)),
+                (int) (y - (yPadding * this.scale)),
                 width + (int) (2 * box.padding * this.scale),
-                height + (int) (2 * box.padding * this.scale)
+                height + (int) (2 * yPadding * this.scale)
             );
             this.setColor(beforeColor);
             this.setTransparency(beforeAlpha);

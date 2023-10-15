@@ -9,9 +9,12 @@ import gui.painters.PathPainter;
 import gui.painters.SelectedTowerPainter;
 import gui.painters.SmoothBorderPainter;
 import gui.painters.TowerPainter;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import location.Location;
@@ -53,6 +56,8 @@ public class Panel extends JPanel {
         );
 
         for (Painter painter : this.painters) {
+            graphics.setTransparency(1.0);
+            graphics.setColor(Color.BLACK);
             painter.paint(graphics);
         }
     }
@@ -65,9 +70,9 @@ public class Panel extends JPanel {
         this.painters.add(new BackgroundPainter(this.game, this.frame, this));
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
+        this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new TowerPainter(this.game, this.frame, this));
         this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
-        this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }
 
@@ -128,5 +133,23 @@ public class Panel extends JPanel {
             (x - this.topLeft.width) / this.scale,
             (y - this.topLeft.height) / this.scale
         );
+    }
+
+    /**
+     * Get the mouse location, or null if the mouse is not in the frame.
+     * 
+     * @return The mouse location or null.
+     */
+    public Location getMouseLocation() {
+        try {
+            Point mousePosition = this.frame.getMousePosition();
+            Insets insets = this.frame.getInsets();
+            return this.correctXY(
+                mousePosition.x - insets.left,
+                mousePosition.y - insets.top
+            );
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 }
