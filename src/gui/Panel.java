@@ -3,6 +3,7 @@ package gui;
 import game.Game;
 import gui.frame.Frame;
 import gui.painters.BackgroundPainter;
+import gui.painters.EnemyPainter;
 import gui.painters.GoldLabelPainter;
 import gui.painters.GrassPainter;
 import gui.painters.PathPainter;
@@ -70,6 +71,7 @@ public class Panel extends JPanel {
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
         this.painters.add(new TowerPainter(this.game, this.frame, this));
+        this.painters.add(new EnemyPainter(this.game, this.frame, this));
         this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
         this.painters.add(new GoldLabelPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));

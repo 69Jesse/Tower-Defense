@@ -68,6 +68,18 @@ public abstract class RangeDamageTower extends DamageTower {
         return enemies;
     }
 
+    @Override
+    protected Enemy findEnemy() {
+        ArrayList<Enemy> enemies = this.damagableEnemies();
+        if (enemies.size() == 0) {
+            return null;
+        }
+        enemies.sort((a, b) -> {
+            return (int) (b.getPathCompleted() - a.getPathCompleted());
+        });
+        return enemies.get(0);
+    }
+
     /**
      * Returns the multiplier of the range of this tower.
      * This can be dependent on the level of this tower.

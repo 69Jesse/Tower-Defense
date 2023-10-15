@@ -28,6 +28,4 @@ public class RegularEnemy extends Enemy {
     public String getImagePath() {
         return "./assets/enemies/regular_enemy.png";
     }
-
-    
 }

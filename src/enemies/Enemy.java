@@ -15,6 +15,8 @@ public abstract class Enemy extends LocationableWithSetter {
     public final int speed;
     public final boolean flying;
 
+    protected int health;
+    protected double pathCompleted;
     protected Location location;
 
     /**
@@ -43,11 +45,30 @@ public abstract class Enemy extends LocationableWithSetter {
         this.speed = speed;
         this.flying = flying;
         this.location = location;
+        this.pathCompleted = 0.0;
     }
 
     @Override
     public Location getLocation() {
         return this.location;
+    }
+
+    /**
+     * Returns the current health of this enemy.
+     * 
+     * @return The current health of this enemy.
+     */
+    public int getHealth() {
+        return this.health;
+    }
+
+    /**
+     * Returns the percentage of the path this enemy has completed.
+     * 
+     * @return The percentage of the path this enemy has completed.
+     */
+    public double getPathCompleted() {
+        return this.pathCompleted;
     }
 
     /**

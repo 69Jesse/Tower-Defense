@@ -1,5 +1,6 @@
 package towers;
 
+import enemies.Enemy;
 import game.Game;
 import location.Location;
 
@@ -54,4 +55,11 @@ public abstract class DamageTower extends Tower {
     public double getDamage() {
         return this.damage * this.damageMultiplier();
     }
+
+    /**
+     * Returns the enemy this tower should damage, or null if no enemy can be damaged.
+     * 
+     * @return The enemy this tower should damage, or null if no enemy can be damaged.
+     */
+    protected abstract Enemy findEnemy();
 }

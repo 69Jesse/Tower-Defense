@@ -1,6 +1,7 @@
 package field;
 
 import enemies.Enemy;
+import enemies.implementations.RegularEnemy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -34,6 +35,7 @@ public class Field {
         this.enemies = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
+        this.enemies.add(new RegularEnemy(this.path.get(this.path.size() / 2)));
     }
 
     public void reset() {
