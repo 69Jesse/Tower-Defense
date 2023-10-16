@@ -1,5 +1,6 @@
 package towers;
 
+import enemies.Enemy;
 import location.Location;
 import location.Locationable;
 import location.LocationableWithSetter;
@@ -10,7 +11,7 @@ import location.LocationableWithSetter;
  */
 public class Projectile extends LocationableWithSetter {
     public final Locationable source;
-    public final Locationable target;
+    public final Enemy target;
     private final int damage;
     private final double speed;
     private final String imagePath;
@@ -29,7 +30,7 @@ public class Projectile extends LocationableWithSetter {
      */
     public Projectile(
         Locationable source,
-        Locationable target,
+        Enemy target,
         int damage,
         double speed,
         String imagePath,
@@ -88,22 +89,25 @@ public class Projectile extends LocationableWithSetter {
      * @return Whether or not this projectile should be removed.
      */
     public boolean tick() {
+        if (this.target.isDead()) {
+            return true;
+        }
         this.calculateLocation();
         this.ticksElapsed++;
 
-        if (this.shouldBeRemoved()) {
-            // damage enemy
+        if (this.hasHitTarget()) {
+            this.target.doDamage(this.damage);
             return true;
         }
         return false;
     }
 
     /**
-     * Returns if this projectile should be removed.
+     * Returns if this projectile has hit its target.
      * 
-     * @return If this projectile should be removed.
+     * @return If this projectile has hit its target.
      */
-    public boolean shouldBeRemoved() {
+    public boolean hasHitTarget() {
         return this.ticksElapsed >= this.ticksToTarget();
     }
 }

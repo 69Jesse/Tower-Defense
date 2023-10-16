@@ -46,6 +46,7 @@ public abstract class Enemy extends LocationableWithSetter {
         this.flying = flying;
         this.location = location;
         this.pathCompleted = 0.0;
+        this.health = maxHealth;
     }
 
     @Override

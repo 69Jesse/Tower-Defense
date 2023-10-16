@@ -236,7 +236,7 @@ public final class BetterGraphics {
      * @param alpha The alpha value in [0, 1].
      */
     public void setTransparency(double alpha) {
-        alpha = Math.max(0, Math.min(1, alpha));
+        alpha = Math.max(0.0, Math.min(1.0, alpha));
         this.g2d.setComposite(
             AlphaComposite.getInstance(
                 AlphaComposite.SRC_OVER,
