@@ -52,8 +52,8 @@ public abstract class DamageTower extends Tower {
      * 
      * @return The damage of this tower.
      */
-    public double getDamage() {
-        return this.damage * this.damageMultiplier();
+    public int getDamage() {
+        return (int) (this.damage * this.damageMultiplier());
     }
 
     /**

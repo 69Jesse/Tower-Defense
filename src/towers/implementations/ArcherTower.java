@@ -3,6 +3,7 @@ package towers.implementations;
 import enemies.Enemy;
 import game.Game;
 import location.Location;
+import towers.Projectile;
 import towers.RangeDamageTower;
 
 
@@ -84,19 +85,15 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
-    /**
-     * Performs an action.
-     */
-    public void act() {
-        Enemy enemy = this.findEnemy();
-        if (enemy == null) {
-            System.out.println(
-                "No enemy to attack"
-            );
-            return;
-        }
-        System.out.println(
-            "Attacking enemy: " + enemy.getClass()
+    @Override
+    protected Projectile createProjectile(Enemy enemy) {
+        return new Projectile(
+            this,
+            enemy,
+            this.getDamage(),
+            0.1,
+            "./assets/projectiles/archer_tower.png",
+            true
         );
     }
 }

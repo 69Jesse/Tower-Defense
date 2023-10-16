@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import location.Location;
+import towers.Projectile;
 import towers.Tower;
 
 
@@ -22,6 +23,7 @@ public class Field {
 
     public HashMap<Location, Tower> towers;
     public ArrayList<Enemy> enemies;
+    public ArrayList<Projectile> projectiles;
 
     /**
      * Constructs a new field.

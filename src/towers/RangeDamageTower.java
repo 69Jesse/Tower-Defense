@@ -96,4 +96,32 @@ public abstract class RangeDamageTower extends DamageTower {
     public double getRange() {
         return this.range * this.rangeMultiplier();
     }
+
+    /**
+     * Creates a projectile that can damage an enemy.
+     * 
+     * @param enemy The enemy to damage.
+     */
+    protected abstract Projectile createProjectile(Enemy enemy);
+
+    /**
+     * Fires a projectile at an enemy.
+     * 
+     * @param enemy The enemy to fire at.
+     */
+    protected void fireAtEnemy(Enemy enemy) {
+        Projectile projectile = this.createProjectile(enemy);
+        this.game.field.projectiles.add(projectile);
+    }
+
+    /**
+     * Performs an action.
+     */
+    public void act() {
+        Enemy enemy = this.findEnemy();
+        if (enemy == null) {
+            return;
+        }
+        this.fireAtEnemy(enemy);
+    }
 }
