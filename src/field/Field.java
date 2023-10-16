@@ -2,6 +2,7 @@ package field;
 
 import enemies.Enemy;
 import enemies.implementations.RegularEnemy;
+import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -14,6 +15,8 @@ import towers.Tower;
  * Field class.
  */
 public class Field {
+    private final Game game;
+
     public final int width = 80;  // The width of the field in (field) pixels.
     public final int height = 45;  // The height of the field in (field) pixels.
 
@@ -28,7 +31,8 @@ public class Field {
     /**
      * Constructs a new field.
      */
-    public Field() {
+    public Field(Game game) {
+        this.game = game;
         this.init();
     }
 
@@ -41,7 +45,7 @@ public class Field {
         this.projectiles = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
-        this.enemies.add(new RegularEnemy(this.path.get(this.path.size() / 2)));
+        this.enemies.add(new RegularEnemy(this.game, this.path.get(this.path.size() / 2)));
     }
 
     /**

@@ -27,27 +27,28 @@ public final class EnemyPainter extends Painter {
             enemy.getImagePath(),
             location.x,
             location.y,
-            4, 4
+            enemy.size,
+            enemy.size
         );
     }
 
-    private double healthBarYOffset = 3.0;
-    private double healthBarWidth = 5.0;
-    private double healthBarHeight = 2.0;
-    private double healthBarPadding = 0.5;
+    private double healthBarYOffset = 2.5;
+    private double healthBarWidth = 3.0;
+    private double healthBarHeight = 0.8;
+    private double healthBarPadding = 0.15;
     private Color healthBarPaddingColor = new Color(0x000000);
     private Color healthBarFilledColor = new Color(0x00FF00);
     private Color healthBarEmptyColor = new Color(0xFF0000);
 
     private void drawHealthBar(BetterGraphics graphics, Enemy enemy) {
-        Location location = enemy.getLocation();
+        final Location location = enemy.getLocation();
 
-        double healthPercentage = Math.max(0.0, Math.min(1.0, enemy.getHealth() / enemy.maxHealth));
+        final double healthPercentage = Math.max(0.0, Math.min(1.0,
+            enemy.getHealth() / (double) enemy.maxHealth
+        ));
 
-        double topLeftX = location.x - this.healthBarWidth / 2;
-        double topLeftY = location.y - this.healthBarYOffset - this.healthBarHeight / 2;
-        double bottomRightX = location.x + this.healthBarWidth / 2;
-        double bottomRightY = location.y - this.healthBarYOffset + this.healthBarHeight / 2;
+        final double topLeftX = location.x - this.healthBarWidth / 2;
+        final double topLeftY = location.y - this.healthBarYOffset - this.healthBarHeight / 2;
 
         graphics.setColor(this.healthBarPaddingColor);
         graphics.fillRect(
@@ -60,7 +61,14 @@ public final class EnemyPainter extends Painter {
         graphics.fillRect(
             topLeftX + this.healthBarPadding,
             topLeftY + this.healthBarPadding,
-            this.healthBarWidth - this.healthBarPadding * 2,
+            (this.healthBarWidth - this.healthBarPadding * 2),
+            this.healthBarHeight - this.healthBarPadding * 2
+        );
+        graphics.setColor(this.healthBarFilledColor);
+        graphics.fillRect(
+            topLeftX + this.healthBarPadding,
+            topLeftY + this.healthBarPadding,
+            (this.healthBarWidth - this.healthBarPadding * 2) * healthPercentage,
             this.healthBarHeight - this.healthBarPadding * 2
         );
     }

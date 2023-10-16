@@ -30,7 +30,7 @@ public final class Game {
     public void start() {
         System.out.println("Game starting!");
         this.resetGold();
-        this.field = new Field();
+        this.field = new Field(this);
         this.frame = new Frame(this);
         this.cacheOptions();
         this.frame.start();

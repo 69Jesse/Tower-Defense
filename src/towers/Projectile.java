@@ -15,6 +15,7 @@ public class Projectile extends LocationableWithSetter {
     private final int damage;
     private final double speed;
     private final String imagePath;
+    public final double size;
     public final double maxCurve;
     private int ticksElapsed;
 
@@ -26,6 +27,7 @@ public class Projectile extends LocationableWithSetter {
      * @param damage    The damage of the projectile.
      * @param speed     The speed of the projectile in field pixels per game tick.
      * @param imagePath The path to the image of the projectile.
+     * @param size The size of the image of the projectile in field pixels.
      * @param maxCurve  The maximum curve of the projectile in field pixels (0 for no curve).
      */
     public Projectile(
@@ -34,6 +36,7 @@ public class Projectile extends LocationableWithSetter {
         int damage,
         double speed,
         String imagePath,
+        double size,
         double maxCurve
     ) {
         this.location = source.getLocation();
@@ -42,6 +45,7 @@ public class Projectile extends LocationableWithSetter {
         this.damage = damage;
         this.speed = speed;
         this.imagePath = imagePath;
+        this.size = size;
         this.maxCurve = maxCurve;
         this.ticksElapsed = 0;
     }
@@ -96,7 +100,10 @@ public class Projectile extends LocationableWithSetter {
         this.ticksElapsed++;
 
         if (this.hasHitTarget()) {
-            this.target.doDamage(this.damage);
+            this.target.onHit(this.damage);
+            if (this.target.isDead()) {
+                this.target.onKill();
+            }
             return true;
         }
         return false;

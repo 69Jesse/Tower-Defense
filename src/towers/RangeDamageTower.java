@@ -50,7 +50,7 @@ public abstract class RangeDamageTower extends DamageTower {
      * @return      Whether or not this tower can damage the enemy.
      */
     protected boolean canDamage(Enemy enemy) {
-        return this.location.distanceTo(enemy) <= this.getRange();
+        return (this.location.distanceTo(enemy) - enemy.size) <= this.getRange();
     }
 
     /**

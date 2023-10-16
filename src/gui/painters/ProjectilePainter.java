@@ -24,8 +24,6 @@ public final class ProjectilePainter extends Painter {
         super(game, frame, panel);
     }
 
-    private final int size = 1;
-
     @Override
     public void paint(BetterGraphics graphics) {
         for (Projectile projectile : this.game.field.projectiles) {
@@ -41,8 +39,8 @@ public final class ProjectilePainter extends Painter {
                 projectile.getImagePath(),
                 location.x,
                 y,
-                this.size,
-                this.size
+                projectile.size,
+                projectile.size
             );
         }
     }
