@@ -22,14 +22,15 @@ public final class Game {
     public Frame frame;
 
     private int gold;
-    public Location selectedLocation = null;
+    public Location selectedLocation;  // null when no location is selected.
+    public int speed;
 
     /**
      * Starts the game.
      */
     public void start() {
         System.out.println("Game starting!");
-        this.resetGold();
+        this.init();
         this.field = new Field(this);
         this.frame = new Frame(this);
         this.cacheOptions();
@@ -37,10 +38,11 @@ public final class Game {
     }
 
     /**
-     * Resets the gold.
+     * Initializes the game.
      */
-    private void resetGold() {
+    private void init() {
         this.gold = 10000;
+        this.speed = 3;
     }
 
     /**
@@ -182,6 +184,15 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
+        for (int i = 0; i < this.speed; i++) {
+            this.tickIteration();
+        }
+    }
+
+    /**
+     * Handle a game tick iteration.
+     */
+    private void tickIteration() {
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }
@@ -210,6 +221,6 @@ public final class Game {
     public void reset() {
         this.field.reset();
         this.selectedLocation = null;
-        this.resetGold();
+        this.init();
     }
 }
