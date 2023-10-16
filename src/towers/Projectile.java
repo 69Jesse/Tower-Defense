@@ -9,13 +9,12 @@ import location.LocationableWithSetter;
  * A projectile that can be fired by a tower.
  */
 public class Projectile extends LocationableWithSetter {
-    private Location location;
     public final Locationable source;
     public final Locationable target;
     private final int damage;
     private final double speed;
-    public final String imagePath;
-    public final boolean withCurve;
+    private final String imagePath;
+    public final double maxCurve;
     private int ticksElapsed;
 
     /**
@@ -26,7 +25,7 @@ public class Projectile extends LocationableWithSetter {
      * @param damage    The damage of the projectile.
      * @param speed     The speed of the projectile in field pixels per game tick.
      * @param imagePath The path to the image of the projectile.
-     * @param withCurve Whether or not the projectile should curve upwards (purely visual).
+     * @param maxCurve  The maximum curve of the projectile in field pixels (0 for no curve).
      */
     public Projectile(
         Locationable source,
@@ -34,7 +33,7 @@ public class Projectile extends LocationableWithSetter {
         int damage,
         double speed,
         String imagePath,
-        boolean withCurve
+        double maxCurve
     ) {
         this.location = source.getLocation();
         this.source = source;
@@ -42,7 +41,7 @@ public class Projectile extends LocationableWithSetter {
         this.damage = damage;
         this.speed = speed;
         this.imagePath = imagePath;
-        this.withCurve = withCurve;
+        this.maxCurve = maxCurve;
         this.ticksElapsed = 0;
     }
 
@@ -52,7 +51,7 @@ public class Projectile extends LocationableWithSetter {
      * @return The amount of ticks this projectile has to travel to reach its target.
      */
     private double ticksToTarget() {
-        return this.location.distanceTo(this.target) / this.speed;
+        return this.source.getLocation().distanceTo(this.target) / this.speed;
     }
 
     /**
@@ -60,7 +59,7 @@ public class Projectile extends LocationableWithSetter {
      * 
      * @return The percentage of the path this projectile has travelled.
      */
-    private double getPercentage() {
+    public double getPercentage() {
         return this.ticksElapsed / this.ticksToTarget();
     }
 
@@ -75,10 +74,36 @@ public class Projectile extends LocationableWithSetter {
     }
 
     /**
-     * Tick this projectile.
+     * Returns the image path of this projectile.
+     * 
+     * @return The image path of this projectile.
      */
-    public void tick() {
+    public String getImagePath() {
+        return this.imagePath;
+    }
+
+    /**
+     * Tick this projectile.
+     * 
+     * @return Whether or not this projectile should be removed.
+     */
+    public boolean tick() {
         this.calculateLocation();
         this.ticksElapsed++;
+
+        if (this.shouldBeRemoved()) {
+            // damage enemy
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns if this projectile should be removed.
+     * 
+     * @return If this projectile should be removed.
+     */
+    public boolean shouldBeRemoved() {
+        return this.ticksElapsed >= this.ticksToTarget();
     }
 }

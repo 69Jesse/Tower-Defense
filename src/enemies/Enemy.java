@@ -63,6 +63,24 @@ public abstract class Enemy extends LocationableWithSetter {
     }
 
     /**
+     * Returns whether or not this enemy is dead.
+     * 
+     * @return Whether or not this enemy is dead.
+     */
+    public boolean isDead() {
+        return this.health <= 0;
+    }
+
+    /**
+     * Damages this enemy.
+     * 
+     * @param damage The amount of damage to do.
+     */
+    public void doDamage(int damage) {
+        this.health -= damage;
+    }
+
+    /**
      * Returns the percentage of the path this enemy has completed.
      * 
      * @return The percentage of the path this enemy has completed.

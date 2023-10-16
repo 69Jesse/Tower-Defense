@@ -11,6 +11,12 @@ import towers.RangeDamageTower;
  * An archer tower.
  */
 public final class ArcherTower extends RangeDamageTower {
+    private static final int COST = 100;
+    private static final int MAX_LEVEL = 3;
+    private static final int COOLDOWN = 40;
+    private static final int DAMAGE = 10;
+    private static final double RANGE = 10.0;    
+
     /**
      * Constructs an archer tower.
      * 
@@ -21,11 +27,11 @@ public final class ArcherTower extends RangeDamageTower {
         super(
             game,
             location,
-            100,
-            3,
-            40,
-            10,
-            10
+            COST,
+            MAX_LEVEL,
+            COOLDOWN,
+            DAMAGE,
+            RANGE
         );
     }
 
@@ -51,7 +57,7 @@ public final class ArcherTower extends RangeDamageTower {
             case 2:
                 return 0.8;
             case 3:
-                return 0.6;
+                return 0.4;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -91,9 +97,9 @@ public final class ArcherTower extends RangeDamageTower {
             this,
             enemy,
             this.getDamage(),
-            0.1,
+            0.3,
             "./assets/projectiles/archer_tower.png",
-            true
+            5.0
         );
     }
 }

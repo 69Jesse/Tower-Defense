@@ -11,7 +11,6 @@ public abstract class LocationableWithSetter extends Locationable {
      * @param location The new location of this object on the field.
      */
     public void setLocation(Location location) {
-        this.location.x = location.x;
-        this.location.y = location.y;
+        this.location = location;
     }
 }

@@ -32,20 +32,32 @@ public class Field {
         this.init();
     }
 
+    /**
+     * Initializes the field.
+     */
     private void init() {
         this.towers = new HashMap<>();
         this.enemies = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
         this.enemies.add(new RegularEnemy(this.path.get(this.path.size() / 2)));
     }
 
+    /**
+     * Resets the field.
+     */
     public void reset() {
         this.init();
     }
 
     private Random random = new Random();
 
+    /**
+     * Generates a random location within the field.
+     * 
+     * @return The random location.
+     */
     private Location randomLocation() {
         final double margin = Math.max(this.width, this.height) * 0.1;
         double x = this.random.nextDouble() * (this.width - 2 * margin) + margin;
@@ -58,6 +70,9 @@ public class Field {
     private final int maxPathRetries = 1000;
     private final int maxWaypoinRetries = 100;
 
+    /**
+     * Creates the waypoints.
+     */
     private void createWaypoints() {
         final double margin = 0.1;
         Location start = new Location(
@@ -87,6 +102,9 @@ public class Field {
         this.waypoints.add(end);
     }
 
+    /**
+     * Creates the path.
+     */
     private void createPath() {
         int retries = 0;
         do {
@@ -113,6 +131,9 @@ public class Field {
         } while (this.path == null);
     }
 
+    /**
+     * Creates the placeable locations for the towers.
+     */
     private void createPlaceable() {
         this.placeable = new ArrayList<>();
         final int n = 5;

@@ -25,6 +25,6 @@ public class DebugAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.game.field.reset();
+        this.game.reset();
     }
 }
