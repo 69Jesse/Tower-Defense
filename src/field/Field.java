@@ -23,6 +23,8 @@ public class Field {
     public ArrayList<Location> waypoints;
     public ArrayList<Location> path;
     public ArrayList<Location> placeable;
+    public double totalDistance;
+    public HashMap<Integer, Double> distancesFromStart;
 
     public HashMap<Location, Tower> towers;
     public ArrayList<Enemy> enemies;
@@ -133,6 +135,17 @@ public class Field {
             }
             retries++;
         } while (this.path == null);
+
+        this.totalDistance = 0.0;
+        this.distancesFromStart = new HashMap<>();
+        for (int i = 0; i < this.path.size() - 1; i++) {
+            Location location1 = this.path.get(i);
+            Location location2 = this.path.get(i + 1);
+            double distance = location1.distanceTo(location2);
+            this.distancesFromStart.put(i, this.totalDistance);
+            this.totalDistance += distance;
+        }
+        this.distancesFromStart.put(this.path.size() - 1, this.totalDistance);
     }
 
     /**
