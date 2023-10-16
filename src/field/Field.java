@@ -5,6 +5,7 @@ import enemies.implementations.RegularEnemy;
 import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 import location.Location;
 import towers.Projectile;
@@ -25,7 +26,7 @@ public class Field {
     public ArrayList<Location> placeable;
     public double totalDistance;
     // Mapping from the index of a point in the path to the distance from the start.
-    public HashMap<Integer, Double> distancesFromStart;
+    public LinkedHashMap<Integer, Double> distancesFromStart;
 
     public HashMap<Location, Tower> towers;
     public ArrayList<Enemy> enemies;
@@ -48,7 +49,7 @@ public class Field {
         this.projectiles = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
-        this.enemies.add(new RegularEnemy(this.game, this.path.get(this.path.size() / 2)));
+        this.enemies.add(new RegularEnemy(this.game));
     }
 
     /**
@@ -138,7 +139,7 @@ public class Field {
         } while (this.path == null);
 
         this.totalDistance = 0.0;
-        this.distancesFromStart = new HashMap<>();
+        this.distancesFromStart = new LinkedHashMap<>();
         for (int i = 0; i < this.path.size() - 1; i++) {
             Location location1 = this.path.get(i);
             Location location2 = this.path.get(i + 1);

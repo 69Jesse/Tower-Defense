@@ -9,6 +9,7 @@ import location.LocationableWithSetter;
  * An enemy on the field.
  */
 public abstract class Enemy extends LocationableWithSetter {
+    protected final Game game;
     public final int worth;
     public final int weight;
 
@@ -17,8 +18,6 @@ public abstract class Enemy extends LocationableWithSetter {
     public final double size;
     public final boolean flying;
 
-    protected Game game;
-    protected Location location;
     protected int health;
     protected double pathCompleted;
 
@@ -26,19 +25,17 @@ public abstract class Enemy extends LocationableWithSetter {
      * Constructs a new enemy.
      * 
      * @param game      The game this enemy is in.
-     * @param location  The (starting) location of this enemy on the field.
      * @param worth     The worth of this enemy. This is used to calculate
      *                  the wave size and the gold reward on death.
      * @param weight    The weight of this enemy. This is used to determine
      *                  how often this enemy should appear in a wave.
      * @param maxHealth The maximum health of this enemy.
-     * @param speed     The speed of this enemy.
+     * @param speed     The speed of this enemy in field pixels per game tick.
      * @param size      The size of this enemy in field pixels.
      * @param flying    Whether or not this enemy is flying.
      */
     public Enemy(
         Game game,
-        Location location,
         int worth,
         int weight,
         int maxHealth,
@@ -47,7 +44,6 @@ public abstract class Enemy extends LocationableWithSetter {
         boolean flying
     ) {
         this.game = game;
-        this.location = location;
         this.worth = worth;
         this.weight = weight;
         this.maxHealth = maxHealth;

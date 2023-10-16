@@ -2,7 +2,6 @@ package enemies.implementations;
 
 import enemies.Enemy;
 import game.Game;
-import location.Location;
 
 
 /**
@@ -18,13 +17,10 @@ public class RegularEnemy extends Enemy {
 
     /**
      * Constructs a regular enemy.
-     * 
-     * @param location The location of this enemy on the field.
      */
-    public RegularEnemy(Game game, Location location) {
+    public RegularEnemy(Game game) {
         super(
             game,
-            location,
             WORTH,
             WEIGHT,
             MAX_HEALTH,
