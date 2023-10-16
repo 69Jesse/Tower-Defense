@@ -197,7 +197,7 @@ public final class Game {
             tower.tick();
         }
         for (Enemy enemy : this.field.enemies) {
-            // enemy.tick();
+            enemy.tick();
         }
         for (int i = this.field.projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = this.field.projectiles.get(i);

@@ -1,14 +1,15 @@
 package enemies;
 
 import game.Game;
+import java.util.Map;
+import location.BaseLocationable;
 import location.Location;
-import location.Locationable;
 
 
 /**
  * An enemy on the field.
  */
-public abstract class Enemy extends Locationable {
+public abstract class Enemy extends BaseLocationable {
     protected final Game game;
     public final int worth;
     public final int weight;
@@ -56,7 +57,15 @@ public abstract class Enemy extends Locationable {
 
     @Override
     public Location getLocation() {
-        return this.location;
+        final double distanceTraveled = this.traveledDistance();
+        for (Map.Entry<Integer, Double> entry : this.game.field.distancesFromStart.entrySet()) {
+            double distance = entry.getValue();
+            if (distance <= distanceTraveled) {
+                continue;
+            }
+
+            // TODO
+        }
     }
 
     /**
@@ -66,6 +75,17 @@ public abstract class Enemy extends Locationable {
      */
     public double traveledDistance() {
         return this.ticksElapsed * this.speed;
+    }
+
+    /**
+     * Returns the percentage of the field this enemy has traveled.
+     * If this is >= 1.0, this enemy has reached the end of the field.
+     * 
+     * @param traveled The distance this enemy has traveled.
+     * @return         The percentage of the field this enemy has traveled in [0, 1].
+     */
+    public double percentageDone(double traveled) {
+        return traveled / this.game.field.totalDistance;
     }
 
     /**
