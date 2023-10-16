@@ -50,7 +50,7 @@ public abstract class RangeDamageTower extends DamageTower {
      * @return      Whether or not this tower can damage the enemy.
      */
     protected boolean canDamage(Enemy enemy) {
-        return this.location.distanceTo(enemy) <= this.range;
+        return (this.location.distanceTo(enemy) - enemy.size) <= this.getRange();
     }
 
     /**
@@ -68,6 +68,18 @@ public abstract class RangeDamageTower extends DamageTower {
         return enemies;
     }
 
+    @Override
+    protected Enemy findEnemy() {
+        ArrayList<Enemy> enemies = this.damagableEnemies();
+        if (enemies.size() == 0) {
+            return null;
+        }
+        enemies.sort((a, b) -> {
+            return (int) (b.getPathCompleted() - a.getPathCompleted());
+        });
+        return enemies.get(0);
+    }
+
     /**
      * Returns the multiplier of the range of this tower.
      * This can be dependent on the level of this tower.
@@ -83,5 +95,33 @@ public abstract class RangeDamageTower extends DamageTower {
      */
     public double getRange() {
         return this.range * this.rangeMultiplier();
+    }
+
+    /**
+     * Creates a projectile that can damage an enemy.
+     * 
+     * @param enemy The enemy to damage.
+     */
+    protected abstract Projectile createProjectile(Enemy enemy);
+
+    /**
+     * Fires a projectile at an enemy.
+     * 
+     * @param enemy The enemy to fire at.
+     */
+    protected void fireAtEnemy(Enemy enemy) {
+        Projectile projectile = this.createProjectile(enemy);
+        this.game.field.projectiles.add(projectile);
+    }
+
+    /**
+     * Performs an action.
+     */
+    public void act() {
+        Enemy enemy = this.findEnemy();
+        if (enemy == null) {
+            return;
+        }
+        this.fireAtEnemy(enemy);
     }
 }

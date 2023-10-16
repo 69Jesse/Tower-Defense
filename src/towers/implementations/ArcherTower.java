@@ -1,7 +1,9 @@
-package towers.types;
+package towers.implementations;
 
+import enemies.Enemy;
 import game.Game;
 import location.Location;
+import towers.Projectile;
 import towers.RangeDamageTower;
 
 
@@ -9,6 +11,12 @@ import towers.RangeDamageTower;
  * An archer tower.
  */
 public final class ArcherTower extends RangeDamageTower {
+    private static final int COST = 100;
+    private static final int MAX_LEVEL = 3;
+    private static final int COOLDOWN = 60;
+    private static final int DAMAGE = 10;
+    private static final double RANGE = 10.0;    
+
     /**
      * Constructs an archer tower.
      * 
@@ -19,11 +27,11 @@ public final class ArcherTower extends RangeDamageTower {
         super(
             game,
             location,
-            100,
-            3,
-            40,
-            10,
-            10
+            COST,
+            MAX_LEVEL,
+            COOLDOWN,
+            DAMAGE,
+            RANGE
         );
     }
 
@@ -83,10 +91,21 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
-    /**
-     * Performs an action.
-     */
-    public void act() {
-        System.out.println("Archer tower shoots arrow.");
+    private static final double PROJECTILE_SPEED = 0.3;
+    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/archer_tower.png";
+    private static final double PROJECTILE_SIZE = 1.0;
+    private static final double PROJECTILE_MAX_CURVE = 5.0;
+
+    @Override
+    protected Projectile createProjectile(Enemy enemy) {
+        return new Projectile(
+            this,
+            enemy,
+            this.getDamage(),
+            PROJECTILE_SPEED,
+            PROJECTILE_IMAGE_PATH,
+            PROJECTILE_SIZE,
+            PROJECTILE_MAX_CURVE
+        );
     }
 }

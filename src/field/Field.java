@@ -1,10 +1,13 @@
 package field;
 
 import enemies.Enemy;
+import enemies.implementations.RegularEnemy;
+import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import location.Location;
+import towers.Projectile;
 import towers.Tower;
 
 
@@ -12,6 +15,8 @@ import towers.Tower;
  * Field class.
  */
 public class Field {
+    private final Game game;
+
     public final int width = 80;  // The width of the field in (field) pixels.
     public final int height = 45;  // The height of the field in (field) pixels.
 
@@ -21,27 +26,42 @@ public class Field {
 
     public HashMap<Location, Tower> towers;
     public ArrayList<Enemy> enemies;
+    public ArrayList<Projectile> projectiles;
 
     /**
      * Constructs a new field.
      */
-    public Field() {
+    public Field(Game game) {
+        this.game = game;
         this.init();
     }
 
+    /**
+     * Initializes the field.
+     */
     private void init() {
         this.towers = new HashMap<>();
         this.enemies = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
+        this.enemies.add(new RegularEnemy(this.game, this.path.get(this.path.size() / 2)));
     }
 
+    /**
+     * Resets the field.
+     */
     public void reset() {
         this.init();
     }
 
     private Random random = new Random();
 
+    /**
+     * Generates a random location within the field.
+     * 
+     * @return The random location.
+     */
     private Location randomLocation() {
         final double margin = Math.max(this.width, this.height) * 0.1;
         double x = this.random.nextDouble() * (this.width - 2 * margin) + margin;
@@ -54,6 +74,9 @@ public class Field {
     private final int maxPathRetries = 1000;
     private final int maxWaypoinRetries = 100;
 
+    /**
+     * Creates the waypoints.
+     */
     private void createWaypoints() {
         final double margin = 0.1;
         Location start = new Location(
@@ -83,6 +106,9 @@ public class Field {
         this.waypoints.add(end);
     }
 
+    /**
+     * Creates the path.
+     */
     private void createPath() {
         int retries = 0;
         do {
@@ -109,6 +135,9 @@ public class Field {
         } while (this.path == null);
     }
 
+    /**
+     * Creates the placeable locations for the towers.
+     */
     private void createPlaceable() {
         this.placeable = new ArrayList<>();
         final int n = 5;

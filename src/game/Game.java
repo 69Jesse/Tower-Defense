@@ -1,5 +1,6 @@
 package game;
 
+import enemies.Enemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
 import game.options.SellOption;
@@ -7,6 +8,7 @@ import game.options.UpgradeOption;
 import gui.frame.Frame;
 import java.util.ArrayList;
 import location.Location;
+import towers.Projectile;
 import towers.Tower;
 
 
@@ -14,13 +16,12 @@ import towers.Tower;
  * The game class.
  */
 public final class Game {
-    public final int ticksPerSecond = 20;
+    public final int ticksPerSecond = 60;
 
     public Field field;
     public Frame frame;
 
-    private int gold = 300;
-
+    private int gold;
     public Location selectedLocation = null;
 
     /**
@@ -28,10 +29,18 @@ public final class Game {
      */
     public void start() {
         System.out.println("Game starting!");
-        this.field = new Field();
+        this.resetGold();
+        this.field = new Field(this);
         this.frame = new Frame(this);
         this.cacheOptions();
         this.frame.start();
+    }
+
+    /**
+     * Resets the gold.
+     */
+    private void resetGold() {
+        this.gold = 10000;
     }
 
     /**
@@ -176,5 +185,31 @@ public final class Game {
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }
+        for (Enemy enemy : this.field.enemies) {
+            // enemy.tick();
+        }
+        for (int i = this.field.projectiles.size() - 1; i >= 0; i--) {
+            Projectile projectile = this.field.projectiles.get(i);
+            boolean shouldBeRemoved = projectile.tick();
+            if (shouldBeRemoved) {
+                this.field.projectiles.remove(i);
+            }
+        }
+        for (int i = this.field.enemies.size() - 1; i >= 0; i--) {
+            Enemy enemy = this.field.enemies.get(i);
+            boolean shouldBeRemoved = enemy.isDead();
+            if (shouldBeRemoved) {
+                this.field.enemies.remove(i);
+            }
+        }
+    }
+
+    /**
+     * Resets the game.
+     */
+    public void reset() {
+        this.field.reset();
+        this.selectedLocation = null;
+        this.resetGold();
     }
 }

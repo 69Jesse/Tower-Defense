@@ -61,15 +61,14 @@ public class Frame extends BaseFrame {
         this.setVisible(true);
         this.setInitialSize();
 
-        Timer timer = new Timer(
+        new Timer(
             1000 / this.game.ticksPerSecond,
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     tick();
                 }
             }
-        );
-        timer.start();
+        ).start();
     }
 
     /**
