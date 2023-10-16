@@ -24,6 +24,7 @@ public class Field {
     public ArrayList<Location> path;
     public ArrayList<Location> placeable;
     public double totalDistance;
+    // Mapping from the index of a point in the path to the distance from the start.
     public HashMap<Integer, Double> distancesFromStart;
 
     public HashMap<Location, Tower> towers;
