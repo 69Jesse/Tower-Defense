@@ -2,24 +2,24 @@ package enemies;
 
 import game.Game;
 import location.Location;
-import location.LocationableWithSetter;
+import location.Locationable;
 
 
 /**
  * An enemy on the field.
  */
-public abstract class Enemy extends LocationableWithSetter {
+public abstract class Enemy extends Locationable {
     protected final Game game;
     public final int worth;
     public final int weight;
 
     public final int maxHealth;
-    public final int speed;
+    public final double speed;
     public final double size;
     public final boolean flying;
 
     protected int health;
-    protected double pathCompleted;
+    protected int ticksElapsed;
 
     /**
      * Constructs a new enemy.
@@ -39,7 +39,7 @@ public abstract class Enemy extends LocationableWithSetter {
         int worth,
         int weight,
         int maxHealth,
-        int speed,
+        double speed,
         double size,
         boolean flying
     ) {
@@ -50,13 +50,22 @@ public abstract class Enemy extends LocationableWithSetter {
         this.speed = speed;
         this.size = size;
         this.flying = flying;
-        this.pathCompleted = 0.0;
         this.health = maxHealth;
+        this.ticksElapsed = 0;
     }
 
     @Override
     public Location getLocation() {
         return this.location;
+    }
+
+    /**
+     * Returns the distance this enemy has traveled.
+     * 
+     * @return The distance this enemy has traveled.
+     */
+    public double traveledDistance() {
+        return this.ticksElapsed * this.speed;
     }
 
     /**
@@ -87,15 +96,6 @@ public abstract class Enemy extends LocationableWithSetter {
     }
 
     /**
-     * Returns the percentage of the path this enemy has completed.
-     * 
-     * @return The percentage of the path this enemy has completed.
-     */
-    public double getPathCompleted() {
-        return this.pathCompleted;
-    }
-
-    /**
      * Returns the image path of this tower.
      * This can be dependent on the level of this tower.
      * 
@@ -117,5 +117,12 @@ public abstract class Enemy extends LocationableWithSetter {
      */
     public void onKill() {
         this.game.addGold(this.worth);
+    }
+
+    /**
+     * Tick this enemy.
+     */
+    public void tick() {
+        this.ticksElapsed++;
     }
 }

@@ -75,7 +75,7 @@ public abstract class RangeDamageTower extends DamageTower {
             return null;
         }
         enemies.sort((a, b) -> {
-            return (int) (b.getPathCompleted() - a.getPathCompleted());
+            return (int) (b.traveledDistance() - a.traveledDistance());
         });
         return enemies.get(0);
     }

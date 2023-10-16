@@ -3,13 +3,12 @@ package towers;
 import enemies.Enemy;
 import location.Location;
 import location.Locationable;
-import location.LocationableWithSetter;
 
 
 /**
  * A projectile that can be fired by a tower.
  */
-public class Projectile extends LocationableWithSetter {
+public class Projectile extends Locationable {
     public final Locationable source;
     public final Enemy target;
     private final int damage;
@@ -75,7 +74,7 @@ public class Projectile extends LocationableWithSetter {
 
         final double x = sourceLocation.x + (targetLocation.x - sourceLocation.x) * percentage;
         final double y = sourceLocation.y + (targetLocation.y - sourceLocation.y) * percentage;
-        this.setLocation(new Location(x, y));
+        this.location = new Location(x, y);
     }
 
     /**
