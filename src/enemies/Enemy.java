@@ -59,13 +59,24 @@ public abstract class Enemy extends BaseLocationable {
     public Location getLocation() {
         final double distanceTraveled = this.traveledDistance();
         for (Map.Entry<Integer, Double> entry : this.game.field.distancesFromStart.entrySet()) {
-            double distance = entry.getValue();
-            if (distance <= distanceTraveled) {
+            double upperDistance = entry.getValue();
+            if (upperDistance <= distanceTraveled) {
                 continue;
             }
 
-            // TODO
+            Location upperLocation = this.game.field.path.get(entry.getKey());
+            int index = entry.getKey() - 1;
+            double lowerDistance = this.game.field.distancesFromStart.get(index);
+            Location lowerLocation = this.game.field.path.get(index);
+
+            double remainder = distanceTraveled - lowerDistance;
+            double percentage = remainder / (upperDistance - lowerDistance);
+            
+            double x = lowerLocation.x + (upperLocation.x - lowerLocation.x) * percentage;
+            double y = lowerLocation.y + (upperLocation.y - lowerLocation.y) * percentage;
+            return new Location(x, y);
         }
+        throw new RuntimeException("Enemy has traveled further than the field length.");
     }
 
     /**
@@ -81,11 +92,10 @@ public abstract class Enemy extends BaseLocationable {
      * Returns the percentage of the field this enemy has traveled.
      * If this is >= 1.0, this enemy has reached the end of the field.
      * 
-     * @param traveled The distance this enemy has traveled.
      * @return         The percentage of the field this enemy has traveled in [0, 1].
      */
-    public double percentageDone(double traveled) {
-        return traveled / this.game.field.totalDistance;
+    public double percentageDone() {
+        return this.traveledDistance() / this.game.field.totalDistance;
     }
 
     /**

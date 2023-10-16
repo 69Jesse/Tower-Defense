@@ -1,6 +1,7 @@
 package game;
 
 import enemies.Enemy;
+import enemies.implementations.RegularEnemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
 import game.options.SellOption;
@@ -42,7 +43,7 @@ public final class Game {
      */
     private void init() {
         this.gold = 10000;
-        this.speed = 3;
+        this.speed = 1;
     }
 
     /**
@@ -193,6 +194,7 @@ public final class Game {
      * Handle a game tick iteration.
      */
     private void tickIteration() {
+        if (Math.random() < 1) this.field.enemies.add(new RegularEnemy(this));
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }
@@ -213,6 +215,7 @@ public final class Game {
                 this.field.enemies.remove(i);
             }
         }
+        this.field.sortEnemies();
     }
 
     /**
