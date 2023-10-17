@@ -2,28 +2,29 @@ package towers.implementations;
 
 import enemies.Enemy;
 import game.Game;
+import java.util.ArrayList;
 import location.Location;
 import towers.Projectile;
 import towers.RangeDamageTower;
 
 
 /**
- * An archer tower.
+ * A bomb tower.
  */
-public final class ArcherTower extends RangeDamageTower {
-    private static final int COST = 100;
+public final class BombTower extends RangeDamageTower {
+    private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
-    private static final int COOLDOWN = 60;
-    private static final int DAMAGE = 10;
-    private static final double RANGE = 10.0;    
+    private static final int COOLDOWN = 120;
+    private static final int DAMAGE = 30;
+    private static final double RANGE = 7.5;    
 
     /**
-     * Constructs an archer tower.
+     * Constructs a bomb tower.
      * 
      * @param game     The game this tower is in.
      * @param location The location of this tower on the field.
      */
-    public ArcherTower(Game game, Location location) {
+    public BombTower(Game game, Location location) {
         super(
             game,
             location,
@@ -39,11 +40,11 @@ public final class ArcherTower extends RangeDamageTower {
     public String getImagePath() {
         switch (this.level) {
             case 1:
-                return "./assets/towers/archer_tower_1.png";
+                return "./assets/towers/bomb_tower_1.png";
             case 2:
-                return "./assets/towers/archer_tower_2.png";
+                return "./assets/towers/bomb_tower_2.png";
             case 3:
-                return "./assets/towers/archer_tower_3.png";
+                return "./assets/towers/bomb_tower_3.png";
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -91,10 +92,10 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
-    private static final double PROJECTILE_SPEED = 0.3;
-    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/archer_tower.png";
-    private static final double PROJECTILE_SIZE = 1.0;
-    private static final double PROJECTILE_MAX_CURVE = 5.0;
+    private static final double PROJECTILE_SPEED = 0.2;
+    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/bomb_tower.png";
+    private static final double PROJECTILE_SIZE = 3.0;
+    private static final double PROJECTILE_MAX_CURVE = 6.0;
 
     @Override
     protected Projectile createProjectile(Enemy enemy) {
@@ -110,8 +111,19 @@ public final class ArcherTower extends RangeDamageTower {
         );
     }
 
+    private static final double SPLASH_DAMAGE_RANGE = 3.0;
+
     @Override
     public void onTargetHit(Enemy target, int damage) {
-        target.onHit(this.damage);
+        Location targetLocation = target.getLocation();
+        ArrayList<Enemy> hitting = new ArrayList<>();
+        for (Enemy enemy : this.game.field.enemies) {
+            if (enemy.getLocation().distanceTo(targetLocation) <= SPLASH_DAMAGE_RANGE) {
+                hitting.add(enemy);
+            }
+        }
+        for (Enemy enemy : hitting) {
+            enemy.onHit(this.damage);
+        }
     }
 }
