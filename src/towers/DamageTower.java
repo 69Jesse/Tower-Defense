@@ -62,4 +62,12 @@ public abstract class DamageTower extends Tower {
      * @return The enemy this tower should damage, or null if no enemy can be damaged.
      */
     protected abstract Enemy findEnemy();
+
+    /**
+     * Called when this tower damages an enemy.
+     * 
+     * @param target The enemy that was damaged.
+     * @param damage The amount of damage that was done.
+     */
+    public abstract void onTargetHit(Enemy target, int damage);
 }

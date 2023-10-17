@@ -1,17 +1,19 @@
 package towers;
 
 import enemies.Enemy;
+import game.Game;
+import java.util.ArrayList;
 import location.Location;
 import location.Locationable;
-import location.LocationableWithSetter;
 
 
 /**
  * A projectile that can be fired by a tower.
  */
-public class Projectile extends LocationableWithSetter {
-    public final Locationable source;
-    public final Enemy target;
+public class Projectile extends Locationable {
+    private final Game game;
+    public final DamageTower source;
+    public Enemy target;
     private final int damage;
     private final double speed;
     private final String imagePath;
@@ -22,16 +24,18 @@ public class Projectile extends LocationableWithSetter {
     /**
      * Constructs a projectile.
      * 
+     * @param game      The game this projectile is in.
      * @param source    The source of the projectile.
      * @param target    The target of the projectile.
      * @param damage    The damage of the projectile.
      * @param speed     The speed of the projectile in field pixels per game tick.
      * @param imagePath The path to the image of the projectile.
-     * @param size The size of the image of the projectile in field pixels.
+     * @param size      The size of the image of the projectile in field pixels.
      * @param maxCurve  The maximum curve of the projectile in field pixels (0 for no curve).
      */
     public Projectile(
-        Locationable source,
+        Game game,
+        DamageTower source,
         Enemy target,
         int damage,
         double speed,
@@ -39,6 +43,7 @@ public class Projectile extends LocationableWithSetter {
         double size,
         double maxCurve
     ) {
+        this.game = game;
         this.location = source.getLocation();
         this.source = source;
         this.target = target;
@@ -75,7 +80,7 @@ public class Projectile extends LocationableWithSetter {
 
         final double x = sourceLocation.x + (targetLocation.x - sourceLocation.x) * percentage;
         final double y = sourceLocation.y + (targetLocation.y - sourceLocation.y) * percentage;
-        this.setLocation(new Location(x, y));
+        this.location = new Location(x, y);
     }
 
     /**
@@ -87,6 +92,26 @@ public class Projectile extends LocationableWithSetter {
         return this.imagePath;
     }
 
+    final double maxNewTargetDistance = 5.0;
+
+    private void tryToFindNewTarget() {
+        Location targetLocation = this.target.getLocation();
+        ArrayList<Enemy> possibleTargets = new ArrayList<>();
+        for (Enemy enemy : this.game.field.enemies) {
+            if (!enemy.isDead()) {
+                if (enemy.getLocation().distanceTo(targetLocation) < this.maxNewTargetDistance) {
+                    possibleTargets.add(enemy);
+                }
+            }
+        }
+        if (possibleTargets.size() == 0) {
+            this.target = null;
+            return;
+        }
+        this.game.field.sortEnemies(possibleTargets);
+        this.target = possibleTargets.get(possibleTargets.size() - 1);
+    }
+
     /**
      * Tick this projectile.
      * 
@@ -94,16 +119,16 @@ public class Projectile extends LocationableWithSetter {
      */
     public boolean tick() {
         if (this.target.isDead()) {
-            return true;
+            this.tryToFindNewTarget();
+            if (this.target == null) {
+                return true;
+            }
         }
         this.calculateLocation();
         this.ticksElapsed++;
 
         if (this.hasHitTarget()) {
-            this.target.onHit(this.damage);
-            if (this.target.isDead()) {
-                this.target.onKill();
-            }
+            this.source.onTargetHit(this.target, this.damage);
             return true;
         }
         return false;
