@@ -14,7 +14,7 @@ public final class ArcherTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 60;
-    private static final int DAMAGE = 10;
+    private static final int DAMAGE = 1000;
     private static final double RANGE = 10.0;    
 
     /**
@@ -108,5 +108,10 @@ public final class ArcherTower extends RangeDamageTower {
             PROJECTILE_SIZE,
             PROJECTILE_MAX_CURVE
         );
+    }
+
+    @Override
+    public void onTargetHit(Enemy target, int damage) {
+        target.onHit(this.damage);
     }
 }

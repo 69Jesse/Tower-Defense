@@ -12,7 +12,7 @@ import location.Locationable;
  */
 public class Projectile extends Locationable {
     private final Game game;
-    public final Locationable source;
+    public final DamageTower source;
     public Enemy target;
     private final int damage;
     private final double speed;
@@ -35,7 +35,7 @@ public class Projectile extends Locationable {
      */
     public Projectile(
         Game game,
-        Locationable source,
+        DamageTower source,
         Enemy target,
         int damage,
         double speed,
@@ -128,10 +128,7 @@ public class Projectile extends Locationable {
         this.ticksElapsed++;
 
         if (this.hasHitTarget()) {
-            this.target.onHit(this.damage);
-            if (this.target.isDead()) {
-                this.target.onKill();
-            }
+            this.source.onTargetHit(this.target, this.damage);
             return true;
         }
         return false;

@@ -195,7 +195,7 @@ public final class Game {
      */
     private void waveIteration() {
         // TODO: properly implement this.
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.1) {
             this.field.enemies.add(new RegularEnemy(this));
         }
     }

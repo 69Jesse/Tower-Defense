@@ -149,12 +149,15 @@ public abstract class Enemy extends BaseLocationable {
      */
     public void onHit(int damage) {
         this.doDamage(damage);
+        if (this.isDead()) {
+            this.onDeath();
+        }
     }
 
     /**
-     * Handles the logic when this enemy is killed.
+     * Handles the logic when this enemy dies.
      */
-    public void onKill() {
+    public void onDeath() {
         this.game.addGold(this.worth);
     }
 
