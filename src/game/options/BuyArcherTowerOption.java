@@ -30,15 +30,6 @@ public class BuyArcherTowerOption extends BuyTowerOption {
     }
 
     @Override
-    public boolean shouldBeEnabled(Location location) {
-        Tower tower = this.field.towers.getOrDefault(location, null);
-        if (tower != null) {
-            return false;
-        }
-        return this.game.getGold() >= this.getCost(); 
-    }
-
-    @Override
     public String getImagePath() {
         return "./assets/options/archer_tower.png";
     }

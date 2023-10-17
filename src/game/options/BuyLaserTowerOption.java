@@ -4,20 +4,20 @@ import field.Field;
 import game.Game;
 import location.Location;
 import towers.Tower;
-import towers.implementations.BombTower;
+import towers.implementations.LaserTower;
 
 
 /**
- * The buy bomb tower option class.
+ * The buy laser tower option class.
  */
-public class BuyBombTowerOption extends BuyTowerOption {
+public class BuyLaserTowerOption extends BuyTowerOption {
     /**
      * The constructor.
      *
      * @param game  The game.
      * @param field The field.
      */
-    public BuyBombTowerOption(
+    public BuyLaserTowerOption(
         Game game,
         Field field
     ) {
@@ -26,18 +26,18 @@ public class BuyBombTowerOption extends BuyTowerOption {
 
     @Override
     public Tower createTower(Location location) {
-        return new BombTower(this.game, location);
+        return new LaserTower(this.game, location);
     }
 
     @Override
     public String getImagePath() {
-        return "./assets/options/bomb_tower.png";
+        return "./assets/options/laser_tower.png";
     }
 
     @Override
     public String getLabel(Location location) {
         return String.format(
-            "Buy Bomb Tower (-%d gold)", this.getCost()
+            "Buy Laser Tower (-%d gold)", this.getCost()
         );
     }
 }
