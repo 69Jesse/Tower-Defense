@@ -36,7 +36,7 @@ public class Location {
         );
     }
 
-    public double distanceTo(Locationable other) {
+    public double distanceTo(BaseLocationable other) {
         return this.distanceTo(other.getLocation());
     }
 
@@ -50,7 +50,7 @@ public class Location {
         return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
     }
 
-    public double manhattanDistanceTo(Locationable other) {
+    public double manhattanDistanceTo(BaseLocationable other) {
         return this.manhattanDistanceTo(other.getLocation());
     }
 
@@ -69,7 +69,7 @@ public class Location {
             && this.y >= otherY && this.y <= otherY + height;
     }
 
-    public boolean inSameRect(Locationable other, double width, double height) {
+    public boolean inSameRect(BaseLocationable other, double width, double height) {
         return this.inSameRect(other.getLocation(), width, height);
     }
 
@@ -77,7 +77,7 @@ public class Location {
         return this.inSameRect(other, size, size);
     }
 
-    public boolean inSameSquare(Locationable other, double size) {
+    public boolean inSameSquare(BaseLocationable other, double size) {
         return this.inSameSquare(other.getLocation(), size);
     }
 

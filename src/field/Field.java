@@ -1,10 +1,9 @@
 package field;
 
 import enemies.Enemy;
-import enemies.implementations.RegularEnemy;
-import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 import location.Location;
 import towers.Projectile;
@@ -15,8 +14,6 @@ import towers.Tower;
  * Field class.
  */
 public class Field {
-    private final Game game;
-
     public final int width = 80;  // The width of the field in (field) pixels.
     public final int height = 45;  // The height of the field in (field) pixels.
 
@@ -25,7 +22,7 @@ public class Field {
     public ArrayList<Location> placeable;
     public double totalDistance;
     // Mapping from the index of a point in the path to the distance from the start.
-    public HashMap<Integer, Double> distancesFromStart;
+    public LinkedHashMap<Integer, Double> distancesFromStart;
 
     public HashMap<Location, Tower> towers;
     public ArrayList<Enemy> enemies;
@@ -34,8 +31,7 @@ public class Field {
     /**
      * Constructs a new field.
      */
-    public Field(Game game) {
-        this.game = game;
+    public Field() {
         this.init();
     }
 
@@ -48,7 +44,6 @@ public class Field {
         this.projectiles = new ArrayList<>();
         this.createPath();
         this.createPlaceable();
-        this.enemies.add(new RegularEnemy(this.game, this.path.get(this.path.size() / 2)));
     }
 
     /**
@@ -138,7 +133,7 @@ public class Field {
         } while (this.path == null);
 
         this.totalDistance = 0.0;
-        this.distancesFromStart = new HashMap<>();
+        this.distancesFromStart = new LinkedHashMap<>();
         for (int i = 0; i < this.path.size() - 1; i++) {
             Location location1 = this.path.get(i);
             Location location2 = this.path.get(i + 1);
@@ -275,5 +270,31 @@ public class Field {
         if (!removed) {
             throw new IllegalArgumentException("Tower does not exist at this location.");
         }
+    }
+
+    /**
+     * Sorts the enemies by percentage done.
+     */
+    public void sortEnemies() {
+        this.sortEnemies(this.enemies);
+    }
+
+    /**
+     * Sorts the enemies by percentage done from low to high.
+     * 
+     * @param enemies The enemies to sort.
+     */
+    public void sortEnemies(ArrayList<Enemy> enemies) {
+        enemies.sort((enemy1, enemy2) -> {
+            double percentage1 = enemy1.percentageDone();
+            double percentage2 = enemy2.percentageDone();
+            if (percentage1 < percentage2) {
+                return -1;
+            } else if (percentage1 > percentage2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
     }
 }

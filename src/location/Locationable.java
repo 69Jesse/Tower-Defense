@@ -4,7 +4,7 @@ package location;
 /**
  * An interface for objects that have a location on the field.
  */
-public abstract class Locationable {
+public abstract class Locationable extends BaseLocationable {
     protected Location location;
 
     /**

@@ -1,66 +1,110 @@
 package enemies;
 
 import game.Game;
+import java.util.Map;
+import location.BaseLocationable;
 import location.Location;
-import location.LocationableWithSetter;
 
 
 /**
  * An enemy on the field.
  */
-public abstract class Enemy extends LocationableWithSetter {
+public abstract class Enemy extends BaseLocationable {
+    protected final Game game;
     public final int worth;
     public final int weight;
 
     public final int maxHealth;
-    public final int speed;
+    public final double speed;
     public final double size;
     public final boolean flying;
 
-    protected Game game;
-    protected Location location;
     protected int health;
-    protected double pathCompleted;
+    protected int ticksElapsed;
 
     /**
      * Constructs a new enemy.
      * 
      * @param game      The game this enemy is in.
-     * @param location  The (starting) location of this enemy on the field.
      * @param worth     The worth of this enemy. This is used to calculate
      *                  the wave size and the gold reward on death.
      * @param weight    The weight of this enemy. This is used to determine
      *                  how often this enemy should appear in a wave.
      * @param maxHealth The maximum health of this enemy.
-     * @param speed     The speed of this enemy.
+     * @param speed     The speed of this enemy in field pixels per game tick.
      * @param size      The size of this enemy in field pixels.
      * @param flying    Whether or not this enemy is flying.
      */
     public Enemy(
         Game game,
-        Location location,
         int worth,
         int weight,
         int maxHealth,
-        int speed,
+        double speed,
         double size,
         boolean flying
     ) {
         this.game = game;
-        this.location = location;
         this.worth = worth;
         this.weight = weight;
         this.maxHealth = maxHealth;
         this.speed = speed;
         this.size = size;
         this.flying = flying;
-        this.pathCompleted = 0.0;
         this.health = maxHealth;
+        this.ticksElapsed = 0;
     }
 
     @Override
     public Location getLocation() {
-        return this.location;
+        final double distanceTraveled = this.traveledDistance();
+        for (Map.Entry<Integer, Double> entry : this.game.field.distancesFromStart.entrySet()) {
+            double upperDistance = entry.getValue();
+            if (upperDistance <= distanceTraveled) {
+                continue;
+            }
+
+            Location upperLocation = this.game.field.path.get(entry.getKey());
+            int index = entry.getKey() - 1;
+            double lowerDistance = this.game.field.distancesFromStart.get(index);
+            Location lowerLocation = this.game.field.path.get(index);
+
+            double remainder = distanceTraveled - lowerDistance;
+            double percentage = remainder / (upperDistance - lowerDistance);
+            
+            double x = lowerLocation.x + (upperLocation.x - lowerLocation.x) * percentage;
+            double y = lowerLocation.y + (upperLocation.y - lowerLocation.y) * percentage;
+            return new Location(x, y);
+        }
+        throw new RuntimeException("Enemy has traveled further than the field length.");
+    }
+
+    /**
+     * Returns the distance this enemy has traveled.
+     * 
+     * @return The distance this enemy has traveled.
+     */
+    public double traveledDistance() {
+        return this.ticksElapsed * this.speed;
+    }
+
+    /**
+     * Returns the percentage of the field this enemy has traveled.
+     * If this is >= 1.0, this enemy has reached the end of the field.
+     * 
+     * @return         The percentage of the field this enemy has traveled in [0, 1].
+     */
+    public double percentageDone() {
+        return this.traveledDistance() / this.game.field.totalDistance;
+    }
+
+    /**
+     * Returns whether or not this enemy has reached the end of the field.
+     * 
+     * @return Whether or not this enemy has reached the end of the field.
+     */
+    public boolean isAtEnd() {
+        return this.percentageDone() >= 1.0;
     }
 
     /**
@@ -91,15 +135,6 @@ public abstract class Enemy extends LocationableWithSetter {
     }
 
     /**
-     * Returns the percentage of the path this enemy has completed.
-     * 
-     * @return The percentage of the path this enemy has completed.
-     */
-    public double getPathCompleted() {
-        return this.pathCompleted;
-    }
-
-    /**
      * Returns the image path of this tower.
      * This can be dependent on the level of this tower.
      * 
@@ -121,5 +156,23 @@ public abstract class Enemy extends LocationableWithSetter {
      */
     public void onKill() {
         this.game.addGold(this.worth);
+    }
+
+    /**
+     * Handles the logic when this enemy reaches the end of the field.
+     */
+    public void onEndReached() {
+        // TODO: remove a life??
+    }
+
+    /**
+     * Tick this enemy.
+     */
+    public void tick() {
+        this.ticksElapsed++;
+        if (this.isAtEnd()) {
+            this.onEndReached();
+            this.game.field.enemies.remove(this);
+        }
     }
 }

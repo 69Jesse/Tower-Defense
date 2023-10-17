@@ -99,6 +99,7 @@ public final class ArcherTower extends RangeDamageTower {
     @Override
     protected Projectile createProjectile(Enemy enemy) {
         return new Projectile(
+            this.game,
             this,
             enemy,
             this.getDamage(),
