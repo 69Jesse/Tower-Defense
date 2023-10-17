@@ -60,9 +60,9 @@ public final class LaserTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.3;
-            case 3:
                 return 1.5;
+            case 3:
+                return 2.0;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -74,9 +74,9 @@ public final class LaserTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.3;
-            case 3:
                 return 1.5;
+            case 3:
+                return 2.0;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
