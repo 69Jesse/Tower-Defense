@@ -32,7 +32,7 @@ public final class Game {
     public void start() {
         System.out.println("Game starting!");
         this.init();
-        this.field = new Field(this);
+        this.field = new Field();
         this.frame = new Frame(this);
         this.cacheOptions();
         this.frame.start();
@@ -191,10 +191,20 @@ public final class Game {
     }
 
     /**
+     * Handle a wave tick iteration.
+     */
+    private void waveIteration() {
+        // TODO: properly implement this.
+        if (Math.random() < 0.01) {
+            this.field.enemies.add(new RegularEnemy(this));
+        }
+    }
+
+    /**
      * Handle a game tick iteration.
      */
     private void tickIteration() {
-        if (Math.random() < 1) this.field.enemies.add(new RegularEnemy(this));
+        this.waveIteration();
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }

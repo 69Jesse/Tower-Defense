@@ -1,9 +1,8 @@
 package towers;
 
-import java.util.ArrayList;
-
 import enemies.Enemy;
 import game.Game;
+import java.util.ArrayList;
 import location.Location;
 import location.Locationable;
 

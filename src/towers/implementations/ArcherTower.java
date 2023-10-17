@@ -13,7 +13,7 @@ import towers.RangeDamageTower;
 public final class ArcherTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
-    private static final int COOLDOWN = 0;
+    private static final int COOLDOWN = 60;
     private static final int DAMAGE = 10;
     private static final double RANGE = 10.0;    
 

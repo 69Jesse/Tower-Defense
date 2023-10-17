@@ -99,6 +99,15 @@ public abstract class Enemy extends BaseLocationable {
     }
 
     /**
+     * Returns whether or not this enemy has reached the end of the field.
+     * 
+     * @return Whether or not this enemy has reached the end of the field.
+     */
+    public boolean isAtEnd() {
+        return this.percentageDone() >= 1.0;
+    }
+
+    /**
      * Returns the current health of this enemy.
      * 
      * @return The current health of this enemy.
@@ -150,9 +159,20 @@ public abstract class Enemy extends BaseLocationable {
     }
 
     /**
+     * Handles the logic when this enemy reaches the end of the field.
+     */
+    public void onEndReached() {
+        // TODO: remove a life??
+    }
+
+    /**
      * Tick this enemy.
      */
     public void tick() {
         this.ticksElapsed++;
+        if (this.isAtEnd()) {
+            this.onEndReached();
+            this.game.field.enemies.remove(this);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package field;
 
 import enemies.Enemy;
-import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,8 +14,6 @@ import towers.Tower;
  * Field class.
  */
 public class Field {
-    private final Game game;
-
     public final int width = 80;  // The width of the field in (field) pixels.
     public final int height = 45;  // The height of the field in (field) pixels.
 
@@ -34,8 +31,7 @@ public class Field {
     /**
      * Constructs a new field.
      */
-    public Field(Game game) {
-        this.game = game;
+    public Field() {
         this.init();
     }
 
