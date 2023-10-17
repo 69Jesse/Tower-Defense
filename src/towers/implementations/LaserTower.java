@@ -15,7 +15,8 @@ public final class LaserTower extends RangeDamageTower {
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 0;
     private static final int DAMAGE = 2;
-    private static final double RANGE = 10.0;    
+    private static final double RANGE = 10.0;
+    private static final boolean CAN_DAMAGE_FLYING = true;
 
     /**
      * Constructs a laser tower.
@@ -31,7 +32,8 @@ public final class LaserTower extends RangeDamageTower {
             MAX_LEVEL,
             COOLDOWN,
             DAMAGE,
-            RANGE
+            RANGE,
+            CAN_DAMAGE_FLYING
         );
     }
 

@@ -74,10 +74,10 @@ public abstract class Option {
         int total
     ) {
         double x = Math.cos(
-            2 * Math.PI * number / total + Math.PI / 2
+            2 * Math.PI * number / total - Math.PI / 2
         ) * this.distanceFromTowerCenter;
-        double y = -Math.sin(
-            2 * Math.PI * number / total + Math.PI / 2
+        double y = Math.sin(
+            2 * Math.PI * number / total + 3 * Math.PI / 2
         ) * this.distanceFromTowerCenter;
         return new Location(
             towerLocation.x + x,

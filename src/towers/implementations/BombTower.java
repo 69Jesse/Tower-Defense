@@ -16,7 +16,8 @@ public final class BombTower extends RangeDamageTower {
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 120;
     private static final int DAMAGE = 30;
-    private static final double RANGE = 7.5;    
+    private static final double RANGE = 7.5;
+    private static final boolean CAN_DAMAGE_FLYING = false;
 
     /**
      * Constructs a bomb tower.
@@ -32,7 +33,8 @@ public final class BombTower extends RangeDamageTower {
             MAX_LEVEL,
             COOLDOWN,
             DAMAGE,
-            RANGE
+            RANGE,
+            CAN_DAMAGE_FLYING
         );
     }
 
@@ -113,12 +115,23 @@ public final class BombTower extends RangeDamageTower {
 
     private static final double SPLASH_DAMAGE_RANGE = 3.0;
 
+    /**
+     * Returns whether or not an enemy is in splash range of a location.
+     * 
+     * @param enemy    The enemy to check.
+     * @param location The (target) location to check.
+     * @return         Whether or not the enemy is in splash range of the location.
+     */
+    private boolean enemyInSplashRange(Enemy enemy, Location location) {
+        return enemy.getLocation().distanceTo(location) <= SPLASH_DAMAGE_RANGE;
+    }
+
     @Override
     public void onTargetHit(Enemy target, int damage) {
         Location targetLocation = target.getLocation();
         ArrayList<Enemy> hitting = new ArrayList<>();
         for (Enemy enemy : this.game.field.enemies) {
-            if (enemy.getLocation().distanceTo(targetLocation) <= SPLASH_DAMAGE_RANGE) {
+            if (this.enemyInSplashRange(enemy, targetLocation) && this.canDamageWithFlight(enemy)) {
                 hitting.add(enemy);
             }
         }

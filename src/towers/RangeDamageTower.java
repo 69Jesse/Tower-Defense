@@ -11,6 +11,7 @@ import location.Location;
  */
 public abstract class RangeDamageTower extends DamageTower {
     protected final double range;
+    protected final boolean canAttackFlying;
 
     /**
      * Constructs a tower that can damage enemies that are in a specific range.
@@ -30,7 +31,8 @@ public abstract class RangeDamageTower extends DamageTower {
         int maxLevel,
         int cooldown,
         int damage,
-        double range
+        double range,
+        boolean canAttackFlying
     ) {
         super(
             game,
@@ -41,6 +43,17 @@ public abstract class RangeDamageTower extends DamageTower {
             damage
         );
         this.range = range;
+        this.canAttackFlying = canAttackFlying;
+    }
+
+    /**
+     * Returns whether or not this tower can damage an enemy because of flight.
+     * 
+     * @param enemy The enemy to check.
+     * @return      Whether or not this tower can damage the enemy because of flight.
+     */
+    protected boolean canDamageWithFlight(Enemy enemy) {
+        return this.canAttackFlying || !enemy.flying;
     }
 
     /**
@@ -50,7 +63,8 @@ public abstract class RangeDamageTower extends DamageTower {
      * @return      Whether or not this tower can damage the enemy.
      */
     protected boolean canDamage(Enemy enemy) {
-        return (this.location.distanceTo(enemy) - enemy.size / 2) <= this.getRange();
+        return (this.location.distanceTo(enemy) - enemy.size / 2) <= this.getRange()
+            && this.canDamageWithFlight(enemy);
     }
 
     /**
