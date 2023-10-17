@@ -4,6 +4,7 @@ import enemies.Enemy;
 import enemies.implementations.RegularEnemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
+import game.options.BuyBombTowerOption;
 import game.options.SellOption;
 import game.options.UpgradeOption;
 import gui.frame.Frame;
@@ -125,6 +126,7 @@ public final class Game {
     }
 
     private static BuyArcherTowerOption BUY_ARCHER_TOWER_OPTION;
+    private static BuyBombTowerOption BUY_BOMB_TOWER_OPTION;
 
     private static SellOption SELL_OPTION;
     private static UpgradeOption UPGRADE_OPTION;
@@ -134,6 +136,7 @@ public final class Game {
      */
     private void cacheOptions() {
         BUY_ARCHER_TOWER_OPTION = new BuyArcherTowerOption(this, this.field);
+        BUY_BOMB_TOWER_OPTION = new BuyBombTowerOption(this, this.field);
         SELL_OPTION = new SellOption(this, this.field);
         UPGRADE_OPTION = new UpgradeOption(this, this.field);
     }
@@ -144,8 +147,11 @@ public final class Game {
      * @param options The options to add to.
      */
     private void addBuyTowerOptions(ArrayList<Option> options) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             options.add(BUY_ARCHER_TOWER_OPTION);
+        }
+        for (int i = 0; i < 5; i++) {
+            options.add(BUY_BOMB_TOWER_OPTION);
         }
     }
 
