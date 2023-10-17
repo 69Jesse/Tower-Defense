@@ -69,8 +69,10 @@ public class Field {
 
     // Excluding the start and end point.
     private final int waypointsAmount = 3;
-    private final int maxPathRetries = 1000;
-    private final int maxWaypoinRetries = 100;
+    private final int placeableAmount = 12;
+    private final int maxPathRetries = 10000;
+    private final int maxWaypointRetries = 10000;
+    private final int maxPlaceableRetries = 10000;
 
     /**
      * Creates the waypoints.
@@ -95,7 +97,7 @@ public class Field {
                 this.waypoints.remove(i + 1);
                 i--;
                 retries++;
-                if (retries > this.maxWaypoinRetries) {
+                if (retries > this.maxWaypointRetries) {
                     // Insanely unlikely to reach this point, but just in case.
                     throw new RuntimeException("Could not generate valid waypoints.");
                 }
@@ -148,10 +150,21 @@ public class Field {
      * Creates the placeable locations for the towers.
      */
     private void createPlaceable() {
+        int retries = 0;
         this.placeable = new ArrayList<>();
-        final int n = 5;
-        for (int i = 0; i < n; i++) {
-            this.placeable.add(this.randomLocation());
+        for (int i = 0; i < this.placeableAmount; i++) {
+            Location possibleLocation = this.randomLocation();
+            if (validTowerLocation(possibleLocation)) {
+                this.placeable.add(possibleLocation);
+            } else {
+                // The location is not a valid location, so we will have to try again.
+                i--;
+                retries++;
+                if (retries > this.maxPlaceableRetries) {
+                    // Really unlikely to reach this point, but just in case.
+                    throw new RuntimeException("Could not generate valid Placeables.");
+                }
+            }
         }
     }
 
@@ -239,6 +252,47 @@ public class Field {
                 return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * Checks if a placeable location of a tower is valid.
+     * @param location The location that will be checked for validity.
+     * @return Whether the location is valid.
+     */
+    private boolean validTowerLocation(Location location) {
+        final double closeDistanceTower = 5.0; // Distance where a location is too close to a tower.
+        final double closeDistancePath = 3.7; // Distance where a location is too close to the path.
+        final double farDistance = 8.0; // Distance where a location is too far from the path.
+
+        // The tower location cannot be too close to another tower.
+        for (Location placeableLocation : this.placeable) {
+            double distance = placeableLocation.distanceTo(location);
+            if (distance < closeDistanceTower) {
+                // The location is too close to another tower, so it is invalid.
+                return false;
+            }
+        }
+
+        // The tower location has to be close enough to the path.
+        // But not on the path.
+        boolean tooFar = true; // Whether the location is too far from the path.
+        for (Location pathPoint : this.path) {
+            double distance = pathPoint.distanceTo(location);
+            if (distance < closeDistancePath) {
+                // The location is too close to the path, so it is invalid.
+                return false;
+            }
+            if (distance < farDistance) {
+                // The location is close enough to the path.
+                tooFar = false;
+            }
+        }
+        if (tooFar) {
+            // The location is too far from the path, so it is invalid.
+            return false;
+        }
+
         return true;
     }
 
