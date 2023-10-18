@@ -1,6 +1,7 @@
 package game;
 
 import enemies.Enemy;
+import enemies.implementations.DroneEnemy;
 import enemies.implementations.RegularEnemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
@@ -201,8 +202,9 @@ public final class Game {
      */
     private void waveIteration() {
         // TODO: properly implement this.
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.03) {
             this.field.enemies.add(new RegularEnemy(this));
+            this.field.enemies.add(new DroneEnemy(this));
         }
     }
 
