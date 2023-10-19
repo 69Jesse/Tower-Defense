@@ -37,7 +37,7 @@ public final class SellOption extends Option {
         try {
             this.game.addGold(value);
             this.field.removeTower(tower);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return;
         }
     }

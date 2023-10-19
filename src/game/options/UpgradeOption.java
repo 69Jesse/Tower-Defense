@@ -33,11 +33,12 @@ public final class UpgradeOption extends Option {
         if (!this.shouldBeEnabled(location)) {
             return;
         }
-        int cost = tower.getUpgradeCost();
         try {
+            int cost = tower.getUpgradeCost();
             this.game.removeGold(cost);
             tower.upgrade();
-        } catch (Exception e) {
+            this.game.addGoldSpent(cost);
+        } catch (IllegalArgumentException e) {
             return;
         }
     }

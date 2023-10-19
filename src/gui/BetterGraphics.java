@@ -315,19 +315,28 @@ public final class BetterGraphics {
     }
 
     /**
+     * An enum to store the alignment of a string.
+     */
+    public enum Alignment {
+        LEFT,
+        CENTER,
+        RIGHT
+    }
+
+    /**
      * Private method to draw a string.
      * 
      * @param text      The text to draw.
      * @param x         The x coordinate of the top left corner in field pixels.
      * @param y         The y coordinate of the top left corner in field pixels.
-     * @param centered  Whether or not the text should be centered.
+     * @param alignment The alignment of the text.
      * @param box       Optional box to draw the text in.
      */
     private void drawStringPrivate(
         String text,
         double x,
         double y,
-        boolean centered,
+        Alignment alignment,
         Box box
     ) {
         x = x * this.scale + this.topLeft.width;
@@ -337,9 +346,11 @@ public final class BetterGraphics {
         int width = metrics.stringWidth(text);
         int height = metrics.getHeight();
 
-        if (centered) {
+        if (alignment == Alignment.CENTER) {
             x -= width / 2;
             y -= height / 2;
+        } else if (alignment == Alignment.RIGHT) {
+            x -= width;
         }
     
         if (box != null) {
@@ -366,14 +377,14 @@ public final class BetterGraphics {
     }
 
     /**
-     * Draw a string.
+     * Draw a string in the top left corner.
      * 
      * @param text The text to draw.
      * @param x    The x coordinate of the top left corner in field pixels.
      * @param y    The y coordinate of the top left corner in field pixels.
      */
-    public void drawString(String text, double x, double y) {
-        this.drawStringPrivate(text, x, y, false, null);
+    public void drawStringTopLeft(String text, double x, double y) {
+        this.drawStringPrivate(text, x, y, Alignment.LEFT, null);
     }
 
     /**
@@ -384,23 +395,34 @@ public final class BetterGraphics {
      * @param y    The y coordinate of the middle in field pixels.
      */
     public void drawStringCentered(String text, double x, double y) {
-        this.drawStringPrivate(text, x, y, true, null);
+        this.drawStringPrivate(text, x, y, Alignment.CENTER, null);
     }
 
     /**
-     * Draw a string in a box.
+     * Draw a string in the top right corner.
+     * 
+     * @param text The text to draw.
+     * @param x    The x coordinate of the top right corner in field pixels.
+     * @param y    The y coordinate of the top right corner in field pixels.
+     */
+    public void drawStringTopRight(String text, double x, double y) {
+        this.drawStringPrivate(text, x, y, Alignment.RIGHT, null);
+    }
+
+    /**
+     * Draw a string in the top left corner with a box.
      * 
      * @param text The text to draw.
      * @param x    The x coordinate of the top left corner in field pixels.
      * @param y    The y coordinate of the top left corner in field pixels.
      * @param box  The box to draw the text in.
      */
-    public void drawStringWithBox(String text, double x, double y, Box box) {
-        this.drawStringPrivate(text, x, y, false, box);
+    public void drawStringTopLeftWithBox(String text, double x, double y, Box box) {
+        this.drawStringPrivate(text, x, y, Alignment.LEFT, box);
     }
 
     /**
-     * Draw a string in a box around the given coordinates.
+     * Draw a string around the given coordinates with a box.
      * 
      * @param text The text to draw.
      * @param x    The x coordinate of the middle in field pixels.
@@ -408,6 +430,18 @@ public final class BetterGraphics {
      * @param box  The box to draw the text in.
      */
     public void drawStringCenteredWithBox(String text, double x, double y, Box box) {
-        this.drawStringPrivate(text, x, y, true, box);
+        this.drawStringPrivate(text, x, y, Alignment.CENTER, box);
+    }
+
+    /**
+     * Draw a string in the top right corner with a box.
+     * 
+     * @param text The text to draw.
+     * @param x    The x coordinate of the top right corner in field pixels.
+     * @param y    The y coordinate of the top right corner in field pixels.
+     * @param box  The box to draw the text in.
+     */
+    public void drawStringTopRightWithBox(String text, double x, double y, Box box) {
+        this.drawStringPrivate(text, x, y, Alignment.RIGHT, box);
     }
 }
