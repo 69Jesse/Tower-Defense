@@ -31,10 +31,15 @@ public final class Game {
     public int speed;
     public boolean gameLost;
     public boolean gameStarted;
+    public boolean gameWon;
 
     private int exp;
     private int enemyKills;
     private int goldSpent;
+
+    // Temporary, the win condition needs to be based on waves.
+    // But we do not have waves yet, so that will be something for a later date.
+    private final int winKills = 100;
 
     /**
      * Runs the game.
@@ -60,6 +65,7 @@ public final class Game {
         this.goldSpent = 0;
         this.gameLost = false;
         this.gameStarted = false;
+        this.gameWon = false;
     }
 
 
@@ -215,7 +221,7 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
-        if (this.gameLost || !this.gameStarted) {
+        if (this.gameLost || this.gameWon || !this.gameStarted) {
             return;
         }
         for (int i = 0; i < this.speed; i++) {
@@ -320,6 +326,9 @@ public final class Game {
             throw new IllegalArgumentException("Cannot add negative enemy kills.");
         }
         this.enemyKills += enemyKills;
+        if (this.enemyKills >= this.winKills) {
+            this.gameWon = true;
+        }
     }
 
     /**
