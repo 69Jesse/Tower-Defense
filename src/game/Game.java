@@ -59,7 +59,7 @@ public final class Game {
     private void init() {
         this.lives = 15;
         this.gold = 10000;
-        this.speed = 10;
+        this.speed = 1;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
