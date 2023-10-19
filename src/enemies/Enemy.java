@@ -178,8 +178,7 @@ public abstract class Enemy extends BaseLocationable {
         if (this.done) {
             return;
         }
-        // this.game.removeLife(1);
-        // TODO: remove a life??
+        this.game.removeLife(1);
         this.done = true;
     }
 

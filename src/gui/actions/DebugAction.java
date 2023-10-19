@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 
 
 /**
- * The fullscreen toggle action.
+ * The debug toggle action.
  */
 public class DebugAction extends AbstractAction {
     // private Frame frame;
@@ -25,6 +25,11 @@ public class DebugAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.game.reset();
+        if (this.game.gameStarted) {
+            this.game.reset();
+        } else {
+            this.game.start();
+        }
+        
     }
 }
