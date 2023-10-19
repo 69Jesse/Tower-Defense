@@ -17,6 +17,8 @@ public class RegularEnemy extends Enemy {
 
     /**
      * Constructs a regular enemy.
+     * 
+     * @param game The game this enemy is in.
      */
     public RegularEnemy(Game game) {
         super(

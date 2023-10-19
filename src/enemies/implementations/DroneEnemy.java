@@ -5,7 +5,7 @@ import game.Game;
 
 
 /**
- * A regular enemy.
+ * A drone enemy.
  */
 public class DroneEnemy extends Enemy {
     private static final int WORTH = 10;
@@ -17,6 +17,8 @@ public class DroneEnemy extends Enemy {
 
     /**
      * Constructs a drone enemy.
+     * 
+     * @param game The game this enemy is in.
      */
     public DroneEnemy(Game game) {
         super(
@@ -35,4 +37,3 @@ public class DroneEnemy extends Enemy {
         return "./assets/enemies/drone_enemy.png";
     }
 }
-
