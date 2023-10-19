@@ -58,7 +58,7 @@ public abstract class Enemy extends BaseLocationable {
     }
 
     @Override
-    public Location getLocation() {
+    public Location getLocation() throws RuntimeException {
         final double distanceTraveled = this.traveledDistance();
         for (Map.Entry<Integer, Double> entry : this.game.field.distancesFromStart.entrySet()) {
             double upperDistance = entry.getValue();
@@ -78,7 +78,9 @@ public abstract class Enemy extends BaseLocationable {
             double y = lowerLocation.y + (upperLocation.y - lowerLocation.y) * percentage;
             return new Location(x, y);
         }
-        throw new RuntimeException("Enemy has traveled further than the field length.");
+
+        // This should never be reached, but still can due to rounding errors.
+        return this.game.field.path.get(this.game.field.path.size() - 1).copy();
     }
 
     /**

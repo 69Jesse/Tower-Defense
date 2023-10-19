@@ -84,4 +84,13 @@ public class Location {
     public String toString() {
         return String.format("Location(%f, %f)", this.x, this.y);
     }
+
+    /**
+     * Returns a copy of this location as a new instance.
+     * 
+     * @return A copy of this location.
+     */ 
+    public Location copy() {
+        return new Location(this.x, this.y);
+    }
 }
