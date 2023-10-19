@@ -13,6 +13,7 @@ import gui.painters.SideLabelPainter;
 import gui.painters.SmoothBorderPainter;
 import gui.painters.StartPainter;
 import gui.painters.TowerPainter;
+import gui.painters.WinPainter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -79,6 +80,7 @@ public class Panel extends JPanel {
         this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
         this.painters.add(new SideLabelPainter(this.game, this.frame, this));
         this.painters.add(new LosePainter(this.game, this.frame, this));
+        this.painters.add(new WinPainter(this.game, this.frame, this));
         this.painters.add(new StartPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }
