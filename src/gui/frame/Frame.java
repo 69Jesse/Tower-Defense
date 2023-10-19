@@ -4,6 +4,7 @@ import game.Game;
 import gui.Panel;
 import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
+import gui.actions.StartAction;
 import gui.mouse.Mouse;
 import java.awt.Dimension;
 import java.awt.Insets;
@@ -92,7 +93,8 @@ public class Frame extends BaseFrame {
      */
     private void setup() {
         this.addKeyBinding("F11", new FullscreenToggleAction(this));
-        this.addKeyBinding("ENTER", new DebugAction(this, this.game));
+        this.addKeyBinding("ENTER", new StartAction(this.game));
+        this.addKeyBinding("SPACE", new DebugAction(this.game));
     }
 
     /**
