@@ -295,14 +295,14 @@ public final class Game {
     /**
      * Adds exp.
      * 
-     * @param exp                       The exp to add.
+     * @param amount                    The amount of exp to add.
      * @throws IllegalArgumentException If the exp is negative.
      */
-    public void addExp(int exp) throws IllegalArgumentException {
-        if (exp < 0) {
+    public void addExp(int amount) throws IllegalArgumentException {
+        if (amount < 0) {
             throw new IllegalArgumentException("Cannot add negative exp.");
         }
-        this.exp += exp;
+        this.exp += amount;
     }
 
     /**
@@ -317,14 +317,14 @@ public final class Game {
     /**
      * Adds enemy kills.
      * 
-     * @param enemyKills                The enemy kills to add.
+     * @param amount                    The amount of enemy kills to add.
      * @throws IllegalArgumentException If the enemy kills is negative.
      */
-    public void addEnemyKills(int enemyKills) throws IllegalArgumentException {
-        if (enemyKills < 0) {
+    public void addEnemyKills(int amount) throws IllegalArgumentException {
+        if (amount < 0) {
             throw new IllegalArgumentException("Cannot add negative enemy kills.");
         }
-        this.enemyKills += enemyKills;
+        this.enemyKills += amount;
         if (this.enemyKills >= this.winKills) {
             this.gameWon = true;
         }
@@ -342,14 +342,14 @@ public final class Game {
     /**
      * Adds gold spent.
      * 
-     * @param goldSpent                 The gold spent to add.
+     * @param amount                    The amount of gold spent to add.
      * @throws IllegalArgumentException If the gold spent is negative.
      */
-    public void addGoldSpent(int goldSpent) throws IllegalArgumentException {
-        if (goldSpent < 0) {
+    public void addGoldSpent(int amount) throws IllegalArgumentException {
+        if (amount < 0) {
             throw new IllegalArgumentException("Cannot add negative gold spent.");
         }
-        this.goldSpent += goldSpent;
+        this.goldSpent += amount;
     }
 
     /**
