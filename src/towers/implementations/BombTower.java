@@ -139,4 +139,15 @@ public final class BombTower extends RangeDamageTower {
             enemy.onHit(this.damage);
         }
     }
+
+    @Override
+    public String[] getInfo() {
+        return new String[] {
+            String.format("Bomb Tower (Lvl %d)", this.level),
+            String.format("Damage: %d", this.getDamage()),
+            String.format("Range: %.1f", this.getRange()),
+            String.format("Cooldown: %d", this.getCooldown()),
+            String.format("Total spent: %d", this.getTotalSpent())
+        };
+    }
 }

@@ -14,6 +14,10 @@ import java.awt.Color;
 public final class SideLabelPainter extends Painter {
     /**
      * The constructor.
+     * 
+     * @param game  The game.
+     * @param frame The frame.
+     * @param panel The panel.
      */
     public SideLabelPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
@@ -23,22 +27,22 @@ public final class SideLabelPainter extends Painter {
     private final Color boxColor = new Color(0x000000);
 
     /**
-     * Returns the strings of text this painter needs to display on the left.
+     * Returns the lines of text this painter needs to display on the left.
      * 
-     * @return The strings of text.
+     * @return The lines of text.
      */
-    private String[] getLeftStrings() {
+    private String[] getLeftLines() {
         return new String[] {
             String.format("Gold: %d", this.game.getGold())
         };
     }
 
     /**
-     * Returns the strings of text this painter needs to display on the right.
+     * Returns the lines of text this painter needs to display on the right.
      * 
-     * @return The strings of text.
+     * @return The lines of text.
      */
-    private String[] getRightString() {
+    private String[] getRightLines() {
         return new String[] {
             String.format("Exp: %d", this.game.getExp()),
             String.format("Kills: %d", this.game.getEnemyKills()),
@@ -57,19 +61,19 @@ public final class SideLabelPainter extends Painter {
 
         BetterGraphics.Box box = graphics.new Box(this.boxColor, 0.5, 0.5);
 
-        String[] strings = this.getLeftStrings();
-        for (int i = 0; i < strings.length; i++) {
-            String string = strings[i];
+        String[] lines = this.getLeftLines();
+        for (int i = 0; i < lines.length; i++) {
+            String line = lines[i];
             graphics.drawStringTopLeftWithBox(
-                string,
+                line,
                 this.xOffset,
                 this.yOffset + this.ySpacing * i,
                 box
             );
         }
-        strings = this.getRightString();
-        for (int i = 0; i < strings.length; i++) {
-            String string = strings[i];
+        lines = this.getRightLines();
+        for (int i = 0; i < lines.length; i++) {
+            String string = lines[i];
             graphics.drawStringTopRightWithBox(
                 string,
                 this.game.field.width - this.xOffset,
