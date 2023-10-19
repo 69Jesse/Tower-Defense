@@ -107,4 +107,15 @@ public final class LaserTower extends RangeDamageTower {
     public void onTargetHit(Enemy target, int damage) {
         target.onHit(this.damage);
     }
+
+    @Override
+    public String[] getInfo() {
+        return new String[] {
+            String.format("Laser Tower (Lvl %d)", this.level),
+            String.format("Damage: %d", this.getDamage()),
+            String.format("Range: %.1f", this.getRange()),
+            String.format("Cooldown: %d", this.getCooldown()),
+            String.format("Total spent: %d", this.getTotalSpent())
+        };
+    }
 }

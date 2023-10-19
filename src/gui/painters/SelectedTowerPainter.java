@@ -37,6 +37,14 @@ public final class SelectedTowerPainter extends Painter {
     private final double optionBoxYOffset = 1.0;
     private final double optionBoxAlpha = 0.5;
     private final double optionBoxPadding = 0.25;
+    private final double infoXOffset = 1.0;
+    private final double infoYOffset = 1.0;
+    private final double infoYSpacing = 2.2;
+    private final Color infoColor = new Color(0xFFFFFF);
+    private final double infoFontSize = 1.5;
+    private final Color infoBoxColor = new Color(0x000000);
+    private final double infoBoxAlpha = 0.5;
+    private final double infoBoxPadding = 0.25;
 
     /**
      * Draw the range of the tower if the tower has a range.
@@ -98,16 +106,19 @@ public final class SelectedTowerPainter extends Painter {
     /**
      * Draw the options.
      * 
-     * @param graphics The graphics.
-     * @param location The location of the placeable spot/tower.
-     * @param tower    The tower.
+     * @param graphics      The graphics.
+     * @param mouseLocation The mouse location (can be null).
+     * @param location      The location of the placeable spot/tower (can be null).
      */
     private void drawOptions(
         BetterGraphics graphics,
-        Location location,
-        Tower tower
+        Location mouseLocation,
+        Location location
     ) {
-        Location mouseLocation = this.panel.getMouseLocation();
+        if (location == null) {
+            return;
+        }
+
         Option hoveringOption = null;
         boolean hoveringEnabled = false;
 
@@ -150,11 +161,61 @@ public final class SelectedTowerPainter extends Painter {
         }
     }
 
+    /**
+     * Draw the tower stats.
+     * 
+     * @param graphics      The graphics.
+     * @param mouseLocation The mouse location (can be null).
+     * @param location      The location of the placeable spot/tower.
+     * @param selectedTower The selected tower (can be null).
+     */
+    private void drawTowerInfo(
+        BetterGraphics graphics,
+        Location mouseLocation,
+        Location location,
+        Tower selectedTower
+    ) {
+        if (selectedTower == null) {
+            if (mouseLocation == null) {
+                return;
+            }
+            Location placeableLocation = this.frame.mouse.hoveringOverPlaceable(mouseLocation);
+            if (placeableLocation == null) {
+                return;
+            }
+            selectedTower = this.game.field.towers.getOrDefault(placeableLocation, null);
+            if (selectedTower == null) {
+                return;
+            }
+        }
+
+        graphics.setTransparency(1.0);
+        graphics.setFont(infoFontSize);
+        graphics.setColor(infoColor);
+        String[] lines = selectedTower.getInfo();
+        BetterGraphics.Box box = graphics.new Box(
+            this.infoBoxColor,
+            this.infoBoxAlpha,
+            this.infoBoxPadding
+        );
+        for (int i = lines.length - 1; i >= 0; i--) {
+            String line = lines[lines.length - 1 - i];
+            graphics.drawStringBottomLeftWithBox(
+                line,
+                this.infoXOffset,
+                this.game.field.height - this.infoYOffset - this.infoYSpacing * i,
+                box
+            );
+        }
+    }
+
     @Override
     public void paint(BetterGraphics graphics) {
         Location location = this.game.selectedLocation;
         Tower tower = this.game.field.towers.getOrDefault(location, null);
         this.drawRange(graphics, tower);
-        this.drawOptions(graphics, location, tower);
+        Location mouseLocation = this.panel.getMouseLocation();
+        this.drawOptions(graphics, mouseLocation, location);
+        this.drawTowerInfo(graphics, mouseLocation, location, tower);
     }
 }

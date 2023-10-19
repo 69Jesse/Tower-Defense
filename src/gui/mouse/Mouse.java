@@ -58,12 +58,12 @@ public class Mouse extends BaseMouse {
     }
 
     /**
-     * Return the placeable location that was clicked, or null if none was clicked.
+     * Return the placeable location that the mouse is at, or null if it is not at any.
      * 
-     * @param location The location where the mouse was clicked.
-     * @return         The placeable location that was clicked, or null if none was clicked.
+     * @param location The location where the mouse is at this moment.
+     * @return         The placeable location that the mouse is at, or null if it is not at any.
      */
-    private Location clickedOnPlaceable(Location location) {
+    public Location hoveringOverPlaceable(Location location) {
         for (Location placeable : this.game.field.placeable) {
             if (placeable.inSameSquare(location, TowerPainter.SIZE)) {
                 return placeable;
@@ -81,7 +81,7 @@ public class Mouse extends BaseMouse {
             }
         }
 
-        Location placeable = this.clickedOnPlaceable(location);
+        Location placeable = this.hoveringOverPlaceable(location);
         if (placeable == null) {
             this.game.selectedLocation = null;
             return;

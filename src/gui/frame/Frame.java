@@ -20,7 +20,7 @@ import javax.swing.Timer;
  */
 public class Frame extends BaseFrame {
     private Game game;
-    private Mouse mouse;
+    public Mouse mouse;
     private Panel panel;
 
     public Frame(Game game) {

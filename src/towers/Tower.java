@@ -156,4 +156,6 @@ public abstract class Tower extends Locationable {
     public int getCooldown() {
         return (int) (this.cooldown * this.cooldownMultiplier());
     }
+
+    public abstract String[] getInfo();
 }
