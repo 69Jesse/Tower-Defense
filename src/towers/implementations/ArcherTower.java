@@ -59,7 +59,7 @@ public final class ArcherTower extends RangeDamageTower {
             case 2:
                 return 0.8;
             case 3:
-                return 0.6;
+                return 0.2;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }

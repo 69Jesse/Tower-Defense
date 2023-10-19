@@ -59,7 +59,7 @@ public final class Game {
     private void init() {
         this.lives = 15;
         this.gold = 10000;
-        this.speed = 10;
+        this.speed = 1;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
@@ -355,6 +355,7 @@ public final class Game {
     /**
      * Removed an amount of life from the total.
      * And checks if the player lost the game.
+     * 
      * @param amount The amount of lives to be removed.
      */
     public void removeLife(int amount) {
@@ -369,6 +370,9 @@ public final class Game {
      * Executed when the player loses the game.
      */
     private void gameLost() {
+        if (this.gameLost) {
+            return;
+        }
         System.out.println("You lost the game :(");
         this.gameLost = true;
     }
