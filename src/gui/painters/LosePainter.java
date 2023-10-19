@@ -25,11 +25,12 @@ public final class LosePainter extends Painter {
 
     private final Color textColor = Color.RED;
     private final Color boxColor = Color.BLACK;
+    private final double opacity = 0.7;
 
     @Override
     public void paint(BetterGraphics graphics) {
         if (game.gameLost && game.gameStarted) {
-            BetterGraphics.Box box = graphics.new Box(this.boxColor, 0.7, 0.5);
+            BetterGraphics.Box box = graphics.new Box(this.boxColor, this.opacity, 0.5);
 
             graphics.setColor(textColor);
             graphics.setFont(4.0);
@@ -40,7 +41,7 @@ public final class LosePainter extends Painter {
                 box
             );
 
-            BetterGraphics.Box box2 = graphics.new Box(this.boxColor, 0.5, 0.5);
+            BetterGraphics.Box box2 = graphics.new Box(this.boxColor, this.opacity, 0.5);
             graphics.setFont(2.5);
             graphics.drawStringCenteredWithBox(
                 "Press enter to try again", 
