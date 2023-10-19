@@ -25,18 +25,21 @@ public final class Game {
     public Field field;
     public Frame frame;
 
+    private int lives;
     private int gold;
     public Location selectedLocation;  // null when no location is selected.
     public int speed;
+    public boolean gameLost;
+    public boolean gameStarted;
 
     private int exp;
     private int enemyKills;
     private int goldSpent;
 
     /**
-     * Starts the game.
+     * Runs the game.
      */
-    public void start() {
+    public void run() {
         System.out.println("Game starting!");
         this.init();
         this.field = new Field();
@@ -49,11 +52,24 @@ public final class Game {
      * Initializes the game.
      */
     private void init() {
+        this.lives = 15;
         this.gold = 10000;
         this.speed = 1;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
+        this.gameLost = false;
+        this.gameStarted = false;
+    }
+
+
+    /**
+     * Returns the amount of lives left.
+     * 
+     * @return The lives left.
+     */
+    public int getLives() {
+        return this.lives;
     }
 
     /**
@@ -199,6 +215,9 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
+        if (this.gameLost || !this.gameStarted) {
+            return;
+        }
         for (int i = 0; i < this.speed; i++) {
             this.tickIteration();
         }
@@ -241,6 +260,13 @@ public final class Game {
             }
         }
         this.field.sortEnemies();
+    }
+
+    /**
+     * Starts the game.
+     */
+    public void start() {
+        this.gameStarted = true;
     }
 
     /**
@@ -316,5 +342,26 @@ public final class Game {
             throw new IllegalArgumentException("Cannot add negative gold spent.");
         }
         this.goldSpent += goldSpent;
+    }
+
+    /**
+     * Removed an amount of life from the total.
+     * And checks if the player lost the game.
+     * @param amount The amount of lives to be removed.
+     */
+    public void removeLife(int amount) {
+        this.lives -= amount;
+        if (this.lives <= 0) {
+            this.lives = 0;
+            gameLost();
+        }
+    }
+
+    /**
+     * Executed when the player loses the game.
+     */
+    private void gameLost() {
+        System.out.println("You lost the game :(");
+        this.gameLost = true;
     }
 }

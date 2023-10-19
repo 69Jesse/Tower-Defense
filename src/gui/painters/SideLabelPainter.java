@@ -29,7 +29,8 @@ public final class SideLabelPainter extends Painter {
      */
     private String[] getLeftStrings() {
         return new String[] {
-            String.format("Gold: %d", this.game.getGold())
+            String.format("Gold: %d", this.game.getGold()),
+            String.format("Lives: %d", this.game.getLives())
         };
     }
 
