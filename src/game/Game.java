@@ -39,7 +39,7 @@ public final class Game {
 
     // Temporary, the win condition needs to be based on waves.
     // But we do not have waves yet, so that will be something for a later date.
-    private final int winKills = 100;
+    private final int winKills = 10000;
 
     /**
      * Runs the game.
@@ -59,7 +59,7 @@ public final class Game {
     private void init() {
         this.lives = 15;
         this.gold = 10000;
-        this.speed = 1;
+        this.speed = 10;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;

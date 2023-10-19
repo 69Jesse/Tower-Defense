@@ -22,9 +22,10 @@ public class StartAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.game.gameStarted && !this.game.gameLost) {
+        boolean gameEnded = this.game.gameLost || this.game.gameWon;
+        if (this.game.gameStarted && !gameEnded) {
             return;
-        } else if (this.game.gameLost) {
+        } else if (gameEnded) {
             this.game.reset();
             this.game.gameStarted = false;
             return;
