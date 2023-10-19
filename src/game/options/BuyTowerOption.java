@@ -39,9 +39,11 @@ public abstract class BuyTowerOption extends Option {
         }
         Tower tower = this.createTower(location);
         try {
-            this.game.removeGold(this.getCost());
+            int cost = this.getCost();
+            this.game.removeGold(cost);
             this.field.addTower(tower);
-        } catch (Exception e) {
+            this.game.addGoldSpent(cost);
+        } catch (IllegalArgumentException e) {
             return;
         }
     }

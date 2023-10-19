@@ -21,6 +21,7 @@ public abstract class Enemy extends BaseLocationable {
 
     protected int health;
     protected int ticksElapsed;
+    protected boolean done;
 
     /**
      * Constructs a new enemy.
@@ -53,6 +54,7 @@ public abstract class Enemy extends BaseLocationable {
         this.flying = flying;
         this.health = maxHealth;
         this.ticksElapsed = 0;
+        this.done = false;
     }
 
     @Override
@@ -158,14 +160,25 @@ public abstract class Enemy extends BaseLocationable {
      * Handles the logic when this enemy dies.
      */
     public void onDeath() {
+        if (this.done) {
+            return;
+        }
         this.game.addGold(this.worth);
+        this.game.addExp(this.worth);
+        this.game.addEnemyKills(1);
+        this.done = true;
     }
 
     /**
      * Handles the logic when this enemy reaches the end of the field.
      */
     public void onEndReached() {
+        if (this.done) {
+            return;
+        }
+        // this.game.removeLife(1);
         // TODO: remove a life??
+        this.done = true;
     }
 
     /**
@@ -175,7 +188,6 @@ public abstract class Enemy extends BaseLocationable {
         this.ticksElapsed++;
         if (this.isAtEnd()) {
             this.onEndReached();
-            this.game.field.enemies.remove(this);
         }
     }
 }

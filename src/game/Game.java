@@ -29,6 +29,10 @@ public final class Game {
     public Location selectedLocation;  // null when no location is selected.
     public int speed;
 
+    private int exp;
+    private int enemyKills;
+    private int goldSpent;
+
     /**
      * Starts the game.
      */
@@ -47,6 +51,9 @@ public final class Game {
     private void init() {
         this.gold = 10000;
         this.speed = 1;
+        this.exp = 0;
+        this.enemyKills = 0;
+        this.goldSpent = 0;
     }
 
     /**
@@ -228,7 +235,7 @@ public final class Game {
         }
         for (int i = this.field.enemies.size() - 1; i >= 0; i--) {
             Enemy enemy = this.field.enemies.get(i);
-            boolean shouldBeRemoved = enemy.isDead();
+            boolean shouldBeRemoved = enemy.isDead() || enemy.isAtEnd();
             if (shouldBeRemoved) {
                 this.field.enemies.remove(i);
             }
@@ -243,5 +250,71 @@ public final class Game {
         this.field.reset();
         this.selectedLocation = null;
         this.init();
+    }
+
+    /**
+     * Returns the exp.
+     * 
+     * @return The exp.
+     */
+    public int getExp() {
+        return this.exp;
+    }
+
+    /**
+     * Adds exp.
+     * 
+     * @param exp                       The exp to add.
+     * @throws IllegalArgumentException If the exp is negative.
+     */
+    public void addExp(int exp) throws IllegalArgumentException {
+        if (exp < 0) {
+            throw new IllegalArgumentException("Cannot add negative exp.");
+        }
+        this.exp += exp;
+    }
+
+    /**
+     * Returns the enemy kills.
+     * 
+     * @return The enemy kills.
+     */
+    public int getEnemyKills() {
+        return this.enemyKills;
+    }
+
+    /**
+     * Adds enemy kills.
+     * 
+     * @param enemyKills                The enemy kills to add.
+     * @throws IllegalArgumentException If the enemy kills is negative.
+     */
+    public void addEnemyKills(int enemyKills) throws IllegalArgumentException {
+        if (enemyKills < 0) {
+            throw new IllegalArgumentException("Cannot add negative enemy kills.");
+        }
+        this.enemyKills += enemyKills;
+    }
+
+    /**
+     * Returns the gold spent.
+     * 
+     * @return The gold spent.
+     */
+    public int getGoldSpent() {
+        return this.goldSpent;
+    }
+
+    /**
+     * Adds gold spent.
+     * 
+     * @param goldSpent                 The gold spent to add.
+     * @throws IllegalArgumentException If the gold spent is negative.
+     */
+    public void addGoldSpent(int goldSpent) throws IllegalArgumentException {
+        if (goldSpent < 0) {
+            throw new IllegalArgumentException("Cannot add negative gold spent.");
+        }
+        this.goldSpent += goldSpent;
     }
 }
