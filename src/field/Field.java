@@ -327,6 +327,15 @@ public class Field {
     }
 
     /**
+     * Adds an enemy to the beginning of the field.
+     * 
+     * @param enemy The enemy to add.
+     */
+    public void addEnemy(Enemy enemy) {
+        this.enemies.add(enemy);
+    }
+
+    /**
      * Sorts the enemies by percentage done.
      */
     public void sortEnemies() {

@@ -1,8 +1,6 @@
 package game;
 
 import enemies.Enemy;
-import enemies.implementations.DroneEnemy;
-import enemies.implementations.RegularEnemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
 import game.options.BuyBombTowerOption;
@@ -25,9 +23,7 @@ public final class Game {
     public Field field;
     public Frame frame;
 
-    private int waveNumber;
-    private int waveValue;
-    private int currentWaveValue;
+    public WaveHandler waveHandler;
     private int lives;
     private int gold;
     public Location selectedLocation;  // null when no location is selected.
@@ -41,9 +37,6 @@ public final class Game {
     private int exp;
     private int enemyKills;
     private int goldSpent;
-    private int tickCount; // The current tick (modulo 5)
-
-    private final int maxWave = 20;
 
     /**
      * Runs the game.
@@ -61,9 +54,7 @@ public final class Game {
      * Initializes the game.
      */
     private void init() {
-        this.waveNumber = 0;
-        this.waveValue = 8;
-        this.currentWaveValue = 0;
+        this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = 10000;
         this.speed = 1;
@@ -75,7 +66,6 @@ public final class Game {
         this.gameWon = false;
         this.waveStarted = false;
         this.waveSpawned = false;
-        this.tickCount = 0;
     }
 
     /**
@@ -230,7 +220,6 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
-        tickCount = (tickCount + 1) % 30;
         if (this.gameLost || this.gameWon || !this.gameStarted) {
             return;
         }
@@ -240,96 +229,10 @@ public final class Game {
     }
 
     /**
-     * Starts a new wave.
-     */
-    private void newWave() {
-        if (waveStarted) {
-            return;
-        }
-        this.waveSpawned = false;
-        this.waveStarted = true;
-        this.waveNumber++;
-        if (this.waveNumber > this.maxWave) {
-            // The player won the game.
-            this.gameWon = true;
-            return;
-        }
-        this.currentWaveValue = 0;
-    }
-
-    /**
-     * Handles a wave.
-     */
-    private void waveIteration() {
-        if (!waveStarted || waveSpawned) {
-            return;
-        }
-        if (tickCount != 0) {
-            return;
-        }
-        int differentEnemyAmount = 2;
-        double randomDouble = Math.random() * differentEnemyAmount;
-        int randomInt = (int) randomDouble;
-        Enemy enemy = null;
-        switch (randomInt) {
-            case 0:
-                enemy = new RegularEnemy(this);
-                break;
-            case 1:
-                enemy = new DroneEnemy(this);
-                break;
-            default:
-                // We shouldn't get here.
-                break;
-        }
-        this.currentWaveValue += enemy.weight;
-        if (this.currentWaveValue > this.waveValue) {
-            // The enemy is worth too much, so we don't put them in.
-            this.currentWaveValue -= enemy.weight;
-        } else {
-            this.field.enemies.add(enemy);
-        }
-        if (this.currentWaveValue >= this.waveValue) {
-            // The wave has been fully spawned.
-            this.waveSpawned = true;
-            this.waveStarted = false;
-            double newWaveValue = this.waveValue * 1.2;
-            this.waveValue = (int) newWaveValue;
-        }
-    }
-
-    /**
-     * Returns the wave number.
-     * 
-     * @return The wave number.
-     */
-    public int getWaveNumber() {
-        return this.waveNumber;
-    }
-
-    /**
-     * Returns the max wave.
-     * 
-     * @return The max wave.
-     */
-    public int getMaxWave() {
-        return this.maxWave;
-    }
-
-    /**
-     * Returns the wave value.
-     * 
-     * @return The wave value.
-     */
-    public int getWaveValue() {
-        return this.waveValue;
-    }
-
-    /**
      * Handle a game tick iteration.
      */
     private void tickIteration() {
-        waveIteration();
+        this.waveHandler.tick();
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }
@@ -358,7 +261,6 @@ public final class Game {
      */
     public void start() {
         this.gameStarted = true;
-        this.newWave();
     }
 
     /**
@@ -412,12 +314,6 @@ public final class Game {
             throw new IllegalArgumentException("Cannot add negative enemy kills.");
         }
         this.enemyKills += amount;
-
-        // Now we check if we can spawn the next wave.
-        if (this.field.enemies.size() <= 1) {
-            // We can start spawning the next wave.
-            newWave();
-        }
     }
 
     /**

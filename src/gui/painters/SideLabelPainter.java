@@ -35,7 +35,11 @@ public final class SideLabelPainter extends Painter {
         return new String[] {
             String.format("Gold: %d", this.game.getGold()),
             String.format("Lives: %d", this.game.getLives()),
-            String.format("Waves: %1d / %2d", this.game.getWaveNumber(), this.game.getMaxWave())
+            String.format(
+                "Waves: %1d / %2d",
+                this.game.waveHandler.getWaveNumber(),
+                this.game.waveHandler.getMaxWave()
+            )
         };
     }
 
@@ -49,7 +53,7 @@ public final class SideLabelPainter extends Painter {
             String.format("Exp: %d", this.game.getExp()),
             String.format("Kills: %d", this.game.getEnemyKills()),
             String.format("Gold spent: %d", this.game.getGoldSpent()),
-            String.format("wave value: %d", this.game.getWaveValue())
+            String.format("Wave value: %d", this.game.waveHandler.getWaveValue())
         };
     }
 
