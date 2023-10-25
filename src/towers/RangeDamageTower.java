@@ -3,8 +3,8 @@ package towers;
 import enemies.Enemy;
 import game.Game;
 import java.util.ArrayList;
-import location.Location;
 import java.util.function.Function;
+import location.Location;
 
 
 
