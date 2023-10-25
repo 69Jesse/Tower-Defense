@@ -6,12 +6,14 @@ import game.options.BuyArcherTowerOption;
 import game.options.BuyBombTowerOption;
 import game.options.BuyLaserTowerOption;
 import game.options.SellOption;
+import game.options.SwitchTargetOption;
 import game.options.UpgradeOption;
 import gui.frame.Frame;
 import java.util.ArrayList;
 import java.util.Random;
 import location.Location;
 import towers.Projectile;
+import towers.RangeDamageTower;
 import towers.Tower;
 
 
@@ -180,6 +182,7 @@ public final class Game {
 
     private static SellOption SELL_OPTION;
     private static UpgradeOption UPGRADE_OPTION;
+    private static SwitchTargetOption SWITCH_TARGET_OPTION;
 
     /**
      * Caches the options because there is no need to create them every time.
@@ -190,6 +193,7 @@ public final class Game {
         BUY_LASER_TOWER_OPTION = new BuyLaserTowerOption(this, this.field);
         SELL_OPTION = new SellOption(this, this.field);
         UPGRADE_OPTION = new UpgradeOption(this, this.field);
+        SWITCH_TARGET_OPTION = new SwitchTargetOption(this, this.field);
     }
 
     /**
@@ -213,6 +217,9 @@ public final class Game {
         options.add(SELL_OPTION);
         if (tower.canUpgrade()) {
             options.add(UPGRADE_OPTION);
+        }
+        if (tower instanceof RangeDamageTower) {
+            options.add(SWITCH_TARGET_OPTION);
         }
     }
 

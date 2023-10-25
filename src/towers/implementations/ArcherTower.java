@@ -125,7 +125,8 @@ public final class ArcherTower extends RangeDamageTower {
             String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
-            String.format("Total spent: %d", this.getTotalSpent())
+            String.format("Total spent: %d", this.getTotalSpent()),
+            String.format("Targeting mode: %s", this.getTargetingMode().getName())
         };
     }
 }
