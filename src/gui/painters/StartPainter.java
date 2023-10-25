@@ -23,22 +23,23 @@ public final class StartPainter extends Painter {
         super(game, frame, panel);
     }
 
-    private final Color textColor = Color.WHITE;
-    private final Color boxColor = Color.BLACK;
+    private final Color textColor = new Color(0xFFFFFF);
+    private final Color boxColor = new Color(0x000000);
 
     @Override
     public void paint(BetterGraphics graphics) {
-        if (!game.gameStarted) {
-            BetterGraphics.Box box = graphics.new Box(this.boxColor, 0.7, 0.5);
-
-            graphics.setColor(textColor);
-            graphics.setFont(4.0);
-            graphics.drawStringCenteredWithBox(
-                "Press enter to start the game.", 
-                this.game.field.width / 2.0,
-                this.game.field.height / 2.0,
-                box
-            );
+        if (this.game.hasStarted()) {
+            return;
         }
+        BetterGraphics.Box box = graphics.new Box(this.boxColor, 0.7, 0.5);
+
+        graphics.setColor(this.textColor);
+        graphics.setFont(4.0);
+        graphics.drawStringCenteredWithBox(
+            "Press enter to start the game.", 
+            this.game.field.width / 2.0,
+            this.game.field.height / 2.0,
+            box
+        );
     }
 }

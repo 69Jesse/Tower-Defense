@@ -327,6 +327,15 @@ public class Field {
     }
 
     /**
+     * Adds an enemy to the beginning of the field.
+     * 
+     * @param enemy The enemy to add.
+     */
+    public void addEnemy(Enemy enemy) {
+        this.enemies.add(enemy);
+    }
+
+    /**
      * Sorts the enemies by percentage done.
      */
     public void sortEnemies() {
@@ -350,5 +359,14 @@ public class Field {
                 return 0;
             }
         });
+    }
+
+    /**
+     * Returns whether all enemies are dead.
+     * 
+     * @return Whether all enemies are dead.
+     */
+    public boolean noEnemiesAlive() {
+        return this.enemies.size() == 0;
     }
 }

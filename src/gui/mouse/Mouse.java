@@ -73,8 +73,9 @@ public class Mouse extends BaseMouse {
     }
 
     private void checkClick(Location location) {
-        if (this.game.gameLost) {
-            // It is okay to perform a click when the game has not started, but not you have lost.
+        if (this.game.hasEnded()) {
+            // It is okay to perform a click when the game
+            // has not started, but not when it has ended.
             return;
         }
         if (this.game.selectedLocation != null) {

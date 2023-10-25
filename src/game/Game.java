@@ -1,8 +1,6 @@
 package game;
 
 import enemies.Enemy;
-import enemies.implementations.DroneEnemy;
-import enemies.implementations.RegularEnemy;
 import field.Field;
 import game.options.BuyArcherTowerOption;
 import game.options.BuyBombTowerOption;
@@ -25,25 +23,24 @@ public final class Game {
     public Field field;
     public Frame frame;
 
-    private int waveNumber;
-    private int waveValue;
-    private int currentWaveValue;
+    public WaveHandler waveHandler;
     private int lives;
     private int gold;
     public Location selectedLocation;  // null when no location is selected.
     public int speed;
-    public boolean gameLost;
-    public boolean gameStarted;
-    public boolean gameWon;
-    public boolean waveStarted;
-    public boolean waveSpawned;
+
+    enum GameState {
+        WAITING_TO_START,
+        STARTED,
+        WON,
+        LOST;
+    }
+
+    private GameState state;
 
     private int exp;
     private int enemyKills;
     private int goldSpent;
-    private int tickCount; // The current tick (modulo 5)
-
-    private final int maxWave = 20;
 
     /**
      * Runs the game.
@@ -61,21 +58,14 @@ public final class Game {
      * Initializes the game.
      */
     private void init() {
-        this.waveNumber = 0;
-        this.waveValue = 8;
-        this.currentWaveValue = 0;
+        this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = 10000;
         this.speed = 1;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
-        this.gameLost = false;
-        this.gameStarted = false;
-        this.gameWon = false;
-        this.waveStarted = false;
-        this.waveSpawned = false;
-        this.tickCount = 0;
+        this.state = GameState.WAITING_TO_START;
     }
 
     /**
@@ -230,106 +220,20 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
-        tickCount = (tickCount + 1) % 30;
-        if (this.gameLost || this.gameWon || !this.gameStarted) {
+        if (!this.isRunning()) {
             return;
         }
         for (int i = 0; i < this.speed; i++) {
             this.tickIteration();
         }
-    }
-
-    /**
-     * Starts a new wave.
-     */
-    private void newWave() {
-        if (waveStarted) {
-            return;
-        }
-        this.waveSpawned = false;
-        this.waveStarted = true;
-        this.waveNumber++;
-        if (this.waveNumber > this.maxWave) {
-            // The player won the game.
-            this.gameWon = true;
-            return;
-        }
-        this.currentWaveValue = 0;
-    }
-
-    /**
-     * Handles a wave.
-     */
-    private void waveIteration() {
-        if (!waveStarted || waveSpawned) {
-            return;
-        }
-        if (tickCount != 0) {
-            return;
-        }
-        int differentEnemyAmount = 2;
-        double randomDouble = Math.random() * differentEnemyAmount;
-        int randomInt = (int) randomDouble;
-        Enemy enemy = null;
-        switch (randomInt) {
-            case 0:
-                enemy = new RegularEnemy(this);
-                break;
-            case 1:
-                enemy = new DroneEnemy(this);
-                break;
-            default:
-                // We shouldn't get here.
-                break;
-        }
-        this.currentWaveValue += enemy.weight;
-        if (this.currentWaveValue > this.waveValue) {
-            // The enemy is worth too much, so we don't put them in.
-            this.currentWaveValue -= enemy.weight;
-        } else {
-            this.field.enemies.add(enemy);
-        }
-        if (this.currentWaveValue >= this.waveValue) {
-            // The wave has been fully spawned.
-            this.waveSpawned = true;
-            this.waveStarted = false;
-            double newWaveValue = this.waveValue * 1.2;
-            this.waveValue = (int) newWaveValue;
-        }
-    }
-
-    /**
-     * Returns the wave number.
-     * 
-     * @return The wave number.
-     */
-    public int getWaveNumber() {
-        return this.waveNumber;
-    }
-
-    /**
-     * Returns the max wave.
-     * 
-     * @return The max wave.
-     */
-    public int getMaxWave() {
-        return this.maxWave;
-    }
-
-    /**
-     * Returns the wave value.
-     * 
-     * @return The wave value.
-     */
-    public int getWaveValue() {
-        return this.waveValue;
+        this.field.sortEnemies();  // To make sure the enemies are drawn in the right order.
     }
 
     /**
      * Handle a game tick iteration.
      */
     private void tickIteration() {
-        waveIteration();
+        this.waveHandler.tick();
         for (Tower tower : this.field.towers.values()) {
             tower.tick();
         }
@@ -350,15 +254,19 @@ public final class Game {
                 this.field.enemies.remove(i);
             }
         }
-        this.field.sortEnemies();
+        if (this.waveHandler.isCompletelyDone()) {
+            this.onGameWin();
+        }
     }
 
     /**
      * Starts the game.
      */
     public void start() {
-        this.gameStarted = true;
-        this.newWave();
+        if (this.hasStarted()) {
+            return;
+        }
+        this.state = GameState.STARTED;
     }
 
     /**
@@ -412,12 +320,6 @@ public final class Game {
             throw new IllegalArgumentException("Cannot add negative enemy kills.");
         }
         this.enemyKills += amount;
-
-        // Now we check if we can spawn the next wave.
-        if (this.field.enemies.size() <= 1) {
-            // We can start spawning the next wave.
-            newWave();
-        }
     }
 
     /**
@@ -442,6 +344,26 @@ public final class Game {
         this.goldSpent += amount;
     }
 
+    public boolean hasStarted() {
+        return this.state != GameState.WAITING_TO_START;
+    }
+
+    public boolean hasWon() {
+        return this.state == GameState.WON;
+    }
+
+    public boolean hasLost() {
+        return this.state == GameState.LOST;
+    }
+
+    public boolean isRunning() {
+        return this.state == GameState.STARTED;
+    }
+
+    public boolean hasEnded() {
+        return this.hasWon() || this.hasLost();
+    }
+
     /**
      * Removed an amount of life from the total.
      * And checks if the player lost the game.
@@ -452,18 +374,29 @@ public final class Game {
         this.lives -= amount;
         if (this.lives <= 0) {
             this.lives = 0;
-            gameLost();
+            this.onGameLose();
         }
     }
 
     /**
-     * Executed when the player loses the game.
+     * Called when the player wins the game.
      */
-    private void gameLost() {
-        if (this.gameLost) {
+    public void onGameWin() {
+        if (this.hasEnded()) {
+            return;
+        }
+        System.out.println("You won the game!");
+        this.state = GameState.WON;
+    }
+
+    /**
+     * Called when the player loses the game.
+     */
+    private void onGameLose() {
+        if (this.hasEnded()) {
             return;
         }
         System.out.println("You lost the game :(");
-        this.gameLost = true;
+        this.state = GameState.LOST;
     }
 }
