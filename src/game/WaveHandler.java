@@ -93,7 +93,7 @@ public class WaveHandler {
      * @return The maximum wave number.
      */
     public int getMaxWave() {
-        return 20;
+        return 100;
     }
 
     /**
@@ -198,6 +198,9 @@ public class WaveHandler {
             this.spawnNextEnemy();
             return;
         }
+        if (this.maxWaveReached()) {
+            return;
+        }
         if (this.ticksUntilNextWave > 0) {
             this.ticksUntilNextWave--;
             if (this.game.field.noEnemiesAlive()) {
@@ -212,12 +215,21 @@ public class WaveHandler {
     }
 
     /**
+     * Returns whether the maximum wave has been reached.
+     * 
+     * @return Whether the maximum wave has been reached.
+     */
+    private boolean maxWaveReached() {
+        return this.waveNumber >= this.getMaxWave();
+    }
+
+    /**
      * Returns whether the game is completely done.
      * 
      * @return Whether the game is completely done.
      */
     public boolean isCompletelyDone() {
-        return this.waveNumber >= this.getMaxWave()
+        return this.maxWaveReached()
             && this.isDoneSpawning()
             && this.game.field.noEnemiesAlive();
     }
