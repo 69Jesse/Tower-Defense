@@ -28,11 +28,15 @@ public final class Game {
     private int gold;
     public Location selectedLocation;  // null when no location is selected.
     public int speed;
-    public boolean gameLost;
-    public boolean gameStarted;
-    public boolean gameWon;
-    public boolean waveStarted;
-    public boolean waveSpawned;
+
+    enum GameState {
+        WAITING_TO_START,
+        STARTED,
+        WON,
+        LOST;
+    }
+
+    private GameState state;
 
     private int exp;
     private int enemyKills;
@@ -61,11 +65,7 @@ public final class Game {
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
-        this.gameLost = false;
-        this.gameStarted = false;
-        this.gameWon = false;
-        this.waveStarted = false;
-        this.waveSpawned = false;
+        this.state = GameState.WAITING_TO_START;
     }
 
     /**
@@ -220,7 +220,7 @@ public final class Game {
      * Handle a game tick.
      */
     public void tick() {
-        if (this.gameLost || this.gameWon || !this.gameStarted) {
+        if (!this.isRunning()) {
             return;
         }
         for (int i = 0; i < this.speed; i++) {
@@ -260,7 +260,10 @@ public final class Game {
      * Starts the game.
      */
     public void start() {
-        this.gameStarted = true;
+        if (this.hasStarted()) {
+            return;
+        }
+        this.state = GameState.STARTED;
     }
 
     /**
@@ -338,6 +341,26 @@ public final class Game {
         this.goldSpent += amount;
     }
 
+    public boolean hasStarted() {
+        return this.state != GameState.WAITING_TO_START;
+    }
+
+    public boolean hasWon() {
+        return this.state == GameState.WON;
+    }
+
+    public boolean hasLost() {
+        return this.state == GameState.LOST;
+    }
+
+    public boolean isRunning() {
+        return this.state == GameState.STARTED;
+    }
+
+    public boolean hasEnded() {
+        return this.hasWon() || this.hasLost();
+    }
+
     /**
      * Removed an amount of life from the total.
      * And checks if the player lost the game.
@@ -348,18 +371,18 @@ public final class Game {
         this.lives -= amount;
         if (this.lives <= 0) {
             this.lives = 0;
-            gameLost();
+            this.onGameLose();
         }
     }
 
     /**
-     * Executed when the player loses the game.
+     * Called when the player loses the game.
      */
-    private void gameLost() {
-        if (this.gameLost) {
+    private void onGameLose() {
+        if (this.hasLost()) {
             return;
         }
         System.out.println("You lost the game :(");
-        this.gameLost = true;
+        this.state = GameState.LOST;
     }
 }

@@ -360,4 +360,13 @@ public class Field {
             }
         });
     }
+
+    /**
+     * Returns whether all enemies are dead.
+     * 
+     * @return Whether all enemies are dead.
+     */
+    public boolean noEnemiesAlive() {
+        return this.enemies.size() == 0;
+    }
 }

@@ -181,6 +181,10 @@ public class WaveHandler {
      * This method is called every tick to update the wave.
      */
     public void tick() {
+        if (!this.game.isRunning()) {
+            // Should not happen, but just in case.
+            return;
+        }
         if (!this.isDoneSpawning()) {
             if (this.ticksUntilNextSpawn > 0) {
                 this.ticksUntilNextSpawn--;
@@ -190,8 +194,13 @@ public class WaveHandler {
             return;
         }
         if (this.ticksUntilNextWave > 0) {
-            // TODO: if all dead: ticks = max(half a second, ticks)
             this.ticksUntilNextWave--;
+            if (this.game.field.noEnemiesAlive()) {
+                this.ticksUntilNextWave = Math.min(
+                    this.ticksUntilNextWave,
+                    this.game.ticksPerSecond / 2
+                );
+            }
             return;
         }
         this.startNewWave();
