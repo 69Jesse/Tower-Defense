@@ -111,6 +111,7 @@ public class WaveHandler {
             this.game.ticksPerSecond * 0.1
             + this.game.random.nextDouble() * this.game.ticksPerSecond * 0.4
             );  // Checker only accepts this indentation for some reason
+        System.out.println(this.game.random.nextDouble());
     }
 
     /**
@@ -150,7 +151,7 @@ public class WaveHandler {
             waveValue -= enemy.weight;
         }
 
-        Collections.shuffle(this.enemies);
+        Collections.shuffle(this.enemies, this.game.random);
         this.spawnIndex = 0;
         this.newTicksUntilNextSpawn();
     }
