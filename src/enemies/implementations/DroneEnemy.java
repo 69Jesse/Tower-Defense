@@ -10,8 +10,8 @@ import game.Game;
 public class DroneEnemy extends Enemy {
     private static final int WORTH = 10;
     private static final int WEIGHT = 1;
-    private static final int MAX_HEALTH = 50;
-    private static final double SPEED = 0.12;
+    private static final int MAX_HEALTH = 20;
+    private static final double SPEED = 0.15;
     private static final double SIZE = 3.0;
     private static final boolean FLYING = true;
 

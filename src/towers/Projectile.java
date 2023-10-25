@@ -14,7 +14,7 @@ public class Projectile extends Locationable {
     private final Game game;
     public final DamageTower source;
     public Enemy target;
-    private final int damage;
+    private final double damage;
     private final double speed;
     private final String imagePath;
     public final double size;
@@ -37,7 +37,7 @@ public class Projectile extends Locationable {
         Game game,
         DamageTower source,
         Enemy target,
-        int damage,
+        double damage,
         double speed,
         String imagePath,
         double size,

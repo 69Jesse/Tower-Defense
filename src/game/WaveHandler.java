@@ -93,7 +93,7 @@ public class WaveHandler {
      * @return The maximum wave number.
      */
     public int getMaxWave() {
-        return 1;
+        return 20;
     }
 
     /**
@@ -112,8 +112,13 @@ public class WaveHandler {
             );  // Checker only accepts this indentation for some reason
     }
 
+    /**
+     * Sets the ticks until the next wave.
+     * Note that this starts counting down
+     * when the last wave is done spawning.
+     */
     private void newTicksUntilNextWave() {
-        this.ticksUntilNextWave = this.game.ticksPerSecond * 5;
+        this.ticksUntilNextWave = this.game.ticksPerSecond * 10;
     }
 
     /**

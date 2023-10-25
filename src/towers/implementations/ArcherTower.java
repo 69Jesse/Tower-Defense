@@ -13,8 +13,8 @@ import towers.RangeDamageTower;
 public final class ArcherTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
-    private static final int COOLDOWN = 60;
-    private static final int DAMAGE = 10;
+    private static final int COOLDOWN = 40;
+    private static final double DAMAGE = 15.0;
     private static final double RANGE = 10.0;    
     private static final boolean CAN_DAMAGE_FLYING = true;
 
@@ -59,7 +59,7 @@ public final class ArcherTower extends RangeDamageTower {
             case 2:
                 return 0.8;
             case 3:
-                return 0.2;
+                return 0.6;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -73,7 +73,7 @@ public final class ArcherTower extends RangeDamageTower {
             case 2:
                 return 1.3;
             case 3:
-                return 1.5;
+                return 1.7;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -93,7 +93,7 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
-    private static final double PROJECTILE_SPEED = 0.3;
+    private static final double PROJECTILE_SPEED = 0.4;
     private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/archer_tower.png";
     private static final double PROJECTILE_SIZE = 1.0;
     private static final double PROJECTILE_MAX_CURVE = 5.0;
@@ -113,15 +113,16 @@ public final class ArcherTower extends RangeDamageTower {
     }
 
     @Override
-    public void onTargetHit(Enemy target, int damage) {
-        target.onHit(this.damage);
+    public void onTargetHit(Enemy target, double damage) {
+        target.onHit(this.getDamage());
     }
 
     @Override
     public String[] getInfo() {
         return new String[] {
             String.format("Archer Tower (Lvl %d)", this.level),
-            String.format("Damage: %d", this.getDamage()),
+            "Single Target. Has a long range.",
+            String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
             String.format("Total spent: %d", this.getTotalSpent())

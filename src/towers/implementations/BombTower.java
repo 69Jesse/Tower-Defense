@@ -15,7 +15,7 @@ public final class BombTower extends RangeDamageTower {
     private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 120;
-    private static final int DAMAGE = 30;
+    private static final double DAMAGE = 30.0;
     private static final double RANGE = 7.5;
     private static final boolean CAN_DAMAGE_FLYING = false;
 
@@ -127,7 +127,7 @@ public final class BombTower extends RangeDamageTower {
     }
 
     @Override
-    public void onTargetHit(Enemy target, int damage) {
+    public void onTargetHit(Enemy target, double damage) {
         Location targetLocation = target.getLocation();
         ArrayList<Enemy> hitting = new ArrayList<>();
         for (Enemy enemy : this.game.field.enemies) {
@@ -136,7 +136,7 @@ public final class BombTower extends RangeDamageTower {
             }
         }
         for (Enemy enemy : hitting) {
-            enemy.onHit(this.damage);
+            enemy.onHit(this.getDamage());
         }
     }
 
@@ -144,7 +144,8 @@ public final class BombTower extends RangeDamageTower {
     public String[] getInfo() {
         return new String[] {
             String.format("Bomb Tower (Lvl %d)", this.level),
-            String.format("Damage: %d", this.getDamage()),
+            "Splash Damage. Cannot damage flying enemies.",
+            String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
             String.format("Total spent: %d", this.getTotalSpent())

@@ -9,7 +9,7 @@ import location.Location;
  * A tower that can damage enemies.
  */
 public abstract class DamageTower extends Tower {
-    protected final int damage;
+    protected final double damage;
 
     /**
      * Constructs a tower that can damage enemies.
@@ -27,7 +27,7 @@ public abstract class DamageTower extends Tower {
         int cost,
         int maxLevel,
         int cooldown,
-        int damage
+        double damage
     ) {
         super(
             game,
@@ -52,8 +52,8 @@ public abstract class DamageTower extends Tower {
      * 
      * @return The damage of this tower.
      */
-    public int getDamage() {
-        return (int) (this.damage * this.damageMultiplier());
+    public double getDamage() {
+        return this.damage * this.damageMultiplier();
     }
 
     /**
@@ -69,5 +69,5 @@ public abstract class DamageTower extends Tower {
      * @param target The enemy that was damaged.
      * @param damage The amount of damage that was done.
      */
-    public abstract void onTargetHit(Enemy target, int damage);
+    public abstract void onTargetHit(Enemy target, double damage);
 }

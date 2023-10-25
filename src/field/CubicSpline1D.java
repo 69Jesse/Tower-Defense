@@ -84,7 +84,7 @@ public class CubicSpline1D {
      * 
      * @param a The matrix of coefficients.
      * @param b Ordinate or "dependent variable" values.
-     * @return The solution to the system ax = b. Returned shape is identical to b.
+     * @return  The solution to the system ax = b. Returned shape is identical to b.
      */
     public static ArrayList<Double> linearSolve(
         double[][] a,
@@ -231,10 +231,6 @@ public class CubicSpline1D {
      */
     public double getValue(double x) {
         int i = this.getInterval(x);
-        // System.out.println("A: " + this.aValues);
-        // System.out.println("B: " + this.bValues);
-        // System.out.println("C: " + this.cValues);
-        // System.out.println("D: " + this.dValues);
         double dx = x - this.xValues.get(i);
         double value = this.aValues.get(i)
             + this.bValues.get(i) * dx

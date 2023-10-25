@@ -60,12 +60,21 @@ public final class Game {
     private void init() {
         this.waveHandler = new WaveHandler(this);
         this.lives = 15;
-        this.gold = 10000;
+        this.gold = this.getStartingGold();
         this.speed = 1;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
         this.state = GameState.WAITING_TO_START;
+    }
+
+    /**
+     * Returns the starting gold.
+     * 
+     * @return The starting gold.
+     */
+    public int getStartingGold() {
+        return 250;
     }
 
     /**
@@ -255,7 +264,7 @@ public final class Game {
             }
         }
         if (this.waveHandler.isCompletelyDone()) {
-            this.onGameWin();
+            this.onWin();
         }
     }
 
@@ -374,14 +383,14 @@ public final class Game {
         this.lives -= amount;
         if (this.lives <= 0) {
             this.lives = 0;
-            this.onGameLose();
+            this.onLose();
         }
     }
 
     /**
      * Called when the player wins the game.
      */
-    public void onGameWin() {
+    public void onWin() {
         if (this.hasEnded()) {
             return;
         }
@@ -392,7 +401,7 @@ public final class Game {
     /**
      * Called when the player loses the game.
      */
-    private void onGameLose() {
+    private void onLose() {
         if (this.hasEnded()) {
             return;
         }

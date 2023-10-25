@@ -134,7 +134,7 @@ public abstract class Enemy extends BaseLocationable {
      * 
      * @param damage The amount of damage to do.
      */
-    public void doDamage(int damage) {
+    public void doDamage(double damage) {
         this.health -= damage;
     }
 
@@ -151,7 +151,7 @@ public abstract class Enemy extends BaseLocationable {
      * 
      * @param damage The amount of damage to do.
      */
-    public void onHit(int damage) {
+    public void onHit(double damage) {
         this.doDamage(damage);
         if (this.isDead()) {
             this.onDeath();

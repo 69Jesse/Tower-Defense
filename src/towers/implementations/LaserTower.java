@@ -14,7 +14,7 @@ public final class LaserTower extends RangeDamageTower {
     private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 0;
-    private static final int DAMAGE = 2;
+    private static final double DAMAGE = 0.5;
     private static final double RANGE = 10.0;
     private static final boolean CAN_DAMAGE_FLYING = true;
 
@@ -78,7 +78,7 @@ public final class LaserTower extends RangeDamageTower {
             case 2:
                 return 1.5;
             case 3:
-                return 2.0;
+                return 1.8;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -104,15 +104,16 @@ public final class LaserTower extends RangeDamageTower {
     }
 
     @Override
-    public void onTargetHit(Enemy target, int damage) {
-        target.onHit(this.damage);
+    public void onTargetHit(Enemy target, double damage) {
+        target.onHit(this.getDamage());
     }
 
     @Override
     public String[] getInfo() {
         return new String[] {
             String.format("Laser Tower (Lvl %d)", this.level),
-            String.format("Damage: %d", this.getDamage()),
+            "Single Target. Fires at a high frequency.",
+            String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
             String.format("Total spent: %d", this.getTotalSpent())

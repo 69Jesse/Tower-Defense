@@ -30,7 +30,7 @@ public abstract class RangeDamageTower extends DamageTower {
         int cost,
         int maxLevel,
         int cooldown,
-        int damage,
+        double damage,
         double range,
         boolean canAttackFlying
     ) {
