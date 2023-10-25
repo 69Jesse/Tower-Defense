@@ -1,10 +1,10 @@
 package field;
 
 import enemies.Enemy;
+import game.Game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Random;
 import location.Location;
 import towers.Projectile;
 import towers.Tower;
@@ -14,6 +14,8 @@ import towers.Tower;
  * Field class.
  */
 public class Field {
+    private final Game game;
+
     public final int width = 80;  // The width of the field in (field) pixels.
     public final int height = 45;  // The height of the field in (field) pixels.
 
@@ -31,14 +33,14 @@ public class Field {
     /**
      * Constructs a new field.
      */
-    public Field() {
-        this.init();
+    public Field(Game game) {
+        this.game = game;
     }
 
     /**
      * Initializes the field.
      */
-    private void init() {
+    public void init() {
         this.towers = new HashMap<>();
         this.enemies = new ArrayList<>();
         this.projectiles = new ArrayList<>();
@@ -47,23 +49,14 @@ public class Field {
     }
 
     /**
-     * Resets the field.
-     */
-    public void reset() {
-        this.init();
-    }
-
-    private Random random = new Random();
-
-    /**
      * Generates a random location within the field.
      * 
      * @return The random location.
      */
     private Location randomLocation() {
         final double margin = Math.max(this.width, this.height) * 0.1;
-        double x = this.random.nextDouble() * (this.width - 2 * margin) + margin;
-        double y = this.random.nextDouble() * (this.height - 2 * margin) + margin;
+        double x = this.game.random.nextDouble() * (this.width - 2 * margin) + margin;
+        double y = this.game.random.nextDouble() * (this.height - 2 * margin) + margin;
         return new Location(x, y);
     }
 
@@ -81,11 +74,11 @@ public class Field {
         final double margin = 0.1;
         Location start = new Location(
             0,
-            this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+            this.game.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
         );
         Location end = new Location(
             this.width,
-            this.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+            this.game.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
         );
 
         int retries = 0;

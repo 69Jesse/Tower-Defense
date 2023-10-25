@@ -30,6 +30,7 @@ public class WaveHandler {
         this.enemies = new ArrayList<>();
         // Wait some time before starting the first wave.
         this.ticksUntilNextWave = this.game.ticksPerSecond;
+        System.out.println(this.game.random.nextDouble());
     }
 
     /**
@@ -53,7 +54,7 @@ public class WaveHandler {
             totalWeight += weight;
         }
 
-        int random = (int) (Math.random() * totalWeight);
+        int random = (int) (this.game.random.nextDouble() * totalWeight);
         int sum = 0;
         for (int i = 0; i < array.size(); i++) {
             sum += weights.get(i);
@@ -108,7 +109,7 @@ public class WaveHandler {
     private void newTicksUntilNextSpawn() {
         this.ticksUntilNextSpawn = (int) (
             this.game.ticksPerSecond * 0.1
-            + Math.random() * this.game.ticksPerSecond * 0.4
+            + this.game.random.nextDouble() * this.game.ticksPerSecond * 0.4
             );  // Checker only accepts this indentation for some reason
     }
 
