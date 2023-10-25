@@ -9,6 +9,7 @@ import game.options.SellOption;
 import game.options.UpgradeOption;
 import gui.frame.Frame;
 import java.util.ArrayList;
+import java.util.Random;
 import location.Location;
 import towers.Projectile;
 import towers.Tower;
@@ -37,6 +38,8 @@ public final class Game {
     }
 
     private GameState state;
+    private Long seed;
+    public Random random;
 
     private int exp;
     private int enemyKills;
@@ -45,19 +48,26 @@ public final class Game {
     /**
      * Runs the game.
      */
-    public void run() {
+    public void run(Long seed) {
         System.out.println("Game starting!");
-        this.init();
-        this.field = new Field();
+        this.seed = seed;
+        this.field = new Field(this);
         this.frame = new Frame(this);
         this.cacheOptions();
         this.frame.start();
+        this.init();
+        this.field.init();
+    }
+
+    public void run() {
+        this.run(null);
     }
 
     /**
      * Initializes the game.
      */
     private void init() {
+        this.random = this.seed == null ? new Random() : new Random(this.seed);
         this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = this.getStartingGold();
@@ -282,9 +292,9 @@ public final class Game {
      * Resets the game.
      */
     public void reset() {
-        this.field.reset();
         this.selectedLocation = null;
         this.init();
+        this.field.init();
     }
 
     /**
