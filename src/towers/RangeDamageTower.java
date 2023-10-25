@@ -4,6 +4,8 @@ import enemies.Enemy;
 import game.Game;
 import java.util.ArrayList;
 import location.Location;
+import java.util.function.Function;
+
 
 
 /**
@@ -12,6 +14,7 @@ import location.Location;
 public abstract class RangeDamageTower extends DamageTower {
     protected final double range;
     protected final boolean canAttackFlying;
+    protected TargetingMode targetingMode;
 
     /**
      * Constructs a tower that can damage enemies that are in a specific range.
@@ -44,6 +47,7 @@ public abstract class RangeDamageTower extends DamageTower {
         );
         this.range = range;
         this.canAttackFlying = canAttackFlying;
+        this.targetingMode = TargetingMode.FIRST;
     }
 
     /**
@@ -82,14 +86,56 @@ public abstract class RangeDamageTower extends DamageTower {
         return enemies;
     }
 
+    /**
+     * Returns the target enemy of this tower.
+     * 
+     * @param enemies The enemies to choose from.
+     * @return        The target enemy of this tower.
+     */
+    protected Enemy findTarget(ArrayList<Enemy> enemies) {
+        Function<Enemy, Double> getValue;
+        switch (this.targetingMode) {
+            case FIRST:
+                getValue = enemy -> -enemy.percentageDone();
+                break;
+            case LAST:
+                getValue = enemy -> enemy.percentageDone();
+                break;
+            case STRONGEST:
+                // Strongest is defined as the enemy with the highest max health.
+                // After this it still has to be sorted by percentage done.
+                // Assuming max health is bigger than 1.0, this will work.
+                getValue = enemy -> -enemy.maxHealth - enemy.percentageDone();
+                break;
+            case WEAKEST:
+                // Weakest is defined as the enemy with the lowest max health.
+                getValue = enemy -> enemy.maxHealth - enemy.percentageDone();
+                break;
+            default:
+                throw new RuntimeException("Invalid targeting mode: " + this.targetingMode);
+        }
+
+        enemies.sort((enemy1, enemy2) -> {
+            double value1 = getValue.apply(enemy1);
+            double value2 = getValue.apply(enemy2);
+            if (value1 < value2) {
+                return -1;
+            } else if (value1 > value2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        return enemies.get(0);
+    }
+
     @Override
     protected Enemy findEnemy() {
         ArrayList<Enemy> enemies = this.damagableEnemies();
         if (enemies.size() == 0) {
             return null;
         }
-        this.game.field.sortEnemies(enemies);
-        return enemies.get(enemies.size() - 1);
+        return this.findTarget(enemies);
     }
 
     /**
@@ -135,5 +181,66 @@ public abstract class RangeDamageTower extends DamageTower {
             return;
         }
         this.fireAtEnemy(enemy);
+    }
+
+    /**
+     * The targeting mode of this tower.
+     */
+    public enum TargetingMode {
+        FIRST("First"),
+        LAST("Last"),
+        STRONGEST("Strongest"),
+        WEAKEST("Weakest");
+
+        private final String name;
+
+        private TargetingMode(String name) {
+            this.name = name;
+        }
+    
+        /**
+         * Returns the name of this targeting mode.
+         * 
+         * @return The name of this targeting mode.
+         */
+        public String getName() {
+            return this.name;
+        }
+    }
+
+    /**
+     * Returns the targeting mode of this tower.
+     * 
+     * @return The targeting mode of this tower.
+     */
+    public TargetingMode getTargetingMode() {
+        return this.targetingMode;
+    }
+
+    /**
+     * Returns the next targeting mode of this tower when switched.
+     * 
+     * @return The next targeting mode of this tower when switched.
+     */
+    public TargetingMode nextTargetingMode() {
+        switch (this.targetingMode) {
+            case FIRST:
+                return TargetingMode.LAST;
+            case LAST:
+                return TargetingMode.STRONGEST;
+            case STRONGEST:
+                return TargetingMode.WEAKEST;
+            case WEAKEST:
+                return TargetingMode.FIRST;
+            default:
+                throw new RuntimeException("Invalid targeting mode: " + this.targetingMode);
+        }
+    }
+
+    /**
+     * Switch the targeting mode of this tower to the next targeting mode in the cycle.
+     */
+    public void switchTargetingMode() {
+        this.targetingMode = this.nextTargetingMode();
     }
 }
