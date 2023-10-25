@@ -207,18 +207,9 @@ public abstract class RangeDamageTower extends DamageTower {
      * @return The next targeting mode of this tower when switched.
      */
     public TargetingMode nextTargetingMode() {
-        switch (this.targetingMode) {
-            case FIRST:
-                return TargetingMode.LAST;
-            case LAST:
-                return TargetingMode.STRONGEST;
-            case STRONGEST:
-                return TargetingMode.WEAKEST;
-            case WEAKEST:
-                return TargetingMode.FIRST;
-            default:
-                throw new RuntimeException("Invalid targeting mode: " + this.targetingMode);
-        }
+        return TargetingMode.values()[
+            (this.targetingMode.ordinal() + 1) % TargetingMode.values().length
+        ];
     }
 
     /**

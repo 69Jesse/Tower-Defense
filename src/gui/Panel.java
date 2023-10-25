@@ -12,6 +12,7 @@ import gui.painters.SelectedTowerPainter;
 import gui.painters.SideLabelPainter;
 import gui.painters.SmoothBorderPainter;
 import gui.painters.StartPainter;
+import gui.painters.SpeedMultiplierPainter;
 import gui.painters.TowerPainter;
 import gui.painters.WinPainter;
 import java.awt.Color;
@@ -74,13 +75,14 @@ public class Panel extends JPanel {
         this.painters.add(new BackgroundPainter(this.game, this.frame, this));
         this.painters.add(new GrassPainter(this.game, this.frame, this));
         this.painters.add(new PathPainter(this.game, this.frame, this));
+        this.painters.add(new SpeedMultiplierPainter(this.game, this.frame, this));
         this.painters.add(new TowerPainter(this.game, this.frame, this));
         this.painters.add(new EnemyPainter(this.game, this.frame, this));
         this.painters.add(new ProjectilePainter(this.game, this.frame, this));
         this.painters.add(new SelectedTowerPainter(this.game, this.frame, this));
         this.painters.add(new SideLabelPainter(this.game, this.frame, this));
-        this.painters.add(new LosePainter(this.game, this.frame, this));
         this.painters.add(new WinPainter(this.game, this.frame, this));
+        this.painters.add(new LosePainter(this.game, this.frame, this));
         this.painters.add(new StartPainter(this.game, this.frame, this));
         this.painters.add(new SmoothBorderPainter(this.game, this.frame, this));
     }

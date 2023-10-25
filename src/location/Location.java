@@ -57,7 +57,7 @@ public class Location {
     /**
      * Returns whether or not this location is in the same rectangle as another location.
      * 
-     * @param other  The other location.
+     * @param other  The middle of the other location/rectangle.
      * @param width  The width of the rectangle.
      * @param height The height of the rectangle.
      * @return       Whether or not this location is in the same rectangle as another location.

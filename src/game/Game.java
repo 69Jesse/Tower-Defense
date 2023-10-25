@@ -30,7 +30,7 @@ public final class Game {
     private int lives;
     private int gold;
     public Location selectedLocation;  // null when no location is selected.
-    public int speed;
+    private Speed speed;
 
     enum GameState {
         WAITING_TO_START,
@@ -73,7 +73,7 @@ public final class Game {
         this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = this.getStartingGold();
-        this.speed = 1;
+        this.speed = Speed.ONE;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
@@ -249,7 +249,7 @@ public final class Game {
         if (!this.isRunning()) {
             return;
         }
-        for (int i = 0; i < this.speed; i++) {
+        for (int i = 0; i < this.speed.value; i++) {
             this.tickIteration();
         }
         this.field.sortEnemies();  // To make sure the enemies are drawn in the right order.
@@ -402,6 +402,39 @@ public final class Game {
             this.lives = 0;
             this.onLose();
         }
+    }
+
+    /**
+     * The speed of the game.
+     */
+    public enum Speed {
+        ONE(1),
+        TWO(2),
+        THREE(3),
+        FIVE(5),
+        TEN(10);
+
+        public final int value;
+
+        Speed(int value) {
+            this.value = value;
+        }
+    }
+
+    /**
+     * Returns the speed.
+     * 
+     * @return The speed.
+     */
+    public Speed getSpeed() {
+        return this.speed;
+    }
+
+    /**
+     * Switches the speed to the next speed in cycle.
+     */
+    public void switchSpeed() {
+        this.speed = Speed.values()[(this.speed.ordinal() + 1) % Speed.values().length];
     }
 
     /**
