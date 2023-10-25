@@ -4,6 +4,7 @@ import game.Game;
 import game.Option;
 import gui.Panel;
 import gui.frame.Frame;
+import gui.painters.SpeedMultiplierPainter;
 import gui.painters.TowerPainter;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
@@ -58,10 +59,27 @@ public class Mouse extends BaseMouse {
     }
 
     /**
+     * Check if the mouse is hovering over an option and perform the callback if it is.
+     * 
+     * @param location The location where the mouse is at this moment.
+     */
+    private boolean checkClickedOption(Location location) {
+        if (this.game.selectedLocation == null) {
+            return false;
+        }
+        Option option = this.clickedOnOption(location, this.game.selectedLocation);
+        if (option != null) {
+            option.callback(this.game.selectedLocation);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Return the placeable location that the mouse is at, or null if it is not at any.
      * 
      * @param location The location where the mouse is at this moment.
-     * @return         The placeable location that the mouse is at, or null if it is not at any.
+     * @return         The placeable location where the mouse is at, or null if it is not at any.
      */
     public Location hoveringOverPlaceable(Location location) {
         for (Location placeable : this.game.field.placeable) {
@@ -72,20 +90,13 @@ public class Mouse extends BaseMouse {
         return null;
     }
 
-    private void checkClick(Location location) {
-        if (this.game.hasEnded()) {
-            // It is okay to perform a click when the game
-            // has not started, but not when it has ended.
-            return;
-        }
-        if (this.game.selectedLocation != null) {
-            Option option = this.clickedOnOption(location, this.game.selectedLocation);
-            if (option != null) {
-                option.callback(this.game.selectedLocation);
-                return;
-            }
-        }
-
+    /**
+     * Check if the mouse is hovering over a placeable spot and select said spot,
+     * or deselect it if it is already selected, or if it is not hovering over any.
+     * 
+     * @param location The location where the mouse is at this moment.
+     */
+    private void checkClickedPlaceable(Location location) {
         Location placeable = this.hoveringOverPlaceable(location);
         if (placeable == null) {
             this.game.selectedLocation = null;
@@ -97,6 +108,33 @@ public class Mouse extends BaseMouse {
         } else {
             this.game.selectedLocation = placeable;
         }
+    }
+
+    /**
+     * Check if the mouse is hovering over the speed multiplier and switch the speed if it is.
+     * 
+     * @param location The location where the mouse is at this moment.
+     */
+    private void checkClickedSpeedMultiplier(Location location) {
+        if (location.inSameSquare(
+            SpeedMultiplierPainter.MIDDLE_LOCATION, SpeedMultiplierPainter.SIZE
+        )) {
+            this.game.switchSpeed();
+        }
+    }
+
+    private void checkClick(Location location) {
+        if (this.game.hasEnded()) {
+            // It is okay to perform a click when the game
+            // has not started, but not when it has ended.
+            return;
+        }
+        boolean calledCallback = this.checkClickedOption(location);
+        if (calledCallback) {
+            return;
+        }
+        this.checkClickedPlaceable(location);
+        this.checkClickedSpeedMultiplier(location);
     }
 
     @Override

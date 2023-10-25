@@ -5,6 +5,7 @@ import gui.BetterGraphics;
 import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
+import location.Location;
 
 
 /**
@@ -20,7 +21,16 @@ public final class SpeedMultiplierPainter extends Painter {
      */
     public SpeedMultiplierPainter(Game game, Frame frame, Panel panel) {
         super(game, frame, panel);
+        MIDDLE_LOCATION = new Location(
+            this.game.field.width - this.bottomRightXOffset - SIZE / 2,
+            this.game.field.height - this.bottomRightYOffset - SIZE / 2
+        );
     }
+
+    public static Location MIDDLE_LOCATION;
+    public static final double SIZE = 3.0;
+    private double bottomRightXOffset = 0.5;
+    private double bottomRightYOffset = 0.5;
 
     /**
      * Returns the image path.
@@ -46,6 +56,12 @@ public final class SpeedMultiplierPainter extends Painter {
 
     @Override
     public void paint(BetterGraphics graphics) {
-
+        graphics.drawImageCentered(
+            this.getImagePath(),
+            MIDDLE_LOCATION.x,
+            MIDDLE_LOCATION.y,
+            SIZE,
+            SIZE
+        );
     }
 }
