@@ -93,7 +93,7 @@ public class WaveHandler {
      * @return The maximum wave number.
      */
     public int getMaxWave() {
-        return 20;
+        return 1;
     }
 
     /**
@@ -204,5 +204,16 @@ public class WaveHandler {
             return;
         }
         this.startNewWave();
+    }
+
+    /**
+     * Returns whether the game is completely done.
+     * 
+     * @return Whether the game is completely done.
+     */
+    public boolean isCompletelyDone() {
+        return this.waveNumber >= this.getMaxWave()
+            && this.isDoneSpawning()
+            && this.game.field.noEnemiesAlive();
     }
 }

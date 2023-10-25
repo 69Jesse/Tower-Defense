@@ -226,6 +226,7 @@ public final class Game {
         for (int i = 0; i < this.speed; i++) {
             this.tickIteration();
         }
+        this.field.sortEnemies();  // To make sure the enemies are drawn in the right order.
     }
 
     /**
@@ -253,7 +254,9 @@ public final class Game {
                 this.field.enemies.remove(i);
             }
         }
-        this.field.sortEnemies();
+        if (this.waveHandler.isCompletelyDone()) {
+            this.onGameWin();
+        }
     }
 
     /**
@@ -376,10 +379,21 @@ public final class Game {
     }
 
     /**
+     * Called when the player wins the game.
+     */
+    public void onGameWin() {
+        if (this.hasEnded()) {
+            return;
+        }
+        System.out.println("You won the game!");
+        this.state = GameState.WON;
+    }
+
+    /**
      * Called when the player loses the game.
      */
     private void onGameLose() {
-        if (this.hasLost()) {
+        if (this.hasEnded()) {
             return;
         }
         System.out.println("You lost the game :(");
