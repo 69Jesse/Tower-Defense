@@ -39,9 +39,9 @@ public final class SelectedTowerPainter extends Painter {
     private final double optionBoxPadding = 0.25;
     private final double infoXOffset = 1.0;
     private final double infoYOffset = 1.0;
-    private final double infoYSpacing = 2.2;
+    private final double infoYSpacing = 1.6;
     private final Color infoColor = new Color(0xFFFFFF);
-    private final double infoFontSize = 1.5;
+    private final double infoFontSize = 1.0;
     private final Color infoBoxColor = new Color(0x000000);
     private final double infoBoxAlpha = 0.5;
     private final double infoBoxPadding = 0.25;
