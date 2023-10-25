@@ -30,7 +30,6 @@ public class WaveHandler {
         this.enemies = new ArrayList<>();
         // Wait some time before starting the first wave.
         this.ticksUntilNextWave = this.game.ticksPerSecond;
-        System.out.println(this.game.random.nextDouble());
     }
 
     /**
@@ -111,7 +110,6 @@ public class WaveHandler {
             this.game.ticksPerSecond * 0.1
             + this.game.random.nextDouble() * this.game.ticksPerSecond * 0.4
             );  // Checker only accepts this indentation for some reason
-        System.out.println(this.game.random.nextDouble());
     }
 
     /**

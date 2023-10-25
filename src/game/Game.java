@@ -76,7 +76,6 @@ public final class Game {
         this.enemyKills = 0;
         this.goldSpent = 0;
         this.state = GameState.WAITING_TO_START;
-        System.out.println(this.random.nextDouble());
     }
 
     /**
