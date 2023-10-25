@@ -10,16 +10,18 @@ import location.Location;
  */
 public abstract class DamageTower extends Tower {
     protected final double damage;
+    protected final boolean canAttackFlying;
 
     /**
      * Constructs a tower that can damage enemies.
      * 
-     * @param game     The game this tower is in.
-     * @param location The location of this tower on the field.
-     * @param cost     The cost to build this tower.
-     * @param maxLevel The maximum level this tower can be upgraded to.
-     * @param cooldown The cooldown of this tower after each action in game ticks.
-     * @param damage   The amount of damage this tower does to enemies.
+     * @param game            The game this tower is in.
+     * @param location        The location of this tower on the field.
+     * @param cost            The cost to build this tower.
+     * @param maxLevel        The maximum level this tower can be upgraded to.
+     * @param cooldown        The cooldown of this tower after each action in game ticks.
+     * @param damage          The amount of damage this tower does to enemies.
+     * @param canAttackFlying Whether or not this tower can attack flying enemies.
      */
     public DamageTower(
         Game game,
@@ -27,7 +29,8 @@ public abstract class DamageTower extends Tower {
         int cost,
         int maxLevel,
         int cooldown,
-        double damage
+        double damage,
+        boolean canAttackFlying
     ) {
         super(
             game,
@@ -37,6 +40,27 @@ public abstract class DamageTower extends Tower {
             cooldown
         );
         this.damage = damage;
+        this.canAttackFlying = canAttackFlying;
+    }
+
+    /**
+     * Returns whether or not this tower can damage an enemy because of flight.
+     * 
+     * @param enemy The enemy to check.
+     * @return      Whether or not this tower can damage the enemy because of flight.
+     */
+    protected boolean canDamageWithFlight(Enemy enemy) {
+        return this.canAttackFlying || !enemy.flying;
+    }
+
+    /**
+     * Returns whether or not this tower can damage an enemy.
+     * 
+     * @param enemy The enemy to check.
+     * @return      Whether or not this tower can damage the enemy.
+     */
+    protected boolean canDamage(Enemy enemy) {
+        return this.canDamageWithFlight(enemy);
     }
 
     /**

@@ -99,7 +99,11 @@ public class Projectile extends Locationable {
         ArrayList<Enemy> possibleTargets = new ArrayList<>();
         for (Enemy enemy : this.game.field.enemies) {
             if (!enemy.isDead()) {
-                if (enemy.getLocation().distanceTo(targetLocation) < this.maxNewTargetDistance) {
+                if (!this.source.canDamage(enemy)) {
+                    continue;
+                }
+                double distance = enemy.getLocation().distanceTo(targetLocation);
+                if (distance < this.maxNewTargetDistance) {
                     possibleTargets.add(enemy);
                 }
             }

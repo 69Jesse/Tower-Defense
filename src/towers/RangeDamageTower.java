@@ -12,19 +12,19 @@ import location.Location;
  */
 public abstract class RangeDamageTower extends DamageTower {
     protected final double range;
-    protected final boolean canAttackFlying;
     protected TargetingMode targetingMode;
 
     /**
      * Constructs a tower that can damage enemies that are in a specific range.
      * 
-     * @param game     The game this tower is in.
-     * @param location The location of this tower on the field.
-     * @param cost     The cost to build this tower.
-     * @param maxLevel The maximum level this tower can be upgraded to.
-     * @param cooldown The cooldown of this tower after each action in game ticks.
-     * @param damage   The amount of damage this tower does to enemies.
-     * @param range    The range of this tower.
+     * @param game            The game this tower is in.
+     * @param location        The location of this tower on the field.
+     * @param cost            The cost to build this tower.
+     * @param maxLevel        The maximum level this tower can be upgraded to.
+     * @param cooldown        The cooldown of this tower after each action in game ticks.
+     * @param damage          The amount of damage this tower does to enemies.
+     * @param range           The range of this tower.
+     * @param canAttackFlying Whether or not this tower can attack flying enemies.
      */
     public RangeDamageTower(
         Game game,
@@ -42,32 +42,17 @@ public abstract class RangeDamageTower extends DamageTower {
             cost,
             maxLevel,
             cooldown,
-            damage
+            damage,
+            canAttackFlying
         );
         this.range = range;
-        this.canAttackFlying = canAttackFlying;
         this.targetingMode = TargetingMode.FIRST;
     }
 
-    /**
-     * Returns whether or not this tower can damage an enemy because of flight.
-     * 
-     * @param enemy The enemy to check.
-     * @return      Whether or not this tower can damage the enemy because of flight.
-     */
-    protected boolean canDamageWithFlight(Enemy enemy) {
-        return this.canAttackFlying || !enemy.flying;
-    }
-
-    /**
-     * Returns whether or not this tower can damage an enemy.
-     * 
-     * @param enemy The enemy to check.
-     * @return      Whether or not this tower can damage the enemy.
-     */
+    @Override
     protected boolean canDamage(Enemy enemy) {
         return (this.location.distanceTo(enemy) - enemy.size / 2) <= this.getRange()
-            && this.canDamageWithFlight(enemy);
+            && super.canDamage(enemy);
     }
 
     /**

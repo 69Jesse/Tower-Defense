@@ -25,8 +25,8 @@ public final class EnemyPainter extends Painter {
         Location location = enemy.getLocation();
         graphics.drawImageCentered(
             enemy.getImagePath(),
-            location.x,
-            location.y,
+            location.x + enemy.drawOffsetLocation.x,
+            location.y + enemy.drawOffsetLocation.y,
             enemy.size,
             enemy.size
         );

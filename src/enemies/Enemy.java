@@ -22,6 +22,7 @@ public abstract class Enemy extends BaseLocationable {
     protected int health;
     protected int ticksElapsed;
     protected boolean done;
+    public final Location drawOffsetLocation;
 
     /**
      * Constructs a new enemy.
@@ -55,6 +56,14 @@ public abstract class Enemy extends BaseLocationable {
         this.health = maxHealth;
         this.ticksElapsed = 0;
         this.done = false;
+        this.drawOffsetLocation = this.createDrawOffsetLocation();
+    }
+
+    private Location createDrawOffsetLocation() {
+        final double maxOffset = 0.5;
+        double x = this.game.random.nextDouble() * maxOffset * 2 - maxOffset;
+        double y = this.game.random.nextDouble() * maxOffset * 2 - maxOffset;
+        return new Location(x, y);
     }
 
     @Override
@@ -178,7 +187,9 @@ public abstract class Enemy extends BaseLocationable {
         if (this.done) {
             return;
         }
-        this.game.removeLife(1);
+        this.game.removeLife(
+            Math.max(1, (int) Math.ceil(this.maxHealth / 10.0))
+        );
         this.done = true;
     }
 
