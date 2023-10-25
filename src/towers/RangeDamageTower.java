@@ -7,7 +7,6 @@ import java.util.function.Function;
 import location.Location;
 
 
-
 /**
  * A tower that can damage enemies that are in a specific range.
  */
