@@ -31,6 +31,9 @@ public final class PathPainter extends Painter {
 
     @Override
     public void paint(BetterGraphics graphics) {
+        if (this.game.field.path == null) {
+            return;
+        }
         for (int i = 0; i < 2; i++) {
             final double radius = i == 0 ? this.radius1 : this.radius2;
             graphics.setColor(i == 0 ? this.pathColor1 : this.pathColor2);
