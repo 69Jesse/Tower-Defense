@@ -5,6 +5,7 @@ import game.Game;
 import java.util.ArrayList;
 import java.util.function.Function;
 import location.Location;
+import towers.projectile.Projectile;
 
 
 /**
@@ -50,7 +51,7 @@ public abstract class RangeDamageTower extends DamageTower {
     }
 
     @Override
-    protected boolean canDamage(Enemy enemy) {
+    public boolean canDamage(Enemy enemy) {
         return (this.location.distanceTo(enemy) - enemy.size / 2) <= this.getRange()
             && super.canDamage(enemy);
     }

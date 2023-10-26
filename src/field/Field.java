@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import location.Location;
-import towers.Projectile;
 import towers.Tower;
+import towers.projectile.Projectile;
 
 
 /**

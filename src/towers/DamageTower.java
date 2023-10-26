@@ -59,7 +59,7 @@ public abstract class DamageTower extends Tower {
      * @param enemy The enemy to check.
      * @return      Whether or not this tower can damage the enemy.
      */
-    protected boolean canDamage(Enemy enemy) {
+    public boolean canDamage(Enemy enemy) {
         return this.canDamageWithFlight(enemy);
     }
 

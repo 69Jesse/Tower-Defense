@@ -6,7 +6,7 @@ import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import location.Location;
-import towers.Projectile;
+import towers.projectile.Projectile;
 
 
 /**

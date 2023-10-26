@@ -3,8 +3,9 @@ package towers.implementations;
 import enemies.Enemy;
 import game.Game;
 import location.Location;
-import towers.Projectile;
 import towers.RangeDamageTower;
+import towers.projectile.ImageProjectile;
+import towers.projectile.Projectile;
 
 
 /**
@@ -100,15 +101,16 @@ public final class ArcherTower extends RangeDamageTower {
 
     @Override
     protected Projectile createProjectile(Enemy enemy) {
-        return new Projectile(
+        return new ImageProjectile(
             this.game,
+            this,
             this,
             enemy,
             this.getDamage(),
             PROJECTILE_SPEED,
-            PROJECTILE_IMAGE_PATH,
             PROJECTILE_SIZE,
-            PROJECTILE_MAX_CURVE
+            PROJECTILE_MAX_CURVE,
+            PROJECTILE_IMAGE_PATH
         );
     }
 

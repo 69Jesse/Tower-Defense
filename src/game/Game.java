@@ -12,9 +12,9 @@ import gui.frame.Frame;
 import java.util.ArrayList;
 import java.util.Random;
 import location.Location;
-import towers.Projectile;
 import towers.RangeDamageTower;
 import towers.Tower;
+import towers.projectile.Projectile;
 
 
 /**
