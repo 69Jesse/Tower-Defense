@@ -43,11 +43,11 @@ public final class WizardTower extends RangeDamageTower {
     public String getImagePath() {
         switch (this.level) {
             case 1:
-                return "./assets/towers/archer_tower_1.png";
+                return "./assets/towers/wizard_tower_1.png";
             case 2:
-                return "./assets/towers/archer_tower_2.png";
+                return "./assets/towers/wizard_tower_2.png";
             case 3:
-                return "./assets/towers/archer_tower_3.png";
+                return "./assets/towers/wizard_tower_3.png";
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -124,6 +124,9 @@ public final class WizardTower extends RangeDamageTower {
         return closestEnemy;
     }
 
+    /**
+     * Returns a random offset for the visual effect of the projectile.
+     */
     private double getVisualOffset(int index) {
         return this.game.towerRandom.nextDouble()
             * this.maxVisualOffset * 2 - this.maxVisualOffset
@@ -196,7 +199,7 @@ public final class WizardTower extends RangeDamageTower {
     @Override
     public String[] getInfo() {
         return new String[] {
-            String.format("Archer Tower (Lvl %d)", this.level),
+            String.format("Wizard Tower (Lvl %d)", this.level),
             "Multiple Target. Has a chain damage reaction",
             String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
