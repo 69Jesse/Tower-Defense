@@ -51,7 +51,7 @@ public abstract class Projectile {
         this.shouldFindNewTarget = findNewTarget;
         this.ticksElapsed = 0;
 
-        // Define the final locations if it is not going to move.
+        // Define the final locations if they are not going to move.
         if (!this.shouldMove) {
             this.getSourceLocation();
             this.getTargetLocation();
