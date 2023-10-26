@@ -86,7 +86,7 @@ public final class Game {
      * @return The starting gold.
      */
     public int getStartingGold() {
-        return 250;
+        return 2500;
     }
 
     /**
