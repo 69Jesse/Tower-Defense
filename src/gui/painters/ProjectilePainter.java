@@ -45,8 +45,8 @@ public final class ProjectilePainter extends Painter {
     }
 
     private void paintLineProjectile(BetterGraphics graphics, LineProjectile projectile) {
-        Location start = projectile.source.getLocation();
-        Location end = projectile.target.getLocation();
+        Location start = projectile.getSourceLocation();
+        Location end = projectile.getTargetLocation();
 
         graphics.setLineWidth(projectile.lineWidth);
         graphics.setColor(projectile.lineColor);

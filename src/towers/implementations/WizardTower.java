@@ -3,11 +3,11 @@ package towers.implementations;
 import enemies.Enemy;
 import game.Game;
 import java.awt.Color;
+import java.util.ArrayList;
 import location.Location;
 import towers.RangeDamageTower;
 import towers.projectile.LineProjectile;
 import towers.projectile.Projectile;
-
 
 /**
  * A wizard tower.
@@ -100,14 +100,53 @@ public final class WizardTower extends RangeDamageTower {
     private static final int TICKS_UNTIL_DELETE = 30;
     private static final double LINE_WIDTH = 0.25;
     private static final Color LINE_COLOR = new Color(0x76428A);
+    private final int maxBounceCount = 3;
+    private final double maxBounceRange = 5.0;
+
+    // Max purely visual offset of the projectiles source and target per dimension.
+    // So the actual max offset would be sqrt(pow(maxVisualOffset, 2) * 2))
+    private final double maxVisualOffset = 1.0;
+
+    private Enemy getClosestEnemy(ArrayList<Enemy> enemies, Location to) {
+        Enemy closestEnemy = null;
+        double closestDistance = Double.MAX_VALUE;
+
+        for (Enemy enemy : enemies) {
+            double distance = enemy.getLocation().distanceTo(to);
+            if (distance >= this.maxBounceRange) {
+                continue;
+            }
+            if (distance < closestDistance) {
+                closestEnemy = enemy;
+                closestDistance = distance;
+            }
+        }
+        return closestEnemy;
+    }
+
+    private double getVisualOffset(int index) {
+        return this.game.towerRandom.nextDouble()
+            * this.maxVisualOffset * 2 - this.maxVisualOffset
+            * ((index) / (double) this.maxBounceCount);
+    }
 
     @Override
     protected Projectile[] createProjectiles(Enemy enemy) {
-        return new Projectile[] {
-            new LineProjectile(
+        Projectile[] projectiles = new Projectile[this.maxBounceCount];
+        ArrayList<Enemy> potentialEnemies = new ArrayList<>(this.game.field.enemies);
+        Enemy lastEnemy = enemy;
+
+        for (int i = 0; i < this.maxBounceCount; i++) {
+            if (i != 0) {
+                enemy = this.getClosestEnemy(potentialEnemies, enemy.getLocation());
+                if (enemy == null) {
+                    break;
+                }
+            }
+            projectiles[i] = new LineProjectile(
                 this.game,
                 this,
-                this,
+                i == 0 ? this : lastEnemy,
                 enemy,
                 this.getDamage(),
                 SHOULD_MOVE,
@@ -115,8 +154,38 @@ public final class WizardTower extends RangeDamageTower {
                 TICKS_UNTIL_DELETE,
                 LINE_WIDTH,
                 LINE_COLOR
-            )
-        };
+            );
+            lastEnemy = enemy;
+            potentialEnemies.remove(enemy);
+        }
+
+        // Offset the projectiles slightly to make it look more like electricity.
+        for (int i = 0; i < this.maxBounceCount; i++) {
+            if (projectiles[i] == null) {
+                continue;
+            }
+            double xOffset = this.getVisualOffset(i);
+            double yOffset = this.getVisualOffset(i);
+            Location targetLocation = projectiles[i].getTargetLocation();
+            projectiles[i].setTargetLocation(
+                new Location(
+                    targetLocation.x + xOffset,
+                    targetLocation.y + yOffset
+                )
+            );
+            if (i == this.maxBounceCount - 1 || projectiles[i + 1] == null) {
+                break;
+            }
+            Location sourceLocation = projectiles[i + 1].getSourceLocation();
+            projectiles[i + 1].setSourceLocation(
+                new Location(
+                    sourceLocation.x + xOffset,
+                    sourceLocation.y + yOffset
+                )
+            );
+        }
+
+        return projectiles;
     }
 
     @Override

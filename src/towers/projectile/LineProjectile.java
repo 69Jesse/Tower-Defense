@@ -3,7 +3,7 @@ package towers.projectile;
 import enemies.Enemy;
 import game.Game;
 import java.awt.Color;
-import location.Locationable;
+import location.BaseLocationable;
 import towers.DamageTower;
 
 
@@ -21,8 +21,7 @@ public final class LineProjectile extends Projectile {
      * 
      * @param game             The game this projectile is in.
      * @param tower            The tower that fired this projectile.
-     * @param source           The source of the projectile
-     *                         (does not nessesarily have to be the tower).
+     * @param source           The source of the projectile (not always equal the tower).
      * @param target           The target of the projectile.
      * @param damage           The damage of the projectile.
      * @param shouldMove       Whether or not the location of the points it draws from should move.
@@ -34,7 +33,7 @@ public final class LineProjectile extends Projectile {
     public LineProjectile(
         Game game,
         DamageTower tower,
-        Locationable source,
+        BaseLocationable source,
         Enemy target,
         double damage,
         boolean shouldMove,
@@ -49,7 +48,8 @@ public final class LineProjectile extends Projectile {
             source,
             target,
             damage,
-            shouldMove
+            shouldMove,
+            false
         );
         this.ticksUntilHit = ticksUntilHit;
         this.ticksUntilDelete = ticksUntilDelete;

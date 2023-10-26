@@ -2,8 +2,8 @@ package towers.projectile;
 
 import enemies.Enemy;
 import game.Game;
+import location.BaseLocationable;
 import location.Location;
-import location.Locationable;
 import towers.DamageTower;
 
 
@@ -22,7 +22,7 @@ public final class ImageProjectile extends Projectile {
      * 
      * @param game       The game this projectile is in.
      * @param tower      The tower that fired this projectile.
-     * @param source     The source of the projectile (does not nessesarily have to be the tower).
+     * @param source     The source of the projectile (not always equal the tower).
      * @param target     The target of the projectile.
      * @param damage     The damage of the projectile.
      * @param shouldMove Whether or not the location of the points it draws from should move.
@@ -34,7 +34,7 @@ public final class ImageProjectile extends Projectile {
     public ImageProjectile(
         Game game,
         DamageTower tower,
-        Locationable source,
+        BaseLocationable source,
         Enemy target,
         double damage,
         boolean shouldMove,
@@ -49,7 +49,8 @@ public final class ImageProjectile extends Projectile {
             source,
             target,
             damage,
-            shouldMove
+            shouldMove,
+            true
         );
         this.speed = speed;
         this.size = size;
@@ -77,8 +78,8 @@ public final class ImageProjectile extends Projectile {
 
     private void calculateLocation() {
         final double percentage = this.getPercentage();
-        final Location sourceLocation = this.source.getLocation();
-        final Location targetLocation = this.target.getLocation();
+        final Location sourceLocation = this.getSourceLocation();
+        final Location targetLocation = this.getTargetLocation();
 
         final double x = sourceLocation.x + (targetLocation.x - sourceLocation.x) * percentage;
         final double y = sourceLocation.y + (targetLocation.y - sourceLocation.y) * percentage;

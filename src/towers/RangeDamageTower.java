@@ -155,6 +155,9 @@ public abstract class RangeDamageTower extends DamageTower {
      */
     protected void fireAtEnemy(Enemy enemy) {
         for (Projectile projectile : this.createProjectiles(enemy)) {
+            if (projectile == null) {
+                continue;
+            }
             this.game.field.projectiles.add(projectile);
         }
     }

@@ -42,7 +42,11 @@ public final class Game {
 
     private GameState state;
     private Long seed;
-    public Random random;
+
+    // Two randoms to make sure the randomness of the field is
+    // always directly related to the seed, if given that is.
+    public Random fieldRandom;
+    public Random towerRandom;
 
     private int exp;
     private int enemyKills;
@@ -70,7 +74,8 @@ public final class Game {
      * Initializes the game.
      */
     private void init() {
-        this.random = this.seed == null ? new Random() : new Random(this.seed);
+        this.fieldRandom = this.seed == null ? new Random() : new Random(this.seed);
+        this.towerRandom = new Random();
         this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = this.getStartingGold();

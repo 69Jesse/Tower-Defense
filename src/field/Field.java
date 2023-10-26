@@ -55,8 +55,8 @@ public class Field {
      */
     private Location randomLocation() {
         final double margin = Math.max(this.width, this.height) * 0.1;
-        double x = this.game.random.nextDouble() * (this.width - 2 * margin) + margin;
-        double y = this.game.random.nextDouble() * (this.height - 2 * margin) + margin;
+        double x = this.game.fieldRandom.nextDouble() * (this.width - 2 * margin) + margin;
+        double y = this.game.fieldRandom.nextDouble() * (this.height - 2 * margin) + margin;
         return new Location(x, y);
     }
 
@@ -74,11 +74,11 @@ public class Field {
         final double margin = 0.1;
         Location start = new Location(
             0,
-            this.game.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+            this.game.fieldRandom.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
         );
         Location end = new Location(
             this.width,
-            this.game.random.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
+            this.game.fieldRandom.nextDouble() * this.height * (1 - 2 * margin) + margin * this.height
         );
 
         int retries = 0;

@@ -53,7 +53,7 @@ public class WaveHandler {
             totalWeight += weight;
         }
 
-        int random = (int) (this.game.random.nextDouble() * totalWeight);
+        int random = (int) (this.game.fieldRandom.nextDouble() * totalWeight);
         int sum = 0;
         for (int i = 0; i < array.size(); i++) {
             sum += weights.get(i);
@@ -108,7 +108,7 @@ public class WaveHandler {
     private void newTicksUntilNextSpawn() {
         this.ticksUntilNextSpawn = (int) (
             this.game.ticksPerSecond * 0.1
-            + this.game.random.nextDouble() * this.game.ticksPerSecond * 0.4
+            + this.game.fieldRandom.nextDouble() * this.game.ticksPerSecond * 0.4
             );  // Checker only accepts this indentation for some reason
     }
 
@@ -149,7 +149,7 @@ public class WaveHandler {
             waveValue -= enemy.weight;
         }
 
-        Collections.shuffle(this.enemies, this.game.random);
+        Collections.shuffle(this.enemies, this.game.fieldRandom);
         this.spawnIndex = 0;
         this.newTicksUntilNextSpawn();
     }
