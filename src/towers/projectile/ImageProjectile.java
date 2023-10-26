@@ -35,7 +35,7 @@ public final class ImageProjectile extends Projectile {
         Game game,
         DamageTower tower,
         BaseLocationable source,
-        Enemy target,
+        BaseLocationable target,
         double damage,
         boolean shouldMove,
         double speed,
@@ -103,7 +103,9 @@ public final class ImageProjectile extends Projectile {
     protected boolean duringTick() {
         this.calculateLocation();
         if (this.hasHitTarget()) {
-            this.tower.onTargetHit(this.target, this.damage);
+            if (this.target instanceof Enemy) {
+                this.tower.onTargetHit((Enemy) this.target, this.damage);
+            }
             return true;
         }
         return false;

@@ -21,8 +21,8 @@ public final class LineProjectile extends Projectile {
      * 
      * @param game             The game this projectile is in.
      * @param tower            The tower that fired this projectile.
-     * @param source           The source of the projectile (not always equal the tower).
-     * @param target           The target of the projectile.
+     * @param source           The source of the projectile (the tower most of the time).
+     * @param target           The target of the projectile (an enemy most of the time).
      * @param damage           The damage of the projectile.
      * @param shouldMove       Whether or not the location of the points it draws from should move.
      * @param ticksUntilHit    The amount of ticks this projectile waits before hitting its target.
@@ -34,7 +34,7 @@ public final class LineProjectile extends Projectile {
         Game game,
         DamageTower tower,
         BaseLocationable source,
-        Enemy target,
+        BaseLocationable target,
         double damage,
         boolean shouldMove,
         int ticksUntilHit,
@@ -60,7 +60,9 @@ public final class LineProjectile extends Projectile {
     @Override
     protected boolean duringTick() {
         if (this.ticksElapsed == this.ticksUntilHit) {
-            this.tower.onTargetHit(this.target, this.damage);
+            if (this.target instanceof Enemy) {
+                this.tower.onTargetHit((Enemy) this.target, this.damage);
+            }
         }
         return this.ticksElapsed >= this.ticksUntilDelete;
     }

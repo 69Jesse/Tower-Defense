@@ -5,6 +5,7 @@ import game.Game;
 import java.util.ArrayList;
 import location.BaseLocationable;
 import location.Location;
+import location.Locationable;
 import towers.DamageTower;
 
 
@@ -15,7 +16,7 @@ public abstract class Projectile {
     protected final Game game;
     protected final DamageTower tower;
     protected final BaseLocationable source;
-    protected Enemy target;
+    protected BaseLocationable target;
     protected final double damage;
     protected final boolean shouldMove;
     protected final boolean shouldFindNewTarget;
@@ -36,7 +37,7 @@ public abstract class Projectile {
         Game game,
         DamageTower tower,
         BaseLocationable source,
-        Enemy target,
+        BaseLocationable target,
         double damage,
         boolean shouldMove,
         boolean findNewTarget
@@ -59,8 +60,8 @@ public abstract class Projectile {
 
     final double maxNewTargetDistance = 5.0;
 
-    private void tryToFindNewTarget() {
-        Location targetLocation = this.target.getLocation();
+    private void tryToFindNewEnemyTarget() {
+        Location targetLocation = this.getTargetLocation();
         ArrayList<Enemy> possibleTargets = new ArrayList<>();
         for (Enemy enemy : this.game.field.enemies) {
             if (!enemy.isDead()) {
@@ -94,11 +95,13 @@ public abstract class Projectile {
      * @return Whether or not this projectile should be removed.
      */
     public boolean tick() {
-        if (this.target.isDead()) {
-            if (this.shouldFindNewTarget) {
-                this.tryToFindNewTarget();
-                if (this.target == null) {
-                    return true;
+        if (this.target instanceof Enemy) {
+            if (((Enemy) this.target).isDead()) {
+                if (this.shouldFindNewTarget) {
+                    this.tryToFindNewEnemyTarget();
+                    if (this.target == null) {
+                        return true;
+                    }
                 }
             }
         }
@@ -166,5 +169,15 @@ public abstract class Projectile {
      */
     public void setTargetLocation(Location location) {
         this.targetLocation = location;
+    }
+
+    /**
+     * A dummy that can be used as a target for projectiles
+     * so it can target a location instead of an enemy.
+     */
+    public class DummyTarget extends Locationable {
+        public DummyTarget(Location location) {
+            this.location = location;
+        }
     }
 }
