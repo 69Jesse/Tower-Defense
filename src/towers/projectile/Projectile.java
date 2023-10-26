@@ -60,6 +60,12 @@ public abstract class Projectile {
 
     final double maxNewTargetDistance = 5.0;
 
+    /**
+     * Tries to find a new enemy target for this projectile.
+     * 
+     * This is mostly meant for when the target itself is also an enemy,
+     * but nothing is stopping you from using this when it is not.
+     */
     private void tryToFindNewEnemyTarget() {
         Location targetLocation = this.getTargetLocation();
         ArrayList<Enemy> possibleTargets = new ArrayList<>();
