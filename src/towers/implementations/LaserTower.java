@@ -3,8 +3,9 @@ package towers.implementations;
 import enemies.Enemy;
 import game.Game;
 import location.Location;
-import towers.Projectile;
 import towers.RangeDamageTower;
+import towers.projectile.ImageProjectile;
+import towers.projectile.Projectile;
 
 
 /**
@@ -84,28 +85,33 @@ public final class LaserTower extends RangeDamageTower {
         }
     }
 
+    private static final boolean SHOULD_MOVE = true;
     private static final double PROJECTILE_SPEED = 0.5;
     private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/laser_tower.png";
     private static final double PROJECTILE_SIZE = 1.0;
     private static final double PROJECTILE_MAX_CURVE = 0.0;
 
     @Override
-    protected Projectile createProjectile(Enemy enemy) {
-        return new Projectile(
-            this.game,
-            this,
-            enemy,
-            this.getDamage(),
-            PROJECTILE_SPEED,
-            PROJECTILE_IMAGE_PATH,
-            PROJECTILE_SIZE,
-            PROJECTILE_MAX_CURVE
-        );
+    protected Projectile[] createProjectiles(Enemy enemy) {
+        return new Projectile[] {
+            new ImageProjectile(
+                this.game,
+                this,
+                this,
+                enemy,
+                this.getDamage(),
+                SHOULD_MOVE,
+                PROJECTILE_SPEED,
+                PROJECTILE_SIZE,
+                PROJECTILE_MAX_CURVE,
+                PROJECTILE_IMAGE_PATH
+            )
+        };
     }
 
     @Override
     public void onTargetHit(Enemy target, double damage) {
-        target.onHit(this.getDamage());
+        target.onHit(damage);
     }
 
     @Override

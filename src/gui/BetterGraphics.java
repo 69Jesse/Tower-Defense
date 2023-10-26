@@ -506,4 +506,21 @@ public final class BetterGraphics {
     public void drawStringCenteredWithBox(String text, double x, double y, Box box) {
         this.drawStringPrivate(text, x, y, Alignment.CENTER, box);
     }
+
+    /**
+     * Draw a line.
+     * 
+     * @param startX The x coordinate of the start in field pixels.
+     * @param startY The y coordinate of the start in field pixels.
+     * @param endX   The x coordinate of the end in field pixels.
+     * @param endY   The y coordinate of the end in field pixels.
+     */
+    public void drawLine(double startX, double startY, double endX, double endY) {
+        this.g2d.drawLine(
+            (int) (startX * this.scale + this.topLeft.width),
+            (int) (startY * this.scale + this.topLeft.height),
+            (int) (endX * this.scale + this.topLeft.width),
+            (int) (endY * this.scale + this.topLeft.height)
+        );
+    }
 }

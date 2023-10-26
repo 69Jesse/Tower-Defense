@@ -5,6 +5,7 @@ import field.Field;
 import game.options.BuyArcherTowerOption;
 import game.options.BuyBombTowerOption;
 import game.options.BuyLaserTowerOption;
+import game.options.BuyWizardTowerOption;
 import game.options.SellOption;
 import game.options.SwitchTargetOption;
 import game.options.UpgradeOption;
@@ -12,9 +13,9 @@ import gui.frame.Frame;
 import java.util.ArrayList;
 import java.util.Random;
 import location.Location;
-import towers.Projectile;
 import towers.RangeDamageTower;
 import towers.Tower;
+import towers.projectile.Projectile;
 
 
 /**
@@ -41,7 +42,11 @@ public final class Game {
 
     private GameState state;
     private Long seed;
-    public Random random;
+
+    // Two randoms to make sure the randomness of the field is
+    // always directly related to the seed, if given that is.
+    public Random fieldRandom;
+    public Random towerRandom;
 
     private int exp;
     private int enemyKills;
@@ -69,7 +74,8 @@ public final class Game {
      * Initializes the game.
      */
     private void init() {
-        this.random = this.seed == null ? new Random() : new Random(this.seed);
+        this.fieldRandom = this.seed == null ? new Random() : new Random(this.seed);
+        this.towerRandom = new Random();
         this.waveHandler = new WaveHandler(this);
         this.lives = 15;
         this.gold = this.getStartingGold();
@@ -179,6 +185,7 @@ public final class Game {
     private static BuyArcherTowerOption BUY_ARCHER_TOWER_OPTION;
     private static BuyBombTowerOption BUY_BOMB_TOWER_OPTION;
     private static BuyLaserTowerOption BUY_LASER_TOWER_OPTION;
+    private static BuyWizardTowerOption BUY_WIZARD_TOWER_OPTION;
 
     private static SellOption SELL_OPTION;
     private static UpgradeOption UPGRADE_OPTION;
@@ -191,6 +198,7 @@ public final class Game {
         BUY_ARCHER_TOWER_OPTION = new BuyArcherTowerOption(this, this.field);
         BUY_BOMB_TOWER_OPTION = new BuyBombTowerOption(this, this.field);
         BUY_LASER_TOWER_OPTION = new BuyLaserTowerOption(this, this.field);
+        BUY_WIZARD_TOWER_OPTION = new BuyWizardTowerOption(this, this.field);
         SELL_OPTION = new SellOption(this, this.field);
         UPGRADE_OPTION = new UpgradeOption(this, this.field);
         SWITCH_TARGET_OPTION = new SwitchTargetOption(this, this.field);
@@ -205,6 +213,7 @@ public final class Game {
         options.add(BUY_ARCHER_TOWER_OPTION);
         options.add(BUY_BOMB_TOWER_OPTION);
         options.add(BUY_LASER_TOWER_OPTION);
+        options.add(BUY_WIZARD_TOWER_OPTION);
     }
 
     /**

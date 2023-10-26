@@ -5,6 +5,7 @@ import game.Game;
 import java.util.ArrayList;
 import java.util.function.Function;
 import location.Location;
+import towers.projectile.Projectile;
 
 
 /**
@@ -50,7 +51,7 @@ public abstract class RangeDamageTower extends DamageTower {
     }
 
     @Override
-    protected boolean canDamage(Enemy enemy) {
+    public boolean canDamage(Enemy enemy) {
         return (this.location.distanceTo(enemy) - enemy.size / 2) <= this.getRange()
             && super.canDamage(enemy);
     }
@@ -140,11 +141,12 @@ public abstract class RangeDamageTower extends DamageTower {
     }
 
     /**
-     * Creates a projectile that can damage an enemy.
+     * Creates the projectiles that can damage an enemy.
+     * Most of the time this will be a single projectile, but it can also be multiple.
      * 
      * @param enemy The enemy to damage.
      */
-    protected abstract Projectile createProjectile(Enemy enemy);
+    protected abstract Projectile[] createProjectiles(Enemy enemy);
 
     /**
      * Fires a projectile at an enemy.
@@ -152,8 +154,12 @@ public abstract class RangeDamageTower extends DamageTower {
      * @param enemy The enemy to fire at.
      */
     protected void fireAtEnemy(Enemy enemy) {
-        Projectile projectile = this.createProjectile(enemy);
-        this.game.field.projectiles.add(projectile);
+        for (Projectile projectile : this.createProjectiles(enemy)) {
+            if (projectile == null) {
+                continue;
+            }
+            this.game.field.projectiles.add(projectile);
+        }
     }
 
     /**

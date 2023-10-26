@@ -61,8 +61,8 @@ public abstract class Enemy extends BaseLocationable {
 
     private Location createDrawOffsetLocation() {
         final double maxOffset = 0.5;
-        double x = this.game.random.nextDouble() * maxOffset * 2 - maxOffset;
-        double y = this.game.random.nextDouble() * maxOffset * 2 - maxOffset;
+        double x = this.game.fieldRandom.nextDouble() * maxOffset * 2 - maxOffset;
+        double y = this.game.fieldRandom.nextDouble() * maxOffset * 2 - maxOffset;
         return new Location(x, y);
     }
 
