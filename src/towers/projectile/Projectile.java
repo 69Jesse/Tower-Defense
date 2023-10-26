@@ -17,30 +17,40 @@ public abstract class Projectile {
     public final Locationable source;
     public Enemy target;
     protected final double damage;
+    protected final boolean shouldMove;
     protected int ticksElapsed;
 
     /**
      * Constructs a projectile.
      * 
-     * @param game     The game this projectile is in.
-     * @param tower    The tower that fired this projectile.
-     * @param source   The source of the projectile (does not nessesarily have to be the tower).
-     * @param target   The target of the projectile.
-     * @param damage   The damage of the projectile.
+     * @param game       The game this projectile is in.
+     * @param tower      The tower that fired this projectile.
+     * @param source     The source of the projectile (does not nessesarily have to be the tower).
+     * @param target     The target of the projectile.
+     * @param damage     The damage of the projectile.
+     * @param shouldMove Whether or not the location of the points it draws from should move.
      */
     public Projectile(
         Game game,
         DamageTower tower,
         Locationable source,
         Enemy target,
-        double damage
+        double damage,
+        boolean shouldMove
     ) {
         this.game = game;
         this.tower = tower;
         this.source = source;
         this.target = target;
         this.damage = damage;
+        this.shouldMove = shouldMove;
         this.ticksElapsed = 0;
+
+        // Define the final locations if it is not going to move.
+        if (!this.shouldMove) {
+            this.getSourceLocation();
+            this.getTargetLocation();
+        }
     }
 
     final double maxNewTargetDistance = 5.0;
@@ -89,5 +99,28 @@ public abstract class Projectile {
         boolean shouldRemove = this.duringTick();
         this.ticksElapsed++;
         return shouldRemove;
+    }
+
+    private Location sourceLocation;
+    private Location targetLocation;
+
+    public Location getSourceLocation() {
+        if (this.shouldMove) {
+            return this.source.getLocation();
+        }
+        if (this.sourceLocation == null) {
+            this.sourceLocation = this.source.getLocation();
+        }
+        return this.sourceLocation;
+    }
+
+    public Location getTargetLocation() {
+        if (this.shouldMove) {
+            return this.target.getLocation();
+        }
+        if (this.targetLocation == null) {
+            this.targetLocation = this.target.getLocation();
+        }
+        return this.targetLocation;
     }
 }

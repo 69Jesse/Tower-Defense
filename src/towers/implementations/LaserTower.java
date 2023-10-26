@@ -85,6 +85,7 @@ public final class LaserTower extends RangeDamageTower {
         }
     }
 
+    private static final boolean SHOULD_MOVE = true;
     private static final double PROJECTILE_SPEED = 0.5;
     private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/laser_tower.png";
     private static final double PROJECTILE_SIZE = 1.0;
@@ -99,6 +100,7 @@ public final class LaserTower extends RangeDamageTower {
                 this,
                 enemy,
                 this.getDamage(),
+                SHOULD_MOVE,
                 PROJECTILE_SPEED,
                 PROJECTILE_SIZE,
                 PROJECTILE_MAX_CURVE,

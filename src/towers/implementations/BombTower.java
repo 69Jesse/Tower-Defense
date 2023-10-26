@@ -95,6 +95,7 @@ public final class BombTower extends RangeDamageTower {
         }
     }
 
+    private static final boolean SHOULD_MOVE = true;
     private static final double PROJECTILE_SPEED = 0.2;
     private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/bomb_tower.png";
     private static final double PROJECTILE_SIZE = 3.0;
@@ -109,6 +110,7 @@ public final class BombTower extends RangeDamageTower {
                 this,
                 enemy,
                 this.getDamage(),
+                SHOULD_MOVE,
                 PROJECTILE_SPEED,
                 PROJECTILE_SIZE,
                 PROJECTILE_MAX_CURVE,

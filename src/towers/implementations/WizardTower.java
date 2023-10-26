@@ -15,7 +15,7 @@ import towers.projectile.Projectile;
 public final class WizardTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
-    private static final int COOLDOWN = 40;
+    private static final int COOLDOWN = 60;
     private static final double DAMAGE = 15.0;
     private static final double RANGE = 10.0;    
     private static final boolean CAN_DAMAGE_FLYING = true;
@@ -95,9 +95,10 @@ public final class WizardTower extends RangeDamageTower {
         }
     }
 
+    private static final boolean SHOULD_MOVE = false;
     private static final int TICKS_UNTIL_HIT = 0;
-    private static final int TICKS_UNTIL_DELETE = 60;
-    private static final double LINE_WIDTH = 0.5;
+    private static final int TICKS_UNTIL_DELETE = 30;
+    private static final double LINE_WIDTH = 0.25;
     private static final Color LINE_COLOR = new Color(0x76428A);
 
     @Override
@@ -109,6 +110,7 @@ public final class WizardTower extends RangeDamageTower {
                 this,
                 enemy,
                 this.getDamage(),
+                SHOULD_MOVE,
                 TICKS_UNTIL_HIT,
                 TICKS_UNTIL_DELETE,
                 LINE_WIDTH,

@@ -20,15 +20,16 @@ public final class ImageProjectile extends Projectile {
     /**
      * Constructs an image projectile.
      * 
-     * @param game      The game this projectile is in.
-     * @param tower     The tower that fired this projectile.
-     * @param source    The source of the projectile (does not nessesarily have to be the tower).
-     * @param target    The target of the projectile.
-     * @param damage    The damage of the projectile.
-     * @param speed     The speed of the projectile in field pixels per game tick.
-     * @param size      The size of the image of the projectile in field pixels.
-     * @param maxCurve  The maximum curve of the projectile in field pixels (0 for no curve).
-     * @param imagePath The path to the image of the projectile.
+     * @param game       The game this projectile is in.
+     * @param tower      The tower that fired this projectile.
+     * @param source     The source of the projectile (does not nessesarily have to be the tower).
+     * @param target     The target of the projectile.
+     * @param damage     The damage of the projectile.
+     * @param shouldMove Whether or not the location of the points it draws from should move.
+     * @param speed      The speed of the projectile in field pixels per game tick.
+     * @param size       The size of the image of the projectile in field pixels.
+     * @param maxCurve   The maximum curve of the projectile in field pixels (0 for no curve).
+     * @param imagePath  The path to the image of the projectile.
      */
     public ImageProjectile(
         Game game,
@@ -36,6 +37,7 @@ public final class ImageProjectile extends Projectile {
         Locationable source,
         Enemy target,
         double damage,
+        boolean shouldMove,
         double speed,
         double size,
         double maxCurve,
@@ -46,7 +48,8 @@ public final class ImageProjectile extends Projectile {
             tower,
             source,
             target,
-            damage
+            damage,
+            shouldMove
         );
         this.speed = speed;
         this.size = size;

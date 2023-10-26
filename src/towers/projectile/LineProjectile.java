@@ -25,6 +25,7 @@ public final class LineProjectile extends Projectile {
      *                         (does not nessesarily have to be the tower).
      * @param target           The target of the projectile.
      * @param damage           The damage of the projectile.
+     * @param shouldMove       Whether or not the location of the points it draws from should move.
      * @param ticksUntilHit    The amount of ticks this projectile waits before hitting its target.
      * @param ticksUntilDelete The amount of ticks this projectile waits before deleting itself.
      * @param lineWidth        The width of the line of the projectile in field pixels.
@@ -36,6 +37,7 @@ public final class LineProjectile extends Projectile {
         Locationable source,
         Enemy target,
         double damage,
+        boolean shouldMove,
         int ticksUntilHit,
         int ticksUntilDelete,
         double lineWidth,
@@ -46,7 +48,8 @@ public final class LineProjectile extends Projectile {
             tower,
             source,
             target,
-            damage
+            damage,
+            shouldMove
         );
         this.ticksUntilHit = ticksUntilHit;
         this.ticksUntilDelete = ticksUntilDelete;
