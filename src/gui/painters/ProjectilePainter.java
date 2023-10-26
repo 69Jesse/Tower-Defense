@@ -7,6 +7,7 @@ import gui.Panel;
 import gui.frame.Frame;
 import location.Location;
 import towers.projectile.ImageProjectile;
+import towers.projectile.LineProjectile;
 import towers.projectile.Projectile;
 
 
@@ -43,11 +44,24 @@ public final class ProjectilePainter extends Painter {
         );
     }
 
+    private void paintLineProjectile(BetterGraphics graphics, LineProjectile projectile) {
+        Location start = projectile.source.getLocation();
+        Location end = projectile.target.getLocation();
+
+        graphics.setLineWidth(projectile.lineWidth);
+        graphics.setColor(projectile.lineColor);
+        graphics.drawLine(start.x, start.y, end.x, end.y);
+    }
+
     @Override
     public void paint(BetterGraphics graphics) {
         for (Projectile projectile : this.game.field.projectiles) {
             if (projectile instanceof ImageProjectile) {
                 this.paintImageProjectile(graphics, (ImageProjectile) projectile);
+            } else if (projectile instanceof LineProjectile) {
+                this.paintLineProjectile(graphics, (LineProjectile) projectile);
+            } else {
+                throw new RuntimeException("Unknown projectile type.");
             }
         }
     }

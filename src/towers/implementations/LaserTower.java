@@ -91,23 +91,25 @@ public final class LaserTower extends RangeDamageTower {
     private static final double PROJECTILE_MAX_CURVE = 0.0;
 
     @Override
-    protected Projectile createProjectile(Enemy enemy) {
-        return new ImageProjectile(
-            this.game,
-            this,
-            this,
-            enemy,
-            this.getDamage(),
-            PROJECTILE_SPEED,
-            PROJECTILE_SIZE,
-            PROJECTILE_MAX_CURVE,
-            PROJECTILE_IMAGE_PATH
-        );
+    protected Projectile[] createProjectiles(Enemy enemy) {
+        return new Projectile[] {
+            new ImageProjectile(
+                this.game,
+                this,
+                this,
+                enemy,
+                this.getDamage(),
+                PROJECTILE_SPEED,
+                PROJECTILE_SIZE,
+                PROJECTILE_MAX_CURVE,
+                PROJECTILE_IMAGE_PATH
+            )
+        };
     }
 
     @Override
     public void onTargetHit(Enemy target, double damage) {
-        target.onHit(this.getDamage());
+        target.onHit(damage);
     }
 
     @Override

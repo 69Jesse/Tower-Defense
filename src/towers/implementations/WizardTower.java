@@ -2,16 +2,17 @@ package towers.implementations;
 
 import enemies.Enemy;
 import game.Game;
+import java.awt.Color;
 import location.Location;
 import towers.RangeDamageTower;
-import towers.projectile.ImageProjectile;
+import towers.projectile.LineProjectile;
 import towers.projectile.Projectile;
 
 
 /**
- * An archer tower.
+ * A wizard tower.
  */
-public final class ArcherTower extends RangeDamageTower {
+public final class WizardTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 40;
@@ -20,12 +21,12 @@ public final class ArcherTower extends RangeDamageTower {
     private static final boolean CAN_DAMAGE_FLYING = true;
 
     /**
-     * Constructs an archer tower.
+     * Constructs a wizard tower.
      * 
      * @param game     The game this tower is in.
      * @param location The location of this tower on the field.
      */
-    public ArcherTower(Game game, Location location) {
+    public WizardTower(Game game, Location location) {
         super(
             game,
             location,
@@ -94,24 +95,24 @@ public final class ArcherTower extends RangeDamageTower {
         }
     }
 
-    private static final double PROJECTILE_SPEED = 0.4;
-    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/archer_tower.png";
-    private static final double PROJECTILE_SIZE = 1.0;
-    private static final double PROJECTILE_MAX_CURVE = 5.0;
+    private static final int TICKS_UNTIL_HIT = 0;
+    private static final int TICKS_UNTIL_DELETE = 60;
+    private static final double LINE_WIDTH = 0.5;
+    private static final Color LINE_COLOR = new Color(0x76428A);
 
     @Override
     protected Projectile[] createProjectiles(Enemy enemy) {
         return new Projectile[] {
-            new ImageProjectile(
+            new LineProjectile(
                 this.game,
                 this,
                 this,
                 enemy,
                 this.getDamage(),
-                PROJECTILE_SPEED,
-                PROJECTILE_SIZE,
-                PROJECTILE_MAX_CURVE,
-                PROJECTILE_IMAGE_PATH
+                TICKS_UNTIL_HIT,
+                TICKS_UNTIL_DELETE,
+                LINE_WIDTH,
+                LINE_COLOR
             )
         };
     }
@@ -125,7 +126,7 @@ public final class ArcherTower extends RangeDamageTower {
     public String[] getInfo() {
         return new String[] {
             String.format("Archer Tower (Lvl %d)", this.level),
-            "Single Target. Has a long range.",
+            "Multiple Target. Has a chain damage reaction",
             String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),

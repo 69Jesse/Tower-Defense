@@ -8,16 +8,17 @@ import towers.DamageTower;
 
 
 /**
- * A projectile that can be fired by a tower.
+ * A projectile that can be fired by a tower that has an image.
  */
 public final class ImageProjectile extends Projectile {
+    private Location location;
     private final double speed;
     public final double size;
     public final double maxCurve;
     private final String imagePath;
 
     /**
-     * Constructs a projectile.
+     * Constructs an image projectile.
      * 
      * @param game      The game this projectile is in.
      * @param tower     The tower that fired this projectile.
@@ -79,6 +80,10 @@ public final class ImageProjectile extends Projectile {
         final double x = sourceLocation.x + (targetLocation.x - sourceLocation.x) * percentage;
         final double y = sourceLocation.y + (targetLocation.y - sourceLocation.y) * percentage;
         this.location = new Location(x, y);
+    }
+
+    public Location getLocation() {
+        return this.location;
     }
 
     /**

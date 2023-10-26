@@ -11,7 +11,7 @@ import towers.DamageTower;
 /**
  * A projectile that can be fired by a tower.
  */
-public abstract class Projectile extends Locationable {
+public abstract class Projectile {
     protected final Game game;
     public final DamageTower tower;
     public final Locationable source;
@@ -37,7 +37,6 @@ public abstract class Projectile extends Locationable {
     ) {
         this.game = game;
         this.tower = tower;
-        this.location = source.getLocation();
         this.source = source;
         this.target = target;
         this.damage = damage;

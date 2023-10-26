@@ -101,18 +101,20 @@ public final class BombTower extends RangeDamageTower {
     private static final double PROJECTILE_MAX_CURVE = 6.0;
 
     @Override
-    protected Projectile createProjectile(Enemy enemy) {
-        return new ImageProjectile(
-            this.game,
-            this,
-            this,
-            enemy,
-            this.getDamage(),
-            PROJECTILE_SPEED,
-            PROJECTILE_SIZE,
-            PROJECTILE_MAX_CURVE,
-            PROJECTILE_IMAGE_PATH
-        );
+    protected Projectile[] createProjectiles(Enemy enemy) {
+        return new Projectile[] {
+            new ImageProjectile(
+                this.game,
+                this,
+                this,
+                enemy,
+                this.getDamage(),
+                PROJECTILE_SPEED,
+                PROJECTILE_SIZE,
+                PROJECTILE_MAX_CURVE,
+                PROJECTILE_IMAGE_PATH
+            )
+        };
     }
 
     private static final double SPLASH_DAMAGE_RANGE = 3.0;
@@ -138,7 +140,7 @@ public final class BombTower extends RangeDamageTower {
             }
         }
         for (Enemy enemy : hitting) {
-            enemy.onHit(this.getDamage());
+            enemy.onHit(damage);
         }
     }
 
