@@ -6,6 +6,7 @@ import gui.Painter;
 import gui.Panel;
 import gui.frame.Frame;
 import location.Location;
+import towers.projectile.ImageProjectile;
 import towers.projectile.Projectile;
 
 
@@ -24,24 +25,30 @@ public final class ProjectilePainter extends Painter {
         super(game, frame, panel);
     }
 
+    private void paintImageProjectile(BetterGraphics graphics, ImageProjectile projectile) {
+        Location location = projectile.getLocation();
+        double y = location.y;
+
+        if (projectile.maxCurve > 0) {
+            double percentage = projectile.getPercentage();
+            y -= projectile.maxCurve * Math.sin(percentage * Math.PI);
+        }
+
+        graphics.drawImageCentered(
+            projectile.getImagePath(),
+            location.x,
+            y,
+            projectile.size,
+            projectile.size
+        );
+    }
+
     @Override
     public void paint(BetterGraphics graphics) {
         for (Projectile projectile : this.game.field.projectiles) {
-            Location location = projectile.getLocation();
-            double y = location.y;
-
-            if (projectile.maxCurve > 0) {
-                double percentage = projectile.getPercentage();
-                y -= projectile.maxCurve * Math.sin(percentage * Math.PI);
+            if (projectile instanceof ImageProjectile) {
+                this.paintImageProjectile(graphics, (ImageProjectile) projectile);
             }
-
-            graphics.drawImageCentered(
-                projectile.getImagePath(),
-                location.x,
-                y,
-                projectile.size,
-                projectile.size
-            );
         }
     }
 }
