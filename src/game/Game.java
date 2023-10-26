@@ -54,6 +54,8 @@ public final class Game {
 
     /**
      * Runs the game.
+     * 
+     * @param seed The seed to use for the random object, null for no seed.
      */
     public void run(Long seed) {
         System.out.println("Game starting!");
