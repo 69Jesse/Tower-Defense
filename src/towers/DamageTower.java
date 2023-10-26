@@ -3,6 +3,7 @@ package towers;
 import enemies.Enemy;
 import game.Game;
 import location.Location;
+import towers.projectile.Projectile;
 
 
 /**
@@ -78,6 +79,51 @@ public abstract class DamageTower extends Tower {
      */
     public double getDamage() {
         return this.damage * this.damageMultiplier();
+    }
+
+    /**
+     * Creates the projectiles that can damage an enemy.
+     * Most of the time this will be a single projectile, but it can also be multiple.
+     * 
+     * @param enemy The enemy to damage.
+     */
+    protected abstract Projectile[] createProjectiles(Enemy enemy);
+
+    /**
+     * Method that gets called during each tick of a projectile.
+     * Override this method when nessesary.
+     * 
+     * @param projectile The projectile that is ticking.
+     * @return           Whether or not the projectile should be removed.
+     */
+    public boolean duringProjectileTick(Projectile projectile) {
+        // Do nothing.
+        return false;
+    }
+
+    /**
+     * Fires a projectile at an enemy.
+     * 
+     * @param enemy The enemy to fire at.
+     */
+    protected void fireAtEnemy(Enemy enemy) {
+        for (Projectile projectile : this.createProjectiles(enemy)) {
+            if (projectile == null) {
+                continue;
+            }
+            this.game.field.projectiles.add(projectile);
+        }
+    }
+
+    /**
+     * Performs an action.
+     */
+    public void act() {
+        Enemy enemy = this.findEnemy();
+        if (enemy == null) {
+            return;
+        }
+        this.fireAtEnemy(enemy);
     }
 
     /**

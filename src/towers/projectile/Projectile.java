@@ -21,6 +21,7 @@ public abstract class Projectile {
     protected final boolean shouldMove;
     protected final boolean shouldFindNewTarget;
     protected int ticksElapsed;
+    public ExtraData extra;
 
     /**
      * Constructs a projectile.
@@ -111,7 +112,7 @@ public abstract class Projectile {
                 }
             }
         }
-        boolean shouldRemove = this.duringTick();
+        boolean shouldRemove = this.duringTick() || this.tower.duringProjectileTick(this);
         this.ticksElapsed++;
         return shouldRemove;
     }
