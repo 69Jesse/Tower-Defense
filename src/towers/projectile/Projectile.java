@@ -176,4 +176,13 @@ public abstract class Projectile {
     public void setTargetLocation(Location location) {
         this.targetLocation = location;
     }
+
+    /**
+     * Returns the damage of this projectile.
+     * 
+     * @return The damage of this projectile.
+     */
+    public double getDamage() {
+        return this.damage;
+    }
 }

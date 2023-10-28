@@ -2,11 +2,18 @@ package towers.implementations;
 
 import enemies.Enemy;
 import game.Game;
+import java.util.HashSet;
 import location.Location;
 import towers.RangeDamageTower;
 import towers.projectile.DummyTarget;
+import towers.projectile.ExtraData;
 import towers.projectile.ImageProjectile;
 import towers.projectile.Projectile;
+
+
+class EnemyHitTracker extends ExtraData {
+    public HashSet<Enemy> enemiesHit = new HashSet<>();
+}
 
 
 /**
@@ -15,8 +22,8 @@ import towers.projectile.Projectile;
 public final class SlingshotTower extends RangeDamageTower {
     private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
-    private static final int COOLDOWN = 0;
-    private static final double DAMAGE = 0.5;
+    private static final int COOLDOWN = 120;
+    private static final double DAMAGE = 5.0;
     private static final double RANGE = 10.0;
     private static final boolean CAN_DAMAGE_FLYING = true;
 
@@ -95,12 +102,6 @@ public final class SlingshotTower extends RangeDamageTower {
         }
     }
 
-    private static final boolean SHOULD_MOVE = false;
-    private static final double PROJECTILE_SPEED = 0.5;
-    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/slingshot_tower.png";
-    private static final double PROJECTILE_SIZE = 1.0;
-    private static final double PROJECTILE_MAX_CURVE = 0.0;
-
     /**
      * Returns the location of the border of the field that
      * is on the line through the tower and the enemy.
@@ -111,6 +112,7 @@ public final class SlingshotTower extends RangeDamageTower {
     private Location getTargetLocation(Enemy enemy) {
         Location a = this.getLocation();
         Location b = enemy.getLocation();
+
         int width = this.game.field.width;
         int height = this.game.field.height;
     
@@ -150,22 +152,45 @@ public final class SlingshotTower extends RangeDamageTower {
         }
     }
 
+    private static final boolean SHOULD_MOVE = false;
+    private static final double PROJECTILE_SPEED = 1.0;
+    private static final String PROJECTILE_IMAGE_PATH = "./assets/projectiles/slingshot_tower.png";
+    private static final double PROJECTILE_SIZE = 2.0;
+    private static final double PROJECTILE_MAX_CURVE = 0.0;
+
     @Override
     protected Projectile[] createProjectiles(Enemy enemy) {
-        return new Projectile[] {
-            new ImageProjectile(
-                this.game,
-                this,
-                this,
-                new DummyTarget(this.getTargetLocation(enemy)),
-                this.getDamage(),
-                SHOULD_MOVE,
-                PROJECTILE_SPEED,
-                PROJECTILE_SIZE,
-                PROJECTILE_MAX_CURVE,
-                PROJECTILE_IMAGE_PATH
-            )
-        };
+        ImageProjectile projectile = new ImageProjectile(
+            this.game,
+            this,
+            this,
+            new DummyTarget(this.getTargetLocation(enemy)),
+            this.getDamage(),
+            SHOULD_MOVE,
+            PROJECTILE_SPEED,
+            PROJECTILE_SIZE,
+            PROJECTILE_MAX_CURVE,
+            PROJECTILE_IMAGE_PATH
+        );
+        projectile.extra = new EnemyHitTracker();
+        return new Projectile[] {projectile};
+    }
+
+    @Override
+    public boolean duringProjectileTick(Projectile projectile) {
+        ImageProjectile imageProjectile = (ImageProjectile) projectile;
+        EnemyHitTracker extra = (EnemyHitTracker) imageProjectile.extra;
+        Location location = imageProjectile.getLocation();
+        for (Enemy enemy : this.game.field.enemies) {
+            if (extra.enemiesHit.contains(enemy)) {
+                continue;
+            }
+            if (enemy.isTouching(location, PROJECTILE_SIZE)) {
+                this.onTargetHit(enemy, imageProjectile.getDamage());
+                extra.enemiesHit.add(enemy);
+            }
+        }
+        return false;
     }
 
     @Override
@@ -176,8 +201,8 @@ public final class SlingshotTower extends RangeDamageTower {
     @Override
     public String[] getInfo() {
         return new String[] {
-            String.format("Laser Tower (Lvl %d)", this.level),
-            "Single Target. Fires at a high frequency.",
+            String.format("Slingslot Tower (Lvl %d)", this.level),
+            "Single Target. Pierces through enemies.",
             String.format("Damage: %.1f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
