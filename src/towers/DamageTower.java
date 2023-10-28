@@ -115,15 +115,14 @@ public abstract class DamageTower extends Tower {
         }
     }
 
-    /**
-     * Performs an action.
-     */
-    public void act() {
+    @Override
+    public boolean act() {
         Enemy enemy = this.findEnemy();
         if (enemy == null) {
-            return;
+            return false;
         }
         this.fireAtEnemy(enemy);
+        return true;
     }
 
     /**

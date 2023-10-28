@@ -116,8 +116,10 @@ public abstract class Tower extends Locationable {
 
     /**
      * Performs an action.
+     * 
+     * @return Whether or not this tower performed an action.
      */
-    public abstract void act();
+    public abstract boolean act();
 
     /**
      * Performs an action.
@@ -127,8 +129,10 @@ public abstract class Tower extends Locationable {
         int cooldown = this.getCooldown();
         this.remainingCooldown = Math.min(this.remainingCooldown, cooldown);
         if (this.canAct()) {
-            this.act();
-            this.remainingCooldown = cooldown;
+            boolean didAct = this.act();
+            if (didAct) {
+                this.remainingCooldown = cooldown;
+            }
         }
     }
 
