@@ -202,4 +202,18 @@ public abstract class Enemy extends BaseLocationable {
             this.onEndReached();
         }
     }
+
+    /**
+     * Returns whether or not this enemy is touching a location.
+     * 
+     * @param location The location to check.
+     * @param size     The size of the object on the location to check.
+     * @return         Whether or not this enemy is touching the location.
+     */
+    public boolean isTouching(
+        Location location,
+        double size
+    ) {
+        return this.getLocation().distanceTo(location) < this.size / 2 + size / 2;
+    }
 }

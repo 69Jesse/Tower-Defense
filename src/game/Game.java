@@ -6,6 +6,7 @@ import game.options.BuyArcherTowerOption;
 import game.options.BuyBombTowerOption;
 import game.options.BuyLaserTowerOption;
 import game.options.BuyWizardTowerOption;
+import game.options.BuySlingshotTowerOption;
 import game.options.SellOption;
 import game.options.SwitchTargetOption;
 import game.options.UpgradeOption;
@@ -188,6 +189,7 @@ public final class Game {
     private static BuyBombTowerOption BUY_BOMB_TOWER_OPTION;
     private static BuyLaserTowerOption BUY_LASER_TOWER_OPTION;
     private static BuyWizardTowerOption BUY_WIZARD_TOWER_OPTION;
+    private static BuySlingshotTowerOption BUY_SLINGSHOT_TOWER_OPTION;
 
     private static SellOption SELL_OPTION;
     private static UpgradeOption UPGRADE_OPTION;
@@ -201,6 +203,7 @@ public final class Game {
         BUY_BOMB_TOWER_OPTION = new BuyBombTowerOption(this, this.field);
         BUY_LASER_TOWER_OPTION = new BuyLaserTowerOption(this, this.field);
         BUY_WIZARD_TOWER_OPTION = new BuyWizardTowerOption(this, this.field);
+        BUY_SLINGSHOT_TOWER_OPTION = new BuySlingshotTowerOption(this, this.field);
         SELL_OPTION = new SellOption(this, this.field);
         UPGRADE_OPTION = new UpgradeOption(this, this.field);
         SWITCH_TARGET_OPTION = new SwitchTargetOption(this, this.field);
@@ -216,6 +219,7 @@ public final class Game {
         options.add(BUY_BOMB_TOWER_OPTION);
         options.add(BUY_LASER_TOWER_OPTION);
         options.add(BUY_WIZARD_TOWER_OPTION);
+        options.add(BUY_SLINGSHOT_TOWER_OPTION);
     }
 
     /**

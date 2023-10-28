@@ -5,7 +5,6 @@ import game.Game;
 import java.util.ArrayList;
 import location.BaseLocationable;
 import location.Location;
-import location.Locationable;
 import towers.DamageTower;
 
 
@@ -179,12 +178,11 @@ public abstract class Projectile {
     }
 
     /**
-     * A dummy that can be used as a target for projectiles
-     * so it can target a location instead of an enemy.
+     * Returns the damage of this projectile.
+     * 
+     * @return The damage of this projectile.
      */
-    public class DummyTarget extends Locationable {
-        public DummyTarget(Location location) {
-            this.location = location;
-        }
+    public double getDamage() {
+        return this.damage;
     }
 }
