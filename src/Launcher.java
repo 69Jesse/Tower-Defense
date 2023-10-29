@@ -1,8 +1,20 @@
+/*
+ * Properly launch the game with this file.
+ * Make sure your current working directory is the same as the directory
+ * of this file to make sure the game can find all the images it will use.
+ * 
+ * @author Aniek Goeree
+ * @ID 1974459
+ * @author Jesse Janssen
+ * @ID 1992538
+ * 
+ */
+
 import game.Game;
 
 
 /**
- * The launcher class.
+ * The launcher of the game.
  */
 public class Launcher {
     public static void main(String[] args) {
