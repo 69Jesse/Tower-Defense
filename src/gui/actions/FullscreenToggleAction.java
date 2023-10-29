@@ -1,11 +1,11 @@
 package gui.actions;
 
+import gui.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
-import gui.Frame;
 
 /**
  * The fullscreen toggle action.

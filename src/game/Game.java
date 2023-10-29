@@ -11,7 +11,6 @@ import game.options.SellOption;
 import game.options.SwitchTargetOption;
 import game.options.UpgradeOption;
 import gui.Frame;
-
 import java.util.ArrayList;
 import java.util.Random;
 import location.Location;
