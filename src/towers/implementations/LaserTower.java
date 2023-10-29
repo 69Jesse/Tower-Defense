@@ -119,7 +119,7 @@ public final class LaserTower extends RangeDamageTower {
         return new String[] {
             String.format("Laser Tower (Lvl %d)", this.level),
             "Single Target. Fires at a high frequency.",
-            String.format("Damage: %.1f", this.getDamage()),
+            String.format("Damage: %.2f", this.getDamage()),
             String.format("Range: %.1f", this.getRange()),
             String.format("Cooldown: %d", this.getCooldown()),
             String.format("Total spent: %d", this.getTotalSpent()),

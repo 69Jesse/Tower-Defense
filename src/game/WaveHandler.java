@@ -86,7 +86,7 @@ public class WaveHandler {
      * @return The value of the current wave.
      */
     public int getWaveValue() {
-        return (int) Math.pow(this.waveNumber, 1.1) * 10;
+        return (int) Math.pow(this.waveNumber, 1.2) * 30;
     }
 
     /**
@@ -95,7 +95,7 @@ public class WaveHandler {
      * @return The maximum wave number.
      */
     public int getMaxWave() {
-        return 20;
+        return 30;
     }
 
     /**
@@ -110,7 +110,7 @@ public class WaveHandler {
     private void newTicksUntilNextSpawn() {
         this.ticksUntilNextSpawn = (int) (
             this.game.ticksPerSecond * 0.1
-            + this.game.fieldRandom.nextDouble() * this.game.ticksPerSecond * 0.4
+            + this.game.fieldRandom.nextDouble() * this.game.ticksPerSecond * 1.4
             );  // Checker only accepts this indentation for some reason
     }
 
@@ -120,7 +120,7 @@ public class WaveHandler {
      * when the last wave is done spawning.
      */
     private void newTicksUntilNextWave() {
-        this.ticksUntilNextWave = this.game.ticksPerSecond * 10;
+        this.ticksUntilNextWave = this.game.ticksPerSecond * 20;
     }
 
     /**
@@ -136,7 +136,7 @@ public class WaveHandler {
             ArrayList<Enemy> choices = new ArrayList<Enemy>();
             ArrayList<Integer> weights = new ArrayList<Integer>();
             for (Enemy enemy : this.getEnemyTypes()) {
-                if (enemy.weight > waveValue) {
+                if (enemy.value > waveValue) {
                     continue;
                 }
                 choices.add(enemy);
@@ -148,7 +148,7 @@ public class WaveHandler {
 
             Enemy enemy = this.randomChoice(choices, weights);
             this.enemies.add(enemy);
-            waveValue -= enemy.weight;
+            waveValue -= enemy.value;
         }
 
         Collections.shuffle(this.enemies, this.game.fieldRandom);
@@ -185,6 +185,26 @@ public class WaveHandler {
     }
 
     /**
+     * Returns whether the maximum wave has been reached.
+     * 
+     * @return Whether the maximum wave has been reached.
+     */
+    private boolean maxWaveReached() {
+        return this.waveNumber >= this.getMaxWave();
+    }
+
+    /**
+     * Returns whether the game is completely done.
+     * 
+     * @return Whether the game is completely done.
+     */
+    public boolean isCompletelyDone() {
+        return this.maxWaveReached()
+            && this.isDoneSpawning()
+            && this.game.field.noEnemiesAlive();
+    }
+
+    /**
      * This method is called every tick to update the wave.
      */
     public void tick() {
@@ -214,25 +234,5 @@ public class WaveHandler {
             return;
         }
         this.startNewWave();
-    }
-
-    /**
-     * Returns whether the maximum wave has been reached.
-     * 
-     * @return Whether the maximum wave has been reached.
-     */
-    private boolean maxWaveReached() {
-        return this.waveNumber >= this.getMaxWave();
-    }
-
-    /**
-     * Returns whether the game is completely done.
-     * 
-     * @return Whether the game is completely done.
-     */
-    public boolean isCompletelyDone() {
-        return this.maxWaveReached()
-            && this.isDoneSpawning()
-            && this.game.field.noEnemiesAlive();
     }
 }

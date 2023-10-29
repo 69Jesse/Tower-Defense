@@ -20,7 +20,7 @@ class EnemyHitTracker extends ExtraData {
  * A slingshot tower.
  */
 public final class SlingshotTower extends RangeDamageTower {
-    private static final int COST = 300;
+    private static final int COST = 200;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 120;
     private static final double DAMAGE = 20.0;
@@ -68,7 +68,7 @@ public final class SlingshotTower extends RangeDamageTower {
             case 2:
                 return 0.8;
             case 3:
-                return 0.6;
+                return 0.5;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -80,9 +80,9 @@ public final class SlingshotTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.5;
-            case 3:
                 return 2.0;
+            case 3:
+                return 3.0;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }

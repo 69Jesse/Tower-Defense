@@ -11,7 +11,7 @@ import location.Location;
  */
 public abstract class Enemy extends BaseLocationable {
     protected final Game game;
-    public final int worth;
+    public final int value;
     public final int weight;
 
     public final int maxHealth;
@@ -28,7 +28,7 @@ public abstract class Enemy extends BaseLocationable {
      * Constructs a new enemy.
      * 
      * @param game      The game this enemy is in.
-     * @param worth     The worth of this enemy. This is used to calculate
+     * @param value     The value of this enemy. This is used to calculate
      *                  the wave size and the gold reward on death.
      * @param weight    The weight of this enemy. This is used to determine
      *                  how often this enemy should appear in a wave.
@@ -39,7 +39,7 @@ public abstract class Enemy extends BaseLocationable {
      */
     public Enemy(
         Game game,
-        int worth,
+        int value,
         int weight,
         int maxHealth,
         double speed,
@@ -47,8 +47,9 @@ public abstract class Enemy extends BaseLocationable {
         boolean flying
     ) {
         this.game = game;
-        this.worth = worth;
+        this.value = value;
         this.weight = weight;
+        maxHealth = (int) (maxHealth * (1 + this.game.waveHandler.getWaveNumber() * 0.1));
         this.maxHealth = maxHealth;
         this.speed = speed;
         this.size = size;
@@ -174,8 +175,8 @@ public abstract class Enemy extends BaseLocationable {
         if (this.done) {
             return;
         }
-        this.game.addGold(this.worth);
-        this.game.addExp(this.worth);
+        this.game.addGold(this.value);
+        this.game.addExp(this.value);
         this.game.addEnemyKills(1);
         this.done = true;
     }
@@ -188,7 +189,7 @@ public abstract class Enemy extends BaseLocationable {
             return;
         }
         this.game.removeLife(
-            Math.max(1, (int) Math.ceil(this.maxHealth / 10.0))
+            Math.max(1, (int) Math.ceil(this.maxHealth / 100.0))
         );
         this.done = true;
     }

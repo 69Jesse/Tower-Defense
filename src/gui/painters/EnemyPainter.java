@@ -47,8 +47,10 @@ public final class EnemyPainter extends Painter {
             enemy.getHealth() / (double) enemy.maxHealth
         ));
 
-        final double topLeftX = location.x - this.healthBarWidth / 2;
-        final double topLeftY = location.y - this.healthBarYOffset - this.healthBarHeight / 2;
+        final double topLeftX = location.x - this.healthBarWidth / 2
+            + enemy.drawOffsetLocation.x;
+        final double topLeftY = location.y - this.healthBarYOffset - this.healthBarHeight / 2
+            + enemy.drawOffsetLocation.y;
 
         graphics.setColor(this.healthBarPaddingColor);
         graphics.fillRect(

@@ -80,13 +80,22 @@ public final class Game {
         this.fieldRandom = this.seed == null ? new Random() : new Random(this.seed);
         this.towerRandom = new Random();
         this.waveHandler = new WaveHandler(this);
-        this.lives = 15;
+        this.lives = this.getStartingLives();
         this.gold = this.getStartingGold();
         this.speed = Speed.ONE;
         this.exp = 0;
         this.enemyKills = 0;
         this.goldSpent = 0;
         this.state = GameState.WAITING_TO_START;
+    }
+
+    /**
+     * Returns the starting lives.
+     * 
+     * @return The starting lives.
+     */
+    public int getStartingLives() {
+        return 30;
     }
 
     /**

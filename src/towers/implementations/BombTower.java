@@ -73,9 +73,9 @@ public final class BombTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.3;
+                return 1.4;
             case 3:
-                return 1.5;
+                return 1.8;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
