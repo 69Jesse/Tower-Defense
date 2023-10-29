@@ -5,22 +5,22 @@ import game.Game;
 
 
 /**
- * A regular enemy.
+ * A tank enemy.
  */
-public class RegularEnemy extends Enemy {
-    private static final int WORTH = 10;
-    private static final int WEIGHT = 1;
-    private static final int MAX_HEALTH = 50;
-    private static final double SPEED = 0.05;
-    private static final double SIZE = 3.5;
+public class TankEnemy extends Enemy {
+    private static final int WORTH = 50;
+    private static final int WEIGHT = 7;
+    private static final int MAX_HEALTH = 300;
+    private static final double SPEED = 0.02;
+    private static final double SIZE = 4.5;
     private static final boolean FLYING = false;
 
     /**
-     * Constructs a regular enemy.
+     * Constructs a tank enemy.
      * 
      * @param game The game this enemy is in.
      */
-    public RegularEnemy(Game game) {
+    public TankEnemy(Game game) {
         super(
             game,
             WORTH,
@@ -34,6 +34,6 @@ public class RegularEnemy extends Enemy {
 
     @Override
     public String getImagePath() {
-        return "./assets/enemies/regular_enemy.png";
+        return "./assets/enemies/tank_enemy.png";
     }
 }

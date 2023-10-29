@@ -3,6 +3,7 @@ package game;
 import enemies.Enemy;
 import enemies.implementations.DroneEnemy;
 import enemies.implementations.RegularEnemy;
+import enemies.implementations.TankEnemy;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -73,7 +74,8 @@ public class WaveHandler {
     private Enemy[] getEnemyTypes() {
         return new Enemy[] {
             new RegularEnemy(this.game),
-            new DroneEnemy(this.game)
+            new DroneEnemy(this.game),
+            new TankEnemy(this.game)
         };
     }
 
