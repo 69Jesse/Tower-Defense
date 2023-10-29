@@ -24,5 +24,10 @@ public abstract class Painter {
         this.panel = panel;
     }
 
+    /**
+     * Method to paint whatever this painter is supposed to paint.
+     * 
+     * @param graphics The graphics object.
+     */
     public abstract void paint(BetterGraphics graphics);
 }
