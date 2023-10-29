@@ -1,7 +1,6 @@
-package gui.frame;
+package gui;
 
 import game.Game;
-import gui.Panel;
 import gui.actions.DebugAction;
 import gui.actions.FullscreenToggleAction;
 import gui.actions.StartAction;
@@ -19,7 +18,7 @@ import javax.swing.Timer;
 /**
  * The frame class.
  */
-public class Frame extends BaseFrame {
+public class Frame extends JFrame {
     private Game game;
     public Mouse mouse;
     private Panel panel;

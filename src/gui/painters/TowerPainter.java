@@ -2,9 +2,9 @@ package gui.painters;
 
 import game.Game;
 import gui.BetterGraphics;
+import gui.Frame;
 import gui.Painter;
 import gui.Panel;
-import gui.frame.Frame;
 import location.Location;
 import towers.Tower;
 

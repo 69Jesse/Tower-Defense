@@ -1,6 +1,6 @@
 package gui.mouse;
 
-import gui.frame.BaseFrame;
+import gui.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -10,12 +10,12 @@ import java.util.HashMap;
  * The BaseMouse class is a MouseAdapter that changed a few methods.
  */
 public abstract class BaseMouse extends MouseAdapter {
-    protected BaseFrame frame;
+    protected Frame frame;
 
     /**
      * Constructs a new BaseMouse.
      */
-    public BaseMouse(BaseFrame frame) {
+    public BaseMouse(Frame frame) {
         super();
         this.frame = frame;
     }

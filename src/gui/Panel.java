@@ -1,7 +1,6 @@
 package gui;
 
 import game.Game;
-import gui.frame.Frame;
 import gui.painters.BackgroundPainter;
 import gui.painters.EnemyPainter;
 import gui.painters.GrassPainter;

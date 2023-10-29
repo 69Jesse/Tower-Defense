@@ -2,8 +2,8 @@ package gui.mouse;
 
 import game.Game;
 import game.Option;
+import gui.Frame;
 import gui.Panel;
-import gui.frame.Frame;
 import gui.painters.SpeedMultiplierPainter;
 import gui.painters.TowerPainter;
 import java.awt.Insets;

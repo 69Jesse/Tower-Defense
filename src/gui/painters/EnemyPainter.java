@@ -3,9 +3,9 @@ package gui.painters;
 import enemies.Enemy;
 import game.Game;
 import gui.BetterGraphics;
+import gui.Frame;
 import gui.Painter;
 import gui.Panel;
-import gui.frame.Frame;
 import java.awt.Color;
 import location.Location;
 

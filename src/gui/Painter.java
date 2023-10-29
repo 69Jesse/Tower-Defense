@@ -1,7 +1,6 @@
 package gui;
 
 import game.Game;
-import gui.frame.Frame;
 
 
 /**
