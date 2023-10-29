@@ -49,7 +49,7 @@ public abstract class Enemy extends BaseLocationable {
         this.game = game;
         this.value = value;
         this.weight = weight;
-        maxHealth = (int) (maxHealth * (1 + this.game.waveHandler.getWaveNumber() * 0.1));
+        maxHealth = (int) (maxHealth * (1 + this.game.waveHandler.getWaveNumber() * 0.05));
         this.maxHealth = maxHealth;
         this.speed = speed;
         this.size = size;
@@ -189,7 +189,7 @@ public abstract class Enemy extends BaseLocationable {
             return;
         }
         this.game.removeLife(
-            Math.max(1, (int) Math.ceil(this.maxHealth / 100.0))
+            Math.max(1, (int) Math.ceil(this.maxHealth * 0.005))
         );
         this.done = true;
     }
