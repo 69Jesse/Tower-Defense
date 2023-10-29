@@ -16,7 +16,7 @@ public final class BombTower extends RangeDamageTower {
     private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 120;
-    private static final double DAMAGE = 25.0;
+    private static final double DAMAGE = 35.0;
     private static final double RANGE = 7.5;
     private static final boolean CAN_DAMAGE_FLYING = false;
 

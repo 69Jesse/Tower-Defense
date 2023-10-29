@@ -189,7 +189,7 @@ public abstract class Enemy extends BaseLocationable {
             return;
         }
         this.game.removeLife(
-            Math.max(1, (int) Math.ceil(this.maxHealth * 0.005))
+            Math.max(1, (int) (this.maxHealth * 0.005))
         );
         this.done = true;
     }
