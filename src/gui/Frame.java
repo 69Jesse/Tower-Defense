@@ -23,7 +23,13 @@ public class Frame extends JFrame {
     public Mouse mouse;
     private Panel panel;
 
+    /**
+     * The constructor.
+     * 
+     * @param game The game.
+     */
     public Frame(Game game) {
+        super("Robot Rampage");
         this.game = game;
     }
 
