@@ -50,11 +50,11 @@ public final class SlingshotTower extends RangeDamageTower {
     public String getImagePath() {
         switch (this.level) {
             case 1:
-                return "./assets/towers/laser_tower_1.png";
+                return "./assets/towers/slingshot_tower_1.png";
             case 2:
-                return "./assets/towers/laser_tower_2.png";
+                return "./assets/towers/slingshot_tower_2.png";
             case 3:
-                return "./assets/towers/laser_tower_3.png";
+                return "./assets/towers/slingshot_tower_3.png";
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
