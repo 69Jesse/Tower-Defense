@@ -15,8 +15,8 @@ public final class ArcherTower extends RangeDamageTower {
     private static final int COST = 100;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 40;
-    private static final double DAMAGE = 15.0;
-    private static final double RANGE = 10.0;    
+    private static final double DAMAGE = 20.0;
+    private static final double RANGE = 12.5;    
     private static final boolean CAN_DAMAGE_FLYING = true;
 
     /**
@@ -74,7 +74,7 @@ public final class ArcherTower extends RangeDamageTower {
             case 2:
                 return 1.3;
             case 3:
-                return 1.7;
+                return 1.6;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }
@@ -86,9 +86,9 @@ public final class ArcherTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.3;
+                return 1.4;
             case 3:
-                return 1.5;
+                return 1.6;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }

@@ -12,10 +12,10 @@ import towers.projectile.Projectile;
  * A laser tower.
  */
 public final class LaserTower extends RangeDamageTower {
-    private static final int COST = 300;
+    private static final int COST = 400;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 0;
-    private static final double DAMAGE = 0.5;
+    private static final double DAMAGE = 0.1;
     private static final double RANGE = 10.0;
     private static final boolean CAN_DAMAGE_FLYING = true;
 
@@ -63,9 +63,9 @@ public final class LaserTower extends RangeDamageTower {
             case 1:
                 return 1.0;
             case 2:
-                return 1.5;
+                return 1.4;
             case 3:
-                return 2.0;
+                return 1.8;
             default:
                 throw new RuntimeException("Invalid level: " + this.level);
         }

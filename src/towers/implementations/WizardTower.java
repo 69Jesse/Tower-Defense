@@ -13,7 +13,7 @@ import towers.projectile.Projectile;
  * A wizard tower.
  */
 public final class WizardTower extends RangeDamageTower {
-    private static final int COST = 100;
+    private static final int COST = 200;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 60;
     private static final double DAMAGE = 15.0;

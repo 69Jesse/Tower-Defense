@@ -23,7 +23,7 @@ public final class SlingshotTower extends RangeDamageTower {
     private static final int COST = 300;
     private static final int MAX_LEVEL = 3;
     private static final int COOLDOWN = 120;
-    private static final double DAMAGE = 5.0;
+    private static final double DAMAGE = 20.0;
     private static final double RANGE = 10.0;
     private static final boolean CAN_DAMAGE_FLYING = true;
 

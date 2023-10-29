@@ -95,7 +95,7 @@ public class WaveHandler {
      * @return The maximum wave number.
      */
     public int getMaxWave() {
-        return 100;
+        return 20;
     }
 
     /**
