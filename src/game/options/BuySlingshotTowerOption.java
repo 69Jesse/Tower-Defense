@@ -31,7 +31,7 @@ public class BuySlingshotTowerOption extends BuyTowerOption {
 
     @Override
     public String getImagePath() {
-        return "./assets/options/laser_tower.png";
+        return "./assets/options/slingshot_tower.png";
     }
 
     @Override

@@ -31,7 +31,7 @@ public class BuyWizardTowerOption extends BuyTowerOption {
 
     @Override
     public String getImagePath() {
-        return "./assets/options/sell.png";
+        return "./assets/options/wizard_tower.png";
     }
 
     @Override
