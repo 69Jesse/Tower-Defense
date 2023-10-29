@@ -100,7 +100,6 @@ public final class WizardTower extends RangeDamageTower {
     private static final int TICKS_UNTIL_DELETE = 30;
     private static final double LINE_WIDTH = 0.25;
     private static final Color LINE_COLOR = new Color(0x76428A);
-    private final int maxBounceCount = 3;
     private final double maxBounceRange = 5.0;
 
     // Max purely visual offset of the projectiles source and target per dimension.
@@ -125,21 +124,40 @@ public final class WizardTower extends RangeDamageTower {
     }
 
     /**
+     * Returns the number of bounces the lightning can make.
+     * 
+     * @return The number of bounces the lightning can make.
+     */
+    private int getBounceCount() {
+        switch (this.level) {
+            case 1:
+                return 3;
+            case 2:
+                return 4;
+            case 3:
+                return 5;
+            default:
+                throw new RuntimeException("Invalid level: " + this.level);
+        }
+    }
+
+    /**
      * Returns a random offset for the visual effect of the projectile.
      */
     private double getVisualOffset(int index) {
         return this.game.towerRandom.nextDouble()
             * this.maxVisualOffset * 2 - this.maxVisualOffset
-            * ((index) / (double) this.maxBounceCount);
+            * ((index) / (double) this.getBounceCount());
     }
 
     @Override
     protected Projectile[] createProjectiles(Enemy enemy) {
-        Projectile[] projectiles = new Projectile[this.maxBounceCount];
+        int bounceCount = this.getBounceCount();
+        Projectile[] projectiles = new Projectile[bounceCount];
         ArrayList<Enemy> potentialEnemies = new ArrayList<>(this.game.field.enemies);
         Enemy lastEnemy = enemy;
 
-        for (int i = 0; i < this.maxBounceCount; i++) {
+        for (int i = 0; i < bounceCount; i++) {
             if (i != 0) {
                 enemy = this.getClosestEnemy(potentialEnemies, enemy.getLocation());
                 if (enemy == null) {
@@ -163,7 +181,7 @@ public final class WizardTower extends RangeDamageTower {
         }
 
         // Offset the projectiles slightly to make it look more like electricity.
-        for (int i = 0; i < this.maxBounceCount; i++) {
+        for (int i = 0; i < bounceCount; i++) {
             if (projectiles[i] == null) {
                 continue;
             }
@@ -176,7 +194,7 @@ public final class WizardTower extends RangeDamageTower {
                     targetLocation.y + yOffset
                 )
             );
-            if (i == this.maxBounceCount - 1 || projectiles[i + 1] == null) {
+            if (i == bounceCount - 1 || projectiles[i + 1] == null) {
                 break;
             }
             Location sourceLocation = projectiles[i + 1].getSourceLocation();

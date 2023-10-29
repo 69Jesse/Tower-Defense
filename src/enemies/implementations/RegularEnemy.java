@@ -8,7 +8,7 @@ import game.Game;
  * A regular enemy.
  */
 public class RegularEnemy extends Enemy {
-    private static final int VALUE = 10;
+    private static final int VALUE = 20;
     private static final int WEIGHT = 1;
     private static final int MAX_HEALTH = 200;
     private static final double SPEED = 0.05;

@@ -86,7 +86,7 @@ public class WaveHandler {
      * @return The value of the current wave.
      */
     public int getWaveValue() {
-        return (int) Math.pow(this.waveNumber, 1.15) * 30;
+        return (int) Math.pow(this.waveNumber, 1.1) * 40;
     }
 
     /**

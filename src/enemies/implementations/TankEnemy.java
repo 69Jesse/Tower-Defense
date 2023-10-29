@@ -8,9 +8,9 @@ import game.Game;
  * A tank enemy.
  */
 public class TankEnemy extends Enemy {
-    private static final int VALUE = 50;
+    private static final int VALUE = 100;
     private static final int WEIGHT = 3;
-    private static final int MAX_HEALTH = 1000;
+    private static final int MAX_HEALTH = 800;
     private static final double SPEED = 0.02;
     private static final double SIZE = 4.5;
     private static final boolean FLYING = false;
