@@ -13,7 +13,7 @@ But stay sharp – lose all your lives, and the game is over. Do you have what i
 
 ## How to play
 ### Dive into Action
-To begin this thrilling adventure, start by executing the "Launcher.java" file found in the 'src' folder. Make sure your current working directory matches the location of "Launcher.java" to guarantee the images are loaded correctly.
+To begin this thrilling adventure, start by executing the "Launcher.java" file found in the 'src' folder. You can add an optional seed argument to always play on the same field. Make sure your current working directory matches the location of "Launcher.java" to guarantee the images are loaded correctly.
 
 ### Master the Art of Defense
 Start the game by pressing 'Enter' and, if needed, invoke the debug action with the 'Space' key to reset your game.
