@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.File;
 import java.util.HashMap;
 import javax.swing.ImageIcon;
 
@@ -164,12 +165,35 @@ public final class BetterGraphics {
     private static final HashMap<String, Image> IMAGES = new HashMap<>();
 
     /**
+     * Resolve the image path.
+     * This is done to make sure that the images are loaded correctly.
+     * 
+     * @param imagePath The path to the image.
+     * @return          The resolved path.
+     */
+    private String resolveImagePath(String imagePath) {
+        String src = "src/";
+        String currentDirectory = System.getProperty("user.dir");
+        File srcFolder = new File(currentDirectory, src);
+
+        if (srcFolder.exists() && srcFolder.isDirectory()) {
+            if (imagePath.startsWith("./")) {
+                imagePath = imagePath.substring(2);
+            }
+            imagePath = src + imagePath;
+        }
+
+        return "./" + imagePath;
+    }
+
+    /**
      * Get an image, possibly from the cache.
      * 
      * @param imagePath The path to the image.
      * @return          The image.
      */
     private Image getMaybeCachedImage(String imagePath) {
+        imagePath = this.resolveImagePath(imagePath);
         Image image = IMAGES.getOrDefault(imagePath, null);
         if (image == null) {
             image = new ImageIcon(imagePath).getImage();
