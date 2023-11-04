@@ -172,14 +172,15 @@ public final class BetterGraphics {
      * @return          The resolved path.
      */
     private String resolveImagePath(String imagePath) {
-        String src = "src/";
-        String currentDirectory = System.getProperty("user.dir");
-        File srcFolder = new File(currentDirectory, src);
+        if (imagePath.startsWith("./")) {
+            imagePath = imagePath.substring(2);
+        }
+
+        final String src = "src/";
+        final String currentDirectory = System.getProperty("user.dir");
+        final File srcFolder = new File(currentDirectory, src);
 
         if (srcFolder.exists() && srcFolder.isDirectory()) {
-            if (imagePath.startsWith("./")) {
-                imagePath = imagePath.substring(2);
-            }
             imagePath = src + imagePath;
         }
 
